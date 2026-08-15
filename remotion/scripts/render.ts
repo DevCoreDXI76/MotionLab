@@ -35,11 +35,13 @@ async function main() {
   fs.mkdirSync(outputDir, { recursive: true });
   const outputPath = path.join(outputDir, `${projectId}.mp4`);
 
-  const npxCmd = process.platform === "win32" ? "npx.cmd" : "npx";
+  // npx resolves to npx.cmd on Windows; Node's CVE-2024-27980 fix requires shell: true
+  // to invoke .cmd/.bat targets (bare "npx" without it fails with ENOENT, and an explicit
+  // "npx.cmd" without it fails with EINVAL). Verified on Node v24.15.0 / Windows 11.
   const result = spawnSync(
-    npxCmd,
+    "npx",
     ["remotion", "render", "src/index.ts", "Episode", outputPath, `--props=${scriptPath}`],
-    { cwd: REMOTION_DIR, stdio: "inherit" },
+    { cwd: REMOTION_DIR, stdio: "inherit", shell: true },
   );
 
   if (result.status !== 0) {
