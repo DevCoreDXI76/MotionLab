@@ -1,6 +1,8 @@
 import React from "react";
-import { Composition } from "remotion";
+import { Composition, getRemotionEnvironment } from "remotion";
 import { Episode, EpisodeProps } from "./Episode";
+
+const FALLBACK_DURATION_MS = 3000; // Studio 프리뷰 전용: duration 역주입 전에도 편집 화면이 깨지지 않도록 하는 임시값
 
 const DEFAULT_DIMENSIONS: Record<EpisodeProps["format"], { width: number; height: number }> = {
   shorts: { width: 1080, height: 1920 },
@@ -32,7 +34,14 @@ export const RemotionRoot: React.FC = () => {
         const dims = DEFAULT_DIMENSIONS[format];
         const fps = props.fps ?? 30;
         const durationInFrames = props.scenes.reduce((sum: number, scene) => {
-          const durationMs = scene.durationMs ?? 3000;
+          let durationMs = scene.durationMs;
+          if (durationMs == null) {
+            if (getRemotionEnvironment().isStudio) {
+              durationMs = FALLBACK_DURATION_MS;
+            } else {
+              throw new Error(`Scene "${scene.id}" has no durationMs — run generate-narration before rendering.`);
+            }
+          }
           return sum + Math.max(1, Math.round((durationMs / 1000) * fps));
         }, 0);
         return {

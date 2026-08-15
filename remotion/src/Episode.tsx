@@ -1,5 +1,5 @@
 import React from "react";
-import { Series } from "remotion";
+import { Series, getRemotionEnvironment } from "remotion";
 import { resolveSceneComponent } from "./sceneRegistry";
 
 export type Scene = {
@@ -22,13 +22,20 @@ export type EpisodeProps = {
   scenes: Scene[];
 };
 
-const FALLBACK_DURATION_MS = 3000; // Studio 프리뷰에서 duration 역주입 전에도 렌더가 깨지지 않도록 하는 임시값
+const FALLBACK_DURATION_MS = 3000; // Studio 프리뷰 전용: duration 역주입 전에도 편집 화면이 깨지지 않도록 하는 임시값
 
 export const Episode: React.FC<EpisodeProps> = ({ scenes, fps }) => {
   return (
     <Series>
       {scenes.map((scene) => {
-        const durationMs = scene.durationMs ?? FALLBACK_DURATION_MS;
+        let durationMs = scene.durationMs;
+        if (durationMs == null) {
+          if (getRemotionEnvironment().isStudio) {
+            durationMs = FALLBACK_DURATION_MS;
+          } else {
+            throw new Error(`Scene "${scene.id}" has no durationMs — run generate-narration before rendering.`);
+          }
+        }
         const durationInFrames = Math.max(1, Math.round((durationMs / 1000) * fps));
         const SceneComponent = resolveSceneComponent(scene.type);
         return (
