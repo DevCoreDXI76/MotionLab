@@ -5,6 +5,7 @@ import { CodeScene } from "./components/scenes/CodeScene";
 import { OutroScene } from "./components/scenes/OutroScene";
 import type { SceneProps } from "./components/scenes/types";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- heterogeneous scene props require type erasure here
 export const sceneRegistry: Record<string, React.FC<SceneProps<any>>> = {
   title: TitleScene,
   talkingPoint: TalkingPointScene,
@@ -12,6 +13,7 @@ export const sceneRegistry: Record<string, React.FC<SceneProps<any>>> = {
   outro: OutroScene,
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- heterogeneous scene props require type erasure here
 export function resolveSceneComponent(type: string): React.FC<SceneProps<any>> {
   const component = sceneRegistry[type];
   if (!component) {
