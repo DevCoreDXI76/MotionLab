@@ -1,0 +1,89 @@
+{
+  "id": "001_sample",
+  "title": "Remotion으로 쇼츠 자동화하기",
+  "format": "shorts",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "id": "title",
+      "type": "title",
+      "narration": "영상 하나 만드는 데 프리미어 붙잡고 몇 시간씩 쓰고 계신가요? 오늘은 코드로 쇼츠를 찍어내는 도구, 리모션을 소개합니다.",
+      "props": {
+        "title": "Remotion으로 쇼츠 자동화하기",
+        "subtitle": "코드로 만드는 모션그래픽"
+      },
+      "durationMs": 10080,
+      "audioPath": "projects/001_sample/audio/title.mp3"
+    },
+    {
+      "id": "tp-1",
+      "type": "talkingPoint",
+      "narration": "리모션은 리액트 컴포넌트로 영상을 만드는 도구예요. 화면에 그리는 게 아니라 코드로 애니메이션을 짜는 거죠. 그래서 프레임 단위로 정확하게 움직임을 제어할 수 있습니다.",
+      "props": {
+        "heading": "Remotion이 뭔가요?",
+        "bullets": [
+          "React 컴포넌트로 비디오 제작",
+          "코드로 애니메이션 정의",
+          "프레임 단위 정밀 제어"
+        ]
+      },
+      "durationMs": 13992,
+      "audioPath": "projects/001_sample/audio/tp-1.mp3"
+    },
+    {
+      "id": "tp-2",
+      "type": "talkingPoint",
+      "narration": "이게 왜 자동화에 유리하냐면, 데이터만 바꿔 끼우면 영상이 통째로 다시 만들어지거든요. 대본이나 이미지만 교체해도 새 쇼츠가 뚝딱 나옵니다. 반복 작업을 스크립트 몇 줄로 끝낼 수 있어요.",
+      "props": {
+        "heading": "왜 자동화에 유리할까?",
+        "bullets": [
+          "데이터만 바꾸면 영상 자동 생성",
+          "반복 작업의 스크립트화",
+          "쇼츠 대량 생산 가능"
+        ]
+      },
+      "durationMs": 15888,
+      "audioPath": "projects/001_sample/audio/tp-2.mp3"
+    },
+    {
+      "id": "code-1",
+      "type": "code",
+      "narration": "실제 코드를 보면 이렇게 간단해요. 컴포지션 하나에 씬 하나를 등록하고, 지속 시간만 지정해주면 끝입니다. 이 구조 위에 대본 데이터를 흘려보내면 씬이 자동으로 이어 붙습니다.",
+      "props": {
+        "language": "tsx",
+        "code": "export const Scene: React.FC<{ text: string }> = ({ text }) => {\n  const frame = useCurrentFrame();\n  const opacity = interpolate(frame, [0, 20], [0, 1]);\n  return <AbsoluteFill style={{ opacity }}>{text}</AbsoluteFill>;\n};",
+        "caption": "씬 하나로 시작하는 Remotion 컴포지션"
+      },
+      "durationMs": 14712,
+      "audioPath": "projects/001_sample/audio/code-1.mp3"
+    },
+    {
+      "id": "tp-3",
+      "type": "talkingPoint",
+      "narration": "여기에 파이프라인을 붙이면 완전 자동화가 됩니다. 대본을 생성하고, TTS로 음성을 입히고, 씬을 렌더링한 다음 바로 업로드까지 이어지는 흐름이죠. 사람이 손댈 부분은 검수 한 번이면 충분해요.",
+      "props": {
+        "heading": "자동화 파이프라인 예시",
+        "bullets": [
+          "대본 생성",
+          "TTS 음성 합성",
+          "씬 렌더링 → 자동 업로드"
+        ]
+      },
+      "durationMs": 16584,
+      "audioPath": "projects/001_sample/audio/tp-3.mp3"
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "narration": "코드 한 번 짜두면 쇼츠는 계속 찍혀 나옵니다. 다음 영상에서는 실제 렌더링 결과물로 만나요.",
+      "props": {
+        "message": "코드로 찍어내는 쇼츠, 모션랩",
+        "ctaText": "구독하고 다음 편 받기"
+      },
+      "durationMs": 8472,
+      "audioPath": "projects/001_sample/audio/outro.mp3"
+    }
+  ]
+}
