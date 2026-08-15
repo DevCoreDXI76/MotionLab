@@ -35,14 +35,17 @@ async function main() {
   fs.mkdirSync(outputDir, { recursive: true });
   const outputPath = path.join(outputDir, `${projectId}.mp4`);
 
-  // npx resolves to npx.cmd on Windows; Node's CVE-2024-27980 fix requires shell: true
-  // to invoke .cmd/.bat targets (bare "npx" without it fails with ENOENT, and an explicit
-  // "npx.cmd" without it fails with EINVAL). Verified on Node v24.15.0 / Windows 11.
-  const result = spawnSync(
-    "npx",
-    ["remotion", "render", "src/index.ts", "Episode", outputPath, `--props=${scriptPath}`],
-    { cwd: REMOTION_DIR, stdio: "inherit", shell: true },
-  );
+  // npx resolves to npx.cmd on Windows; Node's CVE-2024-27980 fix requires either shell: true
+  // or an explicit cmd.exe wrapper to invoke .cmd/.bat targets (bare "npx" without either fails
+  // with ENOENT, and an explicit "npx.cmd" without either fails with EINVAL). We use the
+  // cmd.exe wrapper instead of shell: true so each argument keeps its own array slot and gets
+  // Node's normal argv-to-command-line quoting (paths with spaces stay intact) rather than being
+  // concatenated into one shell string. Verified on Node v24.15.0 / Windows 11.
+  const isWin = process.platform === "win32";
+  const npxArgs = ["remotion", "render", "src/index.ts", "Episode", outputPath, `--props=${scriptPath}`];
+  const result = isWin
+    ? spawnSync("cmd.exe", ["/d", "/s", "/c", "npx", ...npxArgs], { cwd: REMOTION_DIR, stdio: "inherit" })
+    : spawnSync("npx", npxArgs, { cwd: REMOTION_DIR, stdio: "inherit" });
 
   if (result.status !== 0) {
     console.error("remotion render failed.");
