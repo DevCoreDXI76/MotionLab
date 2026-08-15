@@ -44,6 +44,7 @@ export const Episode: React.FC<EpisodeProps> = ({ scenes, fps }) => {
               narration={scene.narration}
               subtitleText={scene.subtitleText ?? scene.narration}
               audioSrc={scene.audioPath ?? ""}
+              durationInFrames={durationInFrames}
               props={scene.props ?? {}}
             />
           </Series.Sequence>

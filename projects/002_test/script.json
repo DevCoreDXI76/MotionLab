@@ -1,0 +1,89 @@
+{
+  "format": "shorts",
+  "id": "002_test",
+  "title": "Claude Code로 유튜브 쇼츠 자동화하기",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "id": "scene-1-title",
+      "type": "title",
+      "narration": "유튜브 쇼츠, 매번 대본 쓰고 편집하느라 지치셨나요? 오늘은 Claude Code로 쇼츠 제작을 통째로 자동화하는 방법을 보여드릴게요.",
+      "props": {
+        "title": "Claude Code로\n유튜브 쇼츠 자동화하기",
+        "subtitle": "대본부터 렌더링까지, 코드 한 줄로"
+      },
+      "durationMs": 10704,
+      "audioPath": "projects/002_test/audio/scene-1-title.mp3"
+    },
+    {
+      "id": "scene-2-problem",
+      "type": "talkingPoint",
+      "narration": "쇼츠 하나를 만들려면 대본 작성부터 편집, 자막까지 손이 많이 갑니다. 이 반복 작업 때문에 업로드 주기가 자꾸 늦어지죠. Claude Code는 이 과정을 스크립트로 묶어서 자동으로 처리해줍니다.",
+      "props": {
+        "heading": "왜 자동화가 필요할까",
+        "bullets": [
+          "대본 작성에만 30분 이상",
+          "편집·자막 작업은 반복의 연속",
+          "결국 콘텐츠 발행 주기가 늘어진다"
+        ]
+      },
+      "durationMs": 16200,
+      "audioPath": "projects/002_test/audio/scene-2-problem.mp3"
+    },
+    {
+      "id": "scene-3-whatitdoes",
+      "type": "talkingPoint",
+      "narration": "Claude Code CLI에게 주제 하나만 넘기면 씬 구조를 갖춘 JSON 대본을 만들어줍니다. 이 대본은 Remotion 컴포넌트로 바로 렌더링되고, TTS 음성 파일까지 자동으로 붙습니다. 사람이 할 일은 확인하고 승인하는 것뿐이에요.",
+      "props": {
+        "heading": "Claude Code가 하는 일",
+        "bullets": [
+          "주제만 던지면 JSON 대본 생성",
+          "Remotion으로 씬 렌더링",
+          "TTS 음성까지 자동 연결"
+        ]
+      },
+      "durationMs": 18288,
+      "audioPath": "projects/002_test/audio/scene-3-whatitdoes.mp3"
+    },
+    {
+      "id": "scene-4-code",
+      "type": "code",
+      "narration": "실제로는 이렇게 터미널 명령 한두 줄이면 끝나요. 먼저 주제를 넘겨서 JSON 대본을 생성하고, 그다음 Remotion 렌더링 명령을 실행하면 영상 파일이 나옵니다.",
+      "props": {
+        "language": "bash",
+        "code": "claude code run generate-script \\\n  --topic \"쇼츠 자동화\" \\\n  --project 002_test\n\nnpx remotion render",
+        "caption": "터미널 한 줄로 대본 생성부터 렌더링까지"
+      },
+      "durationMs": 13248,
+      "audioPath": "projects/002_test/audio/scene-4-code.mp3"
+    },
+    {
+      "id": "scene-5-benefit",
+      "type": "talkingPoint",
+      "narration": "이 방식으로 대본 작성 시간이 확 줄어듭니다. 포맷이 일정하니까 여러 편을 빠르게 찍어낼 수 있고, 아낀 시간은 기획이나 홍보 같은 더 중요한 일에 쓸 수 있어요.",
+      "props": {
+        "heading": "이렇게 얻는 것",
+        "bullets": [
+          "대본 작성 시간 대폭 단축",
+          "일관된 포맷의 쇼츠 대량 생산",
+          "남는 시간은 기획과 홍보에 집중"
+        ]
+      },
+      "durationMs": 12528,
+      "audioPath": "projects/002_test/audio/scene-5-benefit.mp3"
+    },
+    {
+      "id": "scene-6-outro",
+      "type": "outro",
+      "narration": "코드 한 줄로 시작하는 콘텐츠 자동화, 어떠셨나요? 다음 영상에서 더 자세한 자동화 파이프라인을 다뤄볼게요. 구독하고 기다려주세요.",
+      "props": {
+        "message": "코드로 만드는 콘텐츠, 모션랩에서 계속 보여드릴게요.",
+        "ctaText": "구독하고 다음 영상도 확인하세요"
+      },
+      "durationMs": 11952,
+      "audioPath": "projects/002_test/audio/scene-6-outro.mp3"
+    }
+  ]
+}

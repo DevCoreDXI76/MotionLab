@@ -4,6 +4,7 @@ import path from "node:path";
 import { spawnCli } from "./lib/spawnCli";
 import { validateScript } from "./lib/scriptSchema";
 import { generateMetadataDraft } from "./lib/metadataDraft";
+import { assertFfmpegAvailable, normalizeLoudness } from "./lib/audio/loudnorm";
 import { PROJECTS_DIR, REMOTION_DIR, PUBLIC_DIR } from "./lib/paths";
 
 function assertDurationsFilled(script: {
@@ -39,6 +40,8 @@ async function main() {
     process.exit(1);
   }
 
+  assertFfmpegAvailable();
+
   const scriptPath = path.join(PROJECTS_DIR, projectId, "script.json");
   const script = JSON.parse(fs.readFileSync(scriptPath, "utf-8"));
   const { valid, errors } = validateScript(script);
@@ -59,6 +62,8 @@ async function main() {
     console.error("remotion render failed.");
     process.exit(result.status ?? 1);
   }
+
+  normalizeLoudness(outputPath);
 
   const draft = generateMetadataDraft(script);
   fs.writeFileSync(path.join(outputDir, `${projectId}.metadata.txt`), draft);
