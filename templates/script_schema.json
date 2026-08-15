@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MotionLab Episode Script",
+  "type": "object",
+  "required": ["id", "title", "format", "fps", "scenes"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "format": { "type": "string", "enum": ["shorts", "long"] },
+    "fps": { "type": "integer", "minimum": 1 },
+    "width": { "type": "integer", "minimum": 1 },
+    "height": { "type": "integer", "minimum": 1 },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "narration"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "enum": ["title", "talkingPoint", "code", "outro"] },
+          "narration": { "type": "string", "minLength": 1 },
+          "subtitleText": { "type": ["string", "null"] },
+          "durationMs": { "type": ["number", "null"], "minimum": 0 },
+          "audioPath": { "type": ["string", "null"] },
+          "props": { "type": "object" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
