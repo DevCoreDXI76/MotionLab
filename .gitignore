@@ -3,3 +3,11 @@
 
 # Local git worktrees (superpowers:using-git-worktrees fallback)
 .worktrees/
+
+node_modules/
+remotion/node_modules/
+remotion/out/
+projects/*/output/
+projects/*/audio/
+remotion/public/projects/
+.env
