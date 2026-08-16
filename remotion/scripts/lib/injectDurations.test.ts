@@ -37,4 +37,24 @@ describe("injectDurations", () => {
     await injectDurations(script, provider, "/tmp/audio", "projects/001_sample/audio");
     expect(script.scenes[0].durationMs).toBeUndefined();
   });
+
+  it("sends lexicon-substituted text to TTS but keeps the original narration in the result", async () => {
+    const lexiconScript: ScriptData = {
+      ...script,
+      scenes: [{ id: "s1", type: "title", narration: "이건 JSON 파일입니다" }],
+    };
+    const provider = new FakeTtsProvider();
+    const result = await injectDurations(lexiconScript, provider, "/tmp/audio", "projects/001_sample/audio", {
+      JSON: "제이슨",
+    });
+
+    expect(provider.calls[0].text).toBe("이건 제이슨 파일입니다");
+    expect(result.scenes[0].narration).toBe("이건 JSON 파일입니다");
+  });
+
+  it("defaults to no substitution when no lexicon is given", async () => {
+    const provider = new FakeTtsProvider();
+    await injectDurations(script, provider, "/tmp/audio", "projects/001_sample/audio");
+    expect(provider.calls[0].text).toBe("안녕하세요");
+  });
 });

@@ -23,7 +23,16 @@
           "subtitleText": { "type": ["string", "null"] },
           "durationMs": { "type": ["number", "null"], "minimum": 0 },
           "audioPath": { "type": ["string", "null"] },
-          "props": { "type": "object" }
+          "props": { "type": "object" },
+          "visual": {
+            "type": ["object", "null"],
+            "properties": {
+              "cue": { "type": ["string", "null"] },
+              "assetPath": { "type": ["string", "null"] },
+              "focal": { "type": "string", "enum": ["center", "top", "bottom", "left", "right"] }
+            },
+            "additionalProperties": false
+          }
         },
         "additionalProperties": false
       }

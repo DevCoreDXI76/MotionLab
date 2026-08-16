@@ -30,4 +30,25 @@ describe("validateScript", () => {
     const result = validateScript(bad);
     expect(result.valid).toBe(false);
   });
+
+  it("accepts a script with no visual field (backward compatibility with pre-existing script.json files)", () => {
+    const result = validateScript(validScript);
+    expect(result.valid).toBe(true);
+  });
+
+  it("accepts a scene with a visual field (cue-only, no assetPath)", () => {
+    const withVisual = {
+      ...validScript,
+      scenes: [{ ...validScript.scenes[0], visual: { cue: "terminal", assetPath: null, focal: "center" } }],
+    };
+    expect(validateScript(withVisual).valid).toBe(true);
+  });
+
+  it("rejects a visual field with an unknown property", () => {
+    const bad = {
+      ...validScript,
+      scenes: [{ ...validScript.scenes[0], visual: { kind: "image" } }],
+    };
+    expect(validateScript(bad).valid).toBe(false);
+  });
 });

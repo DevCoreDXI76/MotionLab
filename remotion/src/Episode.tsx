@@ -1,6 +1,7 @@
 import React from "react";
 import { Series, getRemotionEnvironment } from "remotion";
 import { resolveSceneComponent } from "./sceneRegistry";
+import type { VisualCue } from "./components/CentralVisual";
 
 export type Scene = {
   id: string;
@@ -10,6 +11,7 @@ export type Scene = {
   durationMs?: number | null;
   audioPath?: string | null;
   props?: Record<string, unknown>;
+  visual?: VisualCue | null;
 };
 
 export type EpisodeProps = {
@@ -45,6 +47,7 @@ export const Episode: React.FC<EpisodeProps> = ({ scenes, fps }) => {
               subtitleText={scene.subtitleText ?? scene.narration}
               audioSrc={scene.audioPath ?? ""}
               durationInFrames={durationInFrames}
+              visual={scene.visual ?? null}
               props={scene.props ?? {}}
             />
           </Series.Sequence>

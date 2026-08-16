@@ -4,6 +4,7 @@ import path from "node:path";
 import { injectDurations } from "./lib/injectDurations";
 import { EdgeTtsProvider } from "./lib/ttsProviders/edgeTtsProvider";
 import { validateScript } from "./lib/scriptSchema";
+import { loadLexicon } from "./lib/pronunciationLexicon";
 import { PROJECTS_DIR, PUBLIC_DIR } from "./lib/paths";
 
 async function main() {
@@ -24,7 +25,7 @@ async function main() {
   const audioOutDir = path.join(PUBLIC_DIR, "projects", projectId, "audio");
   const provider = new EdgeTtsProvider();
   try {
-    const updated = await injectDurations(raw, provider, audioOutDir, `projects/${projectId}/audio`);
+    const updated = await injectDurations(raw, provider, audioOutDir, `projects/${projectId}/audio`, loadLexicon());
     fs.writeFileSync(scriptPath, JSON.stringify(updated, null, 2));
     console.log(`Updated ${scriptPath} with ${updated.scenes.length} scene durations.`);
   } finally {

@@ -1,5 +1,6 @@
 import path from "node:path";
 import type { TtsProvider } from "./ttsProvider";
+import { applyLexicon } from "./pronunciationLexicon";
 
 export interface Scene {
   id: string;
@@ -9,6 +10,9 @@ export interface Scene {
   durationMs?: number | null;
   audioPath?: string | null;
   props?: Record<string, unknown>;
+  // Loosely typed here — this module only passes `visual` through untouched
+  // (via the spread below); its real shape is CentralVisual.tsx's VisualCue.
+  visual?: Record<string, unknown> | null;
 }
 
 export interface ScriptData {
@@ -26,11 +30,16 @@ export async function injectDurations(
   ttsProvider: TtsProvider,
   audioOutDir: string,
   publicRelativeDir: string,
+  lexicon: Record<string, string> = {},
 ): Promise<ScriptData> {
   const scenes: Scene[] = [];
   for (const scene of script.scenes) {
     const absPath = path.join(audioOutDir, `${scene.id}.mp3`);
-    const { durationMs } = await ttsProvider.generate(scene.narration, absPath);
+    // Lexicon substitution is applied only to the text handed to TTS — `scene`
+    // (spread below) still carries the original narration, so script.json's
+    // narration/subtitle text is never touched by the substitution.
+    const ttsText = applyLexicon(scene.narration, lexicon);
+    const { durationMs } = await ttsProvider.generate(ttsText, absPath);
     scenes.push({
       ...scene,
       durationMs,
