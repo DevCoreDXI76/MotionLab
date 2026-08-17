@@ -1,7 +1,9 @@
 import React from "react";
 import { KenBurnsImage } from "./KenBurnsImage";
+import { VideoBackground } from "./VideoBackground";
 import { MotionGraphic } from "./motionGraphics/MotionGraphic";
 import { resolveMotionVariant } from "../lib/resolveMotionVariant";
+import { isVideoAsset } from "../lib/assetKind";
 
 export interface VisualCue {
   cue?: string | null;
@@ -27,6 +29,9 @@ export interface CentralVisualProps {
  */
 export const CentralVisual: React.FC<CentralVisualProps> = ({ visual, durationInFrames, sceneType }) => {
   if (visual?.assetPath) {
+    if (isVideoAsset(visual.assetPath)) {
+      return <VideoBackground assetPath={visual.assetPath} />;
+    }
     return (
       <KenBurnsImage assetPath={visual.assetPath} durationInFrames={durationInFrames} focal={visual.focal} />
     );

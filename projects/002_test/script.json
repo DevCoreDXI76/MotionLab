@@ -15,7 +15,8 @@
         "subtitle": "대본부터 렌더링까지, 코드 한 줄로"
       },
       "visual": {
-        "cue": "terminal"
+        "cue": "terminal",
+        "assetPath": "projects/002_test/images/scene-1-title.png"
       },
       "durationMs": 4680,
       "audioPath": "projects/002_test/audio/scene-1-title.mp3"
@@ -33,7 +34,8 @@
         ]
       },
       "visual": {
-        "cue": "checklist"
+        "cue": "checklist",
+        "assetPath": "projects/002_test/videos/scene-2-problem-broll.mp4"
       },
       "durationMs": 11280,
       "audioPath": "projects/002_test/audio/scene-2-problem.mp3"
@@ -51,7 +53,8 @@
         ]
       },
       "visual": {
-        "cue": "pipeline"
+        "cue": "pipeline",
+        "assetPath": "projects/002_test/videos/studio-demo.mp4"
       },
       "durationMs": 10056,
       "audioPath": "projects/002_test/audio/scene-3-whatitdoes.mp3"
@@ -63,7 +66,217 @@
       "props": {
         "language": "bash",
         "code": "claude code run generate-script \\\n  --topic \"쇼츠 자동화\" \\\n  --project 002_test\n\nnpx remotion render",
-        "caption": "터미널 한 줄로 대본 생성부터 렌더링까지"
+        "caption": "터미널 한 줄로 대본 생성부터 렌더링까지",
+        "cast": {
+          "header": {
+            "version": 2,
+            "width": 100,
+            "height": 30,
+            "timestamp": 0
+          },
+          "events": [
+            {
+              "time": 0,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 0.05555555555555555,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 0.1111111111111111,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 0.16666666666666666,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.2222222222222222,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 0.2777777777777778,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 0.33333333333333337,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 0.38888888888888895,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.44444444444444453,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 0.5000000000000001,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 0.5555555555555557,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 0.6111111111111113,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 0.6666666666666669,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 0.7222222222222224,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 0.777777777777778,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 0.8333333333333336,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 0.8888888888888892,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 0.9444444444444448,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 1.0000000000000002,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 1.0555555555555558,
+              "type": "o",
+              "data": "5"
+            },
+            {
+              "time": 1.1111111111111114,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 1.8111111111111113,
+              "type": "o",
+              "data": "bce0770 feat: TTS pronunciation lexicon, narration-synced bullets, central visual layer\n0e1c055 feat: subtitle line sync, font unification, audio loudnorm, prompt tuning\nfe603a3 fix: consolidate spawn logic, strip full billing-redirect env, gate duration fallback to Studio, harden render guard\n0a74a37 docs: add end-to-end sample episode (001_sample)\ne160999 fix: replace shell:true with cmd.exe wrapper for npx spawn (space-safety)"
+            },
+            {
+              "time": 1.8111111111111113,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 2.111111111111111,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 2.1666666666666665,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 2.222222222222222,
+              "type": "o",
+              "data": "x"
+            },
+            {
+              "time": 2.2777777777777772,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 2.3333333333333326,
+              "type": "o",
+              "data": "v"
+            },
+            {
+              "time": 2.388888888888888,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 2.4444444444444433,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 2.4999999999999987,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 2.555555555555554,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 2.6111111111111094,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 2.6666666666666647,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 2.72222222222222,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 2.7777777777777755,
+              "type": "o",
+              "data": "u"
+            },
+            {
+              "time": 2.833333333333331,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 2.888888888888886,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 3.588888888888886,
+              "type": "o",
+              "data": "RUN  v4.1.10 C:/MyProjects/02_Agent/MotionLab/remotion\n\n\n Test Files  10 passed (10)\n      Tests  54 passed (54)\n   Start at  23:21:03\n   Duration  927ms (transform 497ms, setup 0ms, import 998ms, tests 39ms, environment 1ms)"
+            },
+            {
+              "time": 3.588888888888886,
+              "type": "o",
+              "data": "\r\n"
+            }
+          ]
+        }
       },
       "durationMs": 8928,
       "audioPath": "projects/002_test/audio/scene-4-code.mp3"
@@ -81,7 +294,8 @@
         ]
       },
       "visual": {
-        "cue": "checklist"
+        "cue": "checklist",
+        "assetPath": "projects/002_test/images/scene-5-benefit.png"
       },
       "durationMs": 11232,
       "audioPath": "projects/002_test/audio/scene-5-benefit.mp3"
