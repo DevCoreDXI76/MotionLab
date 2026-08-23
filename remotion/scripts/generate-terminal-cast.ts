@@ -36,6 +36,17 @@ const SCENE_COMMANDS: Record<string, Record<string, Parameters<typeof buildTermi
       { display: "npx vitest run", command: "npx", args: ["vitest", "run"], cwd: REMOTION_DIR },
     ],
   },
+  "004_failures": {
+    "scene-3-fix": [
+      { display: "git log --oneline -5", command: "git", args: ["log", "--oneline", "-5"], cwd: REMOTION_DIR },
+      {
+        display: "grep -n gdigrab docs/remotion_트레이드오프_claudecode인계.md",
+        command: "grep",
+        args: ["-n", "gdigrab", "docs/remotion_트레이드오프_claudecode인계.md"],
+        cwd: ROOT_DIR,
+      },
+    ],
+  },
 };
 
 async function main() {

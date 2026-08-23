@@ -1,0 +1,505 @@
+{
+  "format": "shorts",
+  "id": "004_failures",
+  "title": "이 자동화, 사실 세 번 실패했어요",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "id": "scene-1-title",
+      "type": "title",
+      "narration": "이 자동화 파이프라인, 사실 세 번 실패했어요.",
+      "props": {
+        "title": "이 자동화,\n사실 세 번 실패했어요",
+        "subtitle": "화면 캡처 사고부터 버튼 버그까지"
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/004_failures/videos/scene-1-title-broll.mp4"
+      },
+      "durationMs": 4680,
+      "audioPath": "projects/004_failures/audio/scene-1-title.mp3"
+    },
+    {
+      "id": "scene-2-capture-fail",
+      "type": "talkingPoint",
+      "narration": "처음엔 화면을 통째로 녹화하려고 했어요. 그런데 도구 세 개가 연속으로 실패하다가, 결국 사용자의 실제 데스크톱을 그대로 찍어버리는 사고가 났어요.",
+      "props": {
+        "heading": "첫 번째 실패 — 화면 캡처",
+        "bullets": [
+          "도구 세 개 연속 실패",
+          "결국 데스크톱이 그대로 찍힌 사고"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/004_failures/videos/scene-2-capture-fail-broll.mp4"
+      },
+      "durationMs": 12192,
+      "audioPath": "projects/004_failures/audio/scene-2-capture-fail.mp3"
+    },
+    {
+      "id": "scene-3-fix",
+      "type": "code",
+      "narration": "그날 이후로 화면 캡처는 전면 금지됐어요. 대신 진짜 명령 출력에 타이핑 연출만 입히는 방식으로 바꿨어요.",
+      "props": {
+        "language": "bash",
+        "code": "# 화면 캡처 대신 실제 명령 출력에 타이핑 연출\nnpx tsx scripts/generate-terminal-cast.ts \\\n  004_failures scene-3-fix",
+        "caption": "보안사고 이후 택한 새 방식",
+        "cast": {
+          "header": {
+            "version": 2,
+            "width": 100,
+            "height": 30,
+            "timestamp": 0
+          },
+          "events": [
+            {
+              "time": 0,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 0.05555555555555555,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 0.1111111111111111,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 0.16666666666666666,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.2222222222222222,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 0.2777777777777778,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 0.33333333333333337,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 0.38888888888888895,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.44444444444444453,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 0.5000000000000001,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 0.5555555555555557,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 0.6111111111111113,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 0.6666666666666669,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 0.7222222222222224,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 0.777777777777778,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 0.8333333333333336,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 0.8888888888888892,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 0.9444444444444448,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 1.0000000000000002,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 1.0555555555555558,
+              "type": "o",
+              "data": "5"
+            },
+            {
+              "time": 1.1111111111111114,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 1.8111111111111113,
+              "type": "o",
+              "data": "65c5ce6 docs: flip default visual-source policy to b-roll-first (004+)\ne197f22 feat: 003_pipeline episode — first real content piece, studio-capture fixes\n5bcc18c feat: Playwright Remotion Studio capture for v5 (scene-3-whatitdoes)\n85d58b7 feat: cast-builder terminal replay, real Studio recording, Pexels b-roll\nbce0770 feat: TTS pronunciation lexicon, narration-synced bullets, central visual layer"
+            },
+            {
+              "time": 1.8111111111111113,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 2.111111111111111,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 2.1666666666666665,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 2.222222222222222,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 2.2777777777777772,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 2.3333333333333326,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 2.388888888888888,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 2.4444444444444433,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 2.4999999999999987,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 2.555555555555554,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 2.6111111111111094,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 2.6666666666666647,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 2.72222222222222,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 2.7777777777777755,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 2.833333333333331,
+              "type": "o",
+              "data": "a"
+            },
+            {
+              "time": 2.888888888888886,
+              "type": "o",
+              "data": "b"
+            },
+            {
+              "time": 2.9444444444444415,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 2.999999999999997,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 3.0555555555555522,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 3.1111111111111076,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 3.166666666666663,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 3.2222222222222183,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 3.2777777777777737,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 3.333333333333329,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 3.3888888888888844,
+              "type": "o",
+              "data": "m"
+            },
+            {
+              "time": 3.4444444444444398,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 3.499999999999995,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 3.5555555555555505,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 3.611111111111106,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 3.666666666666661,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 3.7222222222222165,
+              "type": "o",
+              "data": "_"
+            },
+            {
+              "time": 3.777777777777772,
+              "type": "o",
+              "data": "트"
+            },
+            {
+              "time": 3.8333333333333273,
+              "type": "o",
+              "data": "레"
+            },
+            {
+              "time": 3.8888888888888826,
+              "type": "o",
+              "data": "이"
+            },
+            {
+              "time": 3.944444444444438,
+              "type": "o",
+              "data": "드"
+            },
+            {
+              "time": 3.9999999999999933,
+              "type": "o",
+              "data": "오"
+            },
+            {
+              "time": 4.055555555555549,
+              "type": "o",
+              "data": "프"
+            },
+            {
+              "time": 4.1111111111111045,
+              "type": "o",
+              "data": "_"
+            },
+            {
+              "time": 4.16666666666666,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 4.222222222222215,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 4.277777777777771,
+              "type": "o",
+              "data": "a"
+            },
+            {
+              "time": 4.333333333333326,
+              "type": "o",
+              "data": "u"
+            },
+            {
+              "time": 4.388888888888881,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 4.444444444444437,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 4.499999999999992,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 4.555555555555547,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 4.611111111111103,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 4.666666666666658,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 4.722222222222213,
+              "type": "o",
+              "data": "인"
+            },
+            {
+              "time": 4.777777777777769,
+              "type": "o",
+              "data": "계"
+            },
+            {
+              "time": 4.833333333333324,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 4.8888888888888795,
+              "type": "o",
+              "data": "m"
+            },
+            {
+              "time": 4.944444444444435,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 4.99999999999999,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 5.69999999999999,
+              "type": "o",
+              "data": "186:**배경**: ffmpeg gdigrab 기술 검증 중 에이전트가 사용자 실제 데스크톱 전체를 캡처하는 사고 발생 (에이전트 실행 환경 = 격리 샌드박스가 아니라 사용자 라이브 데스크톱). 캡처에 민감 업무 정보(고객사명·프로젝트명 등)가 포함됨. 파일 2개 즉시 삭제 조치 완료.\n189:1. **에이전트에 의한 화면/데스크톱/창 자동 캡처 전면 금지.** `ffmpeg gdigrab`(desktop이든 창 제목 지정이든), 스크린샷 API, 기타 화면 캡처 도구를 에이전트가 직접 실행하지 않는다. 창 제목 지정 방식도 대상 오지정·창 겹침으로 민감정보가 찍힐 수 있으므로 금지에 포함."
+            },
+            {
+              "time": 5.69999999999999,
+              "type": "o",
+              "data": "\r\n"
+            }
+          ]
+        }
+      },
+      "durationMs": 9528,
+      "audioPath": "projects/004_failures/audio/scene-3-fix.mp3"
+    },
+    {
+      "id": "scene-4-button-bug",
+      "type": "talkingPoint",
+      "narration": "이번엔 Studio 녹화 버튼이 말을 안 들었어요. 버튼은 분명히 있는데 클릭이 계속 실패했어요.",
+      "props": {
+        "heading": "두 번째 실패 — 버튼 버그",
+        "bullets": [
+          "버튼 속성은 정상인데 클릭 실패",
+          "원인은 끝내 못 밝힘"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/004_failures/videos/scene-4-button-bug-broll.mp4"
+      },
+      "durationMs": 8160,
+      "audioPath": "projects/004_failures/audio/scene-4-button-bug.mp3"
+    },
+    {
+      "id": "scene-5-workaround",
+      "type": "talkingPoint",
+      "narration": "결국 버튼 대신 화면 좌표를 직접 클릭해서 우회했어요. 실패할 때마다 다른 방법을 찾아낸 거예요.",
+      "props": {
+        "heading": "그래도 결국 해결됐어요",
+        "bullets": [
+          "좌표 클릭으로 우회 성공",
+          "실패마다 다른 방법을 찾아냄"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/004_failures/videos/scene-5-workaround-broll.mp4"
+      },
+      "durationMs": 8640,
+      "audioPath": "projects/004_failures/audio/scene-5-workaround.mp3"
+    },
+    {
+      "id": "scene-6-outro",
+      "type": "outro",
+      "narration": "완벽한 자동화는 없어요. 실패하면서 만들어가는 거예요. 다음 편에서 또 다른 이야기로 만나요.",
+      "props": {
+        "message": "실패하면서 만들어가는 자동화, 모션랩에서 계속 보여드릴게요.",
+        "ctaText": "구독하고 다음 편도 기다려주세요"
+      },
+      "visual": {
+        "cue": "pulse"
+      },
+      "durationMs": 8880,
+      "audioPath": "projects/004_failures/audio/scene-6-outro.mp3"
+    }
+  ]
+}
