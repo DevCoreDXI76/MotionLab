@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { buildTerminalCastFromCommands } from "./lib/buildTerminalCast";
-import { REMOTION_DIR, PROJECTS_DIR } from "./lib/paths";
+import { REMOTION_DIR, ROOT_DIR, PROJECTS_DIR } from "./lib/paths";
 
 /**
  * Builds a cast (see remotion/src/lib/cast.ts) for a single scene from real,
@@ -22,6 +22,17 @@ const SCENE_COMMANDS: Record<string, Record<string, Parameters<typeof buildTermi
   "002_test": {
     "scene-4-code": [
       { display: "git log --oneline -5", command: "git", args: ["log", "--oneline", "-5"], cwd: REMOTION_DIR },
+      { display: "npx vitest run", command: "npx", args: ["vitest", "run"], cwd: REMOTION_DIR },
+    ],
+  },
+  "003_pipeline": {
+    "scene-3-script": [
+      {
+        display: "head -n 15 projects/003_pipeline/script.json",
+        command: "head",
+        args: ["-n", "15", "projects/003_pipeline/script.json"],
+        cwd: ROOT_DIR,
+      },
       { display: "npx vitest run", command: "npx", args: ["vitest", "run"], cwd: REMOTION_DIR },
     ],
   },

@@ -2,12 +2,21 @@
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
+import { spawnCli } from "./lib/spawnCli";
 import { assertPortFree, startStudio, stopStudio, waitForStudioReady } from "./lib/studioServer";
 import { PROJECTS_DIR, PUBLIC_DIR, REMOTION_DIR } from "./lib/paths";
 
 const VIEWPORT = { width: 1000, height: 900 }; // matches the earlier hand-recorded studio-demo.mp4
-const RECORD_SECONDS = 17;
+const RECORD_SECONDS = 17; // of real, in-motion playback delivered to callers — see LEAD_IN_SECONDS
 const DEFAULT_PORT = 7788; // distinct from `npm run dev`'s default so both can't collide
+
+// Empirically measured (ffprobe'd frame-by-frame): from context creation, page
+// load + the 2s hydration wait + Remotion Player's own startup latency after
+// the Play click eat ~4s before the timeline visibly starts advancing. Every
+// raw recording opens with that many seconds of a frozen frame, which is a
+// big, wasted chunk of a short scene's on-screen time if left in. Trimmed out
+// below so the delivered clip starts already in motion.
+const LEAD_IN_SECONDS = 4;
 
 /**
  * Records ~17s of the *real* Remotion Studio playing an episode's actual
@@ -42,8 +51,22 @@ async function main() {
 
   await assertPortFree(port);
 
+  // Studio is launched with a *copy* of the props, not the live script.json,
+  // with this scene's own assetPath stripped out first. Re-running a capture
+  // on a scene that already has a (possibly still-broken, mid-rewrite)
+  // assetPath would otherwise have Studio try to play that file back inside
+  // its own preview — recursive and, worse, liable to render blank if the
+  // existing file is the very one about to be overwritten. Stripped, Studio
+  // just falls back to the scene's motion-graphic cue, same as before this
+  // scene ever had a capture.
+  const captureProps = JSON.parse(JSON.stringify(script));
+  const captureScene = captureProps.scenes.find((s: { id: string }) => s.id === sceneId);
+  if (captureScene?.visual) delete captureScene.visual.assetPath;
+  const capturePropsPath = `${scriptPath}.capture-tmp.json`;
+  fs.writeFileSync(capturePropsPath, JSON.stringify(captureProps, null, 2));
+
   console.log(`Starting Remotion Studio on port ${port} with ${projectId}'s real script.json as props...`);
-  const studio = await startStudio({ propsPath: scriptPath, port, cwd: REMOTION_DIR });
+  const studio = await startStudio({ propsPath: capturePropsPath, port, cwd: REMOTION_DIR });
 
   const videosDir = path.join(PUBLIC_DIR, "projects", projectId, "videos");
   fs.mkdirSync(videosDir, { recursive: true });
@@ -75,7 +98,7 @@ async function main() {
       const PLAY_BUTTON = { x: 391, y: 660 };
 
       await page.mouse.click(PLAY_BUTTON.x, PLAY_BUTTON.y);
-      await page.waitForTimeout(RECORD_SECONDS * 1000);
+      await page.waitForTimeout((RECORD_SECONDS + LEAD_IN_SECONDS) * 1000);
 
       await page.close(); // finalizes the recorded video file
       recordedPath = (await page.video()?.path()) ?? null;
@@ -85,13 +108,28 @@ async function main() {
     }
   } finally {
     stopStudio(studio.proc);
+    fs.rmSync(capturePropsPath, { force: true });
   }
 
   if (!recordedPath || !fs.existsSync(recordedPath)) {
     throw new Error("Playwright did not produce a recorded video file.");
   }
-  fs.renameSync(recordedPath, outPath);
-  console.log(`Recorded -> ${outPath}`);
+
+  // Cut the frozen lead-in (see LEAD_IN_SECONDS) so the delivered clip starts
+  // already in motion. Must re-encode (not `-c copy`): Playwright's raw VP8
+  // recording only keyframes sparsely (often just once, at t=0), so a
+  // stream-copy trim starting past that point has no keyframe to decode from
+  // and comes out blank. Re-encoding forces a fresh keyframe at the new start.
+  const trimResult = spawnCli(
+    "ffmpeg",
+    ["-y", "-ss", String(LEAD_IN_SECONDS), "-i", recordedPath, "-c:v", "libvpx", "-crf", "30", "-b:v", "1M", outPath],
+    { stdio: "inherit" },
+  );
+  fs.rmSync(recordedPath, { force: true });
+  if (trimResult.status !== 0) {
+    throw new Error(`ffmpeg trim failed for ${recordedPath} (exit code ${trimResult.status}).`);
+  }
+  console.log(`Recorded -> ${outPath} (trimmed ${LEAD_IN_SECONDS}s frozen lead-in)`);
 
   scene.visual = { ...scene.visual, assetPath: `projects/${projectId}/videos/${filename}` };
   fs.writeFileSync(scriptPath, JSON.stringify(script, null, 2));

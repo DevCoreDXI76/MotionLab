@@ -22,7 +22,7 @@
 | 3 | 씬 길이 동기화 | 오디오 실측 길이 기준 자동 계산 | 확정 |
 | 4 | 비주얼 제작 방식 | 코드 기반 모션그래픽 (1차) | 확정 |
 | 5 | 자막 타이밍 | TTS duration 재사용 (STT 없음) | 확정 |
-| 6 | TTS 벤더 | — | **오픈** |
+| 6 | TTS 벤더 | EdgeTtsProvider(Microsoft Edge TTS, `msedge-tts`, 무료·API 키 불필요) | 확정 (실제로는 002 스캐폴딩 시점부터 이미 이걸로 구현되어 있었음 — 이 표만 "오픈"으로 안 갱신됐던 것. 2026-08-23 003 착수 시 발견해 정정) |
 | 7 | 렌더링 위치 | 로컬 렌더 (1차) | 확정 |
 | 8 | 배포 자동화 | 수동 업로드 (1차) | 확정 |
 | 9 | 레포/프로젝트 구조 | 모노레포 (공용 remotion/ + projects/) | 확정 |
@@ -89,16 +89,17 @@
 
 ---
 
-### 6. TTS 벤더 — ElevenLabs vs OpenAI TTS vs Azure TTS  **[오픈]**
+### 6. TTS 벤더 — ElevenLabs vs OpenAI TTS vs Azure TTS vs Edge TTS  **[확정: Edge TTS]**
 | 옵션 | 장점 | 단점 |
 |---|---|---|
 | ElevenLabs | 한국어 품질·감정표현 우수 | 비용 상대적으로 높음 |
 | OpenAI TTS | API 통합 쉬움(이미 Claude/OpenAI 생태계와 친화), 저렴 | 한국어 자연스러움 검증 필요 |
 | Azure TTS | 한국어 보이스 선택지 많음, 기업 무료 티어 존재 | 설정 복잡도(Azure 계정/리소스 구성) |
+| **Edge TTS**(`msedge-tts`) | 무료, API 키 불필요, 즉시 사용 가능 | 감정표현·보이스 다양성은 ElevenLabs 대비 제한적 |
 
-**미확인 시 기본값**: ElevenLabs (품질 우선, 1차 목표가 학습/기록이므로 결과물 품질이 낮으면 콘텐츠 자체의 설득력이 떨어짐).
+**확정**: Edge TTS(`EdgeTtsProvider`, `remotion/scripts/lib/ttsProviders/edgeTtsProvider.ts`). 이 표는 원래 "오픈(미확인 시 기본값 ElevenLabs)"로 남아 있었지만, 실제로는 002 스캐폴딩 시점부터 이미 Edge TTS로 구현되어 002 전체가 이걸로 만들어졌다 — 002/003 모두 검증된 무료 경로이므로 이 표만 뒤늦게 정정한다(2026-08-23, 003 착수 시 발견). ElevenLabs로 바꾸고 싶다면 그건 새로운 결정이지 "미확정 상태를 채우는 것"이 아니다.
 
-**Claude Code 구현 영향**: TTS 연동 모듈은 벤더 교체가 쉽도록 인터페이스를 분리해서 구현할 것(`ttsProvider.generate(text) → { audioPath, durationMs }` 형태). 벤더 확정 전에는 어댑터 패턴으로 설계해 나중에 벤더만 바꿔도 파이프라인 나머지는 안 건드리게 한다.
+**Claude Code 구현 영향**: TTS 연동 모듈은 벤더 교체가 쉽도록 인터페이스를 분리해서 구현되어 있음(`ttsProvider.ts`의 `TtsProvider.generate(text, outPath) → { audioPath, durationMs }` 형태). 다른 벤더로 바꾸려면 이 인터페이스를 구현하는 새 어댑터만 추가하면 된다.
 
 ---
 
@@ -204,4 +205,4 @@
 6. 렌더 스크립트: `script.json` → duration 역주입 → `remotion render`
 7. `projects/001_.../` 샘플 편 하나로 엔드투엔드 실행 검증
 
-**시작 전 사용자에게 확인할 것**: 항목 6(TTS 벤더), 항목 12(스크립트 생성 자동화 수준). 나머지는 확정 상태로 바로 진행 가능.
+**시작 전 사용자에게 확인할 것**: 항목 12(스크립트 생성 자동화 수준). 항목 6(TTS 벤더)은 2026-08-23 확정(Edge TTS) — 나머지는 확정 상태로 바로 진행 가능.
