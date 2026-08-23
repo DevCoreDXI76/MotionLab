@@ -54,7 +54,7 @@
       },
       "visual": {
         "cue": "pipeline",
-        "assetPath": "projects/002_test/videos/studio-demo.mp4"
+        "assetPath": "projects/002_test/videos/scene-3-whatitdoes-studio.webm"
       },
       "durationMs": 10056,
       "audioPath": "projects/002_test/audio/scene-3-whatitdoes.mp3"
