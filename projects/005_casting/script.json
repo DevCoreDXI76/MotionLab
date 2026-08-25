@@ -1,0 +1,703 @@
+{
+  "format": "shorts",
+  "id": "005_casting",
+  "title": "004 다시 보다가, 실수를 하나 더 찾았어요",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "id": "scene-1-title",
+      "type": "title",
+      "narration": "004를 다시 보다가, 우리 파이프라인 실수를 하나 더 찾았어요.",
+      "props": {
+        "title": "004 다시 보다가,\n실수를 하나 더 찾았어요",
+        "subtitle": "b-roll 인물이 씬마다 다른 사람이었어요"
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/005_casting/videos/scene-1-title-broll.mp4"
+      },
+      "durationMs": 5544,
+      "audioPath": "projects/005_casting/audio/scene-1-title.mp3"
+    },
+    {
+      "id": "scene-2-discovery",
+      "type": "talkingPoint",
+      "narration": "004에서 쓴 b-roll 인물이, 씬마다 전부 다른 사람이었어요. 좌절한 얼굴, 야간 작업, 안도하는 얼굴 — 넷 다 서로 무관한 사람이었죠.",
+      "props": {
+        "heading": "다시 보니 보인 것",
+        "bullets": [
+          "씬마다 다른 인물 4명",
+          "화보처럼 세련된 톤"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/005_casting/videos/scene-2-discovery-broll.mp4"
+      },
+      "durationMs": 11712,
+      "audioPath": "projects/005_casting/audio/scene-2-discovery.mp3"
+    },
+    {
+      "id": "scene-3-diagnose",
+      "type": "code",
+      "narration": "코드를 열어보니, 씬 하나마다 Pexels를 독립적으로 검색해서 상위 결과 하나만 가져오는 구조였어요. 인물이 같을 거라는 보장이 원래 없었던 거예요.",
+      "props": {
+        "language": "bash",
+        "code": "# 씬마다 Pexels를 독립 검색 — 인물 동일성 보장 없음\ngrep -n \"query\" scripts/generate-broll.ts",
+        "caption": "generate-broll.ts 확인",
+        "cast": {
+          "header": {
+            "version": 2,
+            "width": 100,
+            "height": 30,
+            "timestamp": 0
+          },
+          "events": [
+            {
+              "time": 0,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 0.05555555555555555,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 0.1111111111111111,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 0.16666666666666666,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 0.2222222222222222,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.2777777777777778,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 0.33333333333333337,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 0.38888888888888895,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.44444444444444453,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 0.5000000000000001,
+              "type": "o",
+              "data": "A"
+            },
+            {
+              "time": 0.5555555555555557,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.6111111111111113,
+              "type": "o",
+              "data": "2"
+            },
+            {
+              "time": 0.6666666666666669,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.7222222222222224,
+              "type": "o",
+              "data": "'"
+            },
+            {
+              "time": 0.777777777777778,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 0.8333333333333336,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 0.8888888888888892,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 0.9444444444444448,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 1.0000000000000002,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 1.0555555555555558,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 1.1111111111111114,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 1.166666666666667,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 1.2222222222222225,
+              "type": "o",
+              "data": "a"
+            },
+            {
+              "time": 1.2777777777777781,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 1.3333333333333337,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 1.3888888888888893,
+              "type": "o",
+              "data": "v"
+            },
+            {
+              "time": 1.4444444444444449,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 1.5000000000000004,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 1.555555555555556,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 1.6111111111111116,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 1.6666666666666672,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 1.7222222222222228,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 1.7777777777777783,
+              "type": "o",
+              "data": "'"
+            },
+            {
+              "time": 1.833333333333334,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 1.8888888888888895,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 1.944444444444445,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 2.0000000000000004,
+              "type": "o",
+              "data": "m"
+            },
+            {
+              "time": 2.055555555555556,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 2.111111111111111,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 2.1666666666666665,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 2.222222222222222,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 2.2777777777777772,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 2.3333333333333326,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 2.388888888888888,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 2.4444444444444433,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 2.4999999999999987,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 2.555555555555554,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 2.6111111111111094,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 2.6666666666666647,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 2.72222222222222,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 2.7777777777777755,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 2.833333333333331,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 2.888888888888886,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 2.9444444444444415,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 2.999999999999997,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 3.0555555555555522,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 3.1111111111111076,
+              "type": "o",
+              "data": "a"
+            },
+            {
+              "time": 3.166666666666663,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 3.2222222222222183,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 3.2777777777777737,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 3.333333333333329,
+              "type": "o",
+              "data": "b"
+            },
+            {
+              "time": 3.3888888888888844,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 3.4444444444444398,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 3.499999999999995,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 3.5555555555555505,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 3.611111111111106,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 3.666666666666661,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 3.7222222222222165,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 3.777777777777772,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 4.4777777777777725,
+              "type": "o",
+              "data": "19:  const [projectId, sceneId, query] = process.argv.slice(2);\n20-  if (!projectId || !sceneId || !query) {\n21-    console.error('Usage: npx tsx scripts/generate-broll.ts <projectId> <sceneId> \"<query>\"');"
+            },
+            {
+              "time": 4.4777777777777725,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 4.777777777777772,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 4.833333333333328,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 4.888888888888883,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 4.944444444444438,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 4.999999999999994,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 5.055555555555549,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 5.1111111111111045,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 5.16666666666666,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 5.222222222222215,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 5.277777777777771,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 5.333333333333326,
+              "type": "o",
+              "data": "5"
+            },
+            {
+              "time": 5.388888888888881,
+              "type": "o",
+              "data": "부"
+            },
+            {
+              "time": 5.444444444444437,
+              "type": "o",
+              "data": "터"
+            },
+            {
+              "time": 5.499999999999992,
+              "type": "o",
+              "data": "\\"
+            },
+            {
+              "time": 5.555555555555547,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 5.611111111111103,
+              "type": "o",
+              "data": "적"
+            },
+            {
+              "time": 5.666666666666658,
+              "type": "o",
+              "data": "용"
+            },
+            {
+              "time": 5.722222222222213,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 5.777777777777769,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 5.833333333333324,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 5.8888888888888795,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 5.944444444444435,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 5.99999999999999,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 6.055555555555546,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 6.111111111111101,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 6.166666666666656,
+              "type": "o",
+              "data": "2"
+            },
+            {
+              "time": 6.222222222222212,
+              "type": "o",
+              "data": "_"
+            },
+            {
+              "time": 6.277777777777767,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 6.333333333333322,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 6.388888888888878,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 6.444444444444433,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 6.4999999999999885,
+              "type": "o",
+              "data": "_"
+            },
+            {
+              "time": 6.555555555555544,
+              "type": "o",
+              "data": "리"
+            },
+            {
+              "time": 6.611111111111099,
+              "type": "o",
+              "data": "뷰"
+            },
+            {
+              "time": 6.6666666666666545,
+              "type": "o",
+              "data": "_"
+            },
+            {
+              "time": 6.72222222222221,
+              "type": "o",
+              "data": "개"
+            },
+            {
+              "time": 6.777777777777765,
+              "type": "o",
+              "data": "선"
+            },
+            {
+              "time": 6.833333333333321,
+              "type": "o",
+              "data": "백"
+            },
+            {
+              "time": 6.888888888888876,
+              "type": "o",
+              "data": "로"
+            },
+            {
+              "time": 6.944444444444431,
+              "type": "o",
+              "data": "그"
+            },
+            {
+              "time": 6.999999999999987,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 7.055555555555542,
+              "type": "o",
+              "data": "m"
+            },
+            {
+              "time": 7.111111111111097,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 7.166666666666653,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 7.866666666666653,
+              "type": "o",
+              "data": "100:- **(2026-08-24 추가, 005부터 적용)** 감정 비트 b-roll은 인물 얼굴 클로즈업 대신 **손/화면/사물 클로즈업**을 기본값으로 검색한다 — 004 리뷰에서 씬마다 다른 사람이 등장(인물 불연속성)하고 화보톤이 튀는 문제가 확인됨. Pexels API가 인물 동일성을 보장 못 하는 한 근본 해결이 아니라 회피책이며, 결과가 부자연스러우면 얼굴 컷으로 되돌리는 것도 가능."
+            },
+            {
+              "time": 7.866666666666653,
+              "type": "o",
+              "data": "\r\n"
+            }
+          ]
+        }
+      },
+      "visual": {
+        "cue": "checklist"
+      },
+      "durationMs": 11928,
+      "audioPath": "projects/005_casting/audio/scene-3-diagnose.mp3"
+    },
+    {
+      "id": "scene-4-fix",
+      "type": "talkingPoint",
+      "narration": "그래서 정책 문서에 한 줄을 추가했어요. 감정이 담긴 씬은 이제 사람 얼굴 대신, 손이나 화면 클로즈업을 기본값으로 씁니다.",
+      "props": {
+        "heading": "고친 방식",
+        "bullets": [
+          "얼굴 대신 손·화면 클로즈업",
+          "005부터 적용"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/005_casting/videos/scene-4-fix-broll.mp4"
+      },
+      "durationMs": 10728,
+      "audioPath": "projects/005_casting/audio/scene-4-fix.mp3"
+    },
+    {
+      "id": "scene-5-lesson",
+      "type": "talkingPoint",
+      "narration": "화보처럼 잘 나온 컷이 항상 좋은 건 아니더라고요. 우리 이야기에는, 우리 이야기에 맞는 화면이 필요했어요.",
+      "props": {
+        "heading": "배운 것",
+        "bullets": [
+          "세련된 컷 ≠ 좋은 컷",
+          "소재와 톤이 맞아야 진짜"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/005_casting/videos/scene-5-lesson-broll.mp4"
+      },
+      "durationMs": 8904,
+      "audioPath": "projects/005_casting/audio/scene-5-lesson.mp3"
+    },
+    {
+      "id": "scene-6-outro",
+      "type": "outro",
+      "narration": "이렇게 또 하나 고쳐가면서 만들어요. 다음 편에서 또 다른 이야기로 만나요.",
+      "props": {
+        "message": "고쳐가면서 만드는 자동화, 모션랩에서 계속 보여드릴게요.",
+        "ctaText": "구독하고 다음 편도 기다려주세요"
+      },
+      "visual": {
+        "cue": "pipeline"
+      },
+      "durationMs": 6504,
+      "audioPath": "projects/005_casting/audio/scene-6-outro.mp3"
+    }
+  ]
+}

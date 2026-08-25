@@ -47,6 +47,22 @@ const SCENE_COMMANDS: Record<string, Record<string, Parameters<typeof buildTermi
       },
     ],
   },
+  "005_casting": {
+    "scene-3-diagnose": [
+      {
+        display: "grep -n -A 2 'process.argv.slice' remotion/scripts/generate-broll.ts",
+        command: "grep",
+        args: ["-n", "-A", "2", "process.argv.slice", "remotion/scripts/generate-broll.ts"],
+        cwd: ROOT_DIR,
+      },
+      {
+        display: "grep -n 005부터\\ 적용 docs/002_test_리뷰_개선백로그.md",
+        command: "grep",
+        args: ["-n", "005부터 적용", "docs/002_test_리뷰_개선백로그.md"],
+        cwd: ROOT_DIR,
+      },
+    ],
+  },
 };
 
 async function main() {
