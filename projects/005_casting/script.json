@@ -1,7 +1,7 @@
 {
   "format": "shorts",
   "id": "005_casting",
-  "title": "004 다시 보다가, 실수를 하나 더 찾았어요",
+  "title": "지난 편 b-roll, 알고 보니 인물이 계속 바뀌었어요",
   "fps": 30,
   "width": 1080,
   "height": 1920,
@@ -9,9 +9,9 @@
     {
       "id": "scene-1-title",
       "type": "title",
-      "narration": "004를 다시 보다가, 우리 파이프라인 실수를 하나 더 찾았어요.",
+      "narration": "지난 편에서 쓴 b-roll 영상, 알고 보니 씬마다 인물이 계속 바뀌고 있었어요.",
       "props": {
-        "title": "004 다시 보다가,\n실수를 하나 더 찾았어요",
+        "title": "지난 편 b-roll,\n알고 보니 인물이 계속 바뀌었어요",
         "subtitle": "b-roll 인물이 씬마다 다른 사람이었어요"
       },
       "visual": {
@@ -24,7 +24,7 @@
     {
       "id": "scene-2-discovery",
       "type": "talkingPoint",
-      "narration": "004에서 쓴 b-roll 인물이, 씬마다 전부 다른 사람이었어요. 좌절한 얼굴, 야간 작업, 안도하는 얼굴 — 넷 다 서로 무관한 사람이었죠.",
+      "narration": "지난 편에 쓴 b-roll 인물이, 씬마다 전부 다른 사람이었어요. 좌절한 얼굴, 야간 작업, 안도하는 얼굴 — 넷 다 서로 무관한 사람이었죠.",
       "props": {
         "heading": "다시 보니 보인 것",
         "bullets": [
