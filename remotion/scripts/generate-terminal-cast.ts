@@ -63,6 +63,22 @@ const SCENE_COMMANDS: Record<string, Record<string, Parameters<typeof buildTermi
       },
     ],
   },
+  "006_recap": {
+    "scene-3-log": [
+      {
+        display: 'grep -l "막힌 지점" projects/003_pipeline/log.md projects/004_failures/log.md projects/005_casting/log.md',
+        command: "grep",
+        args: [
+          "-l",
+          "막힌 지점",
+          "projects/003_pipeline/log.md",
+          "projects/004_failures/log.md",
+          "projects/005_casting/log.md",
+        ],
+        cwd: ROOT_DIR,
+      },
+    ],
+  },
 };
 
 async function main() {

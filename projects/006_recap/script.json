@@ -1,0 +1,640 @@
+{
+  "format": "shorts",
+  "id": "006_recap",
+  "title": "소재 찾는 시간은 0분, 버그 잡는 시간은 그대로예요",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "id": "scene-1-title",
+      "type": "title",
+      "narration": "소재 찾는 시간은 이제 거의 0분인데, 버그 잡는 시간은 하나도 안 줄었어요.",
+      "props": {
+        "title": "소재 찾는 시간은 0분,\n버그 잡는 시간은 그대로예요",
+        "subtitle": "영상 세 편의 제작 로그를 다시 열어봤어요"
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/006_recap/videos/scene-1-title-broll.mp4"
+      },
+      "durationMs": 6336,
+      "audioPath": "projects/006_recap/audio/scene-1-title.mp3"
+    },
+    {
+      "id": "scene-2-planning",
+      "type": "talkingPoint",
+      "narration": "요즘은 기획 시간이 부쩍 줄었어요. 세션에서 실제로 있었던 일을 그대로 대본으로 옮기니까, 소재를 따로 찾을 필요가 없어졌거든요.",
+      "props": {
+        "heading": "기획 시간",
+        "bullets": [
+          "그날 있었던 일을 그대로 대본화",
+          "소재 발굴 시간 0에 수렴"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/006_recap/videos/scene-2-planning-broll.mp4"
+      },
+      "durationMs": 10488,
+      "audioPath": "projects/006_recap/audio/scene-2-planning.mp3"
+    },
+    {
+      "id": "scene-3-log",
+      "type": "code",
+      "narration": "그런데 로그를 다시 보면, 이유는 매번 달랐어요. 스튜디오 녹화, 자막 겹침, 저해상도 b-roll — 편마다 다른 곳에서 새로 걸렸죠.",
+      "props": {
+        "language": "bash",
+        "code": "grep -l \"막힌 지점\" projects/003_pipeline/log.md \\\n  projects/004_failures/log.md projects/005_casting/log.md",
+        "caption": "세 편 모두에서 '막힌 지점' 확인",
+        "cast": {
+          "header": {
+            "version": 2,
+            "width": 100,
+            "height": 30,
+            "timestamp": 0
+          },
+          "events": [
+            {
+              "time": 0,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 0.05555555555555555,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 0.1111111111111111,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 0.16666666666666666,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 0.2222222222222222,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.2777777777777778,
+              "type": "o",
+              "data": "-"
+            },
+            {
+              "time": 0.33333333333333337,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 0.38888888888888895,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.44444444444444453,
+              "type": "o",
+              "data": "\""
+            },
+            {
+              "time": 0.5000000000000001,
+              "type": "o",
+              "data": "막"
+            },
+            {
+              "time": 0.5555555555555557,
+              "type": "o",
+              "data": "힌"
+            },
+            {
+              "time": 0.6111111111111113,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.6666666666666669,
+              "type": "o",
+              "data": "지"
+            },
+            {
+              "time": 0.7222222222222224,
+              "type": "o",
+              "data": "점"
+            },
+            {
+              "time": 0.777777777777778,
+              "type": "o",
+              "data": "\""
+            },
+            {
+              "time": 0.8333333333333336,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.8888888888888892,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 0.9444444444444448,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 1.0000000000000002,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 1.0555555555555558,
+              "type": "o",
+              "data": "j"
+            },
+            {
+              "time": 1.1111111111111114,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 1.166666666666667,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 1.2222222222222225,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 1.2777777777777781,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 1.3333333333333337,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 1.3888888888888893,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 1.4444444444444449,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 1.5000000000000004,
+              "type": "o",
+              "data": "3"
+            },
+            {
+              "time": 1.555555555555556,
+              "type": "o",
+              "data": "_"
+            },
+            {
+              "time": 1.6111111111111116,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 1.6666666666666672,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 1.7222222222222228,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 1.7777777777777783,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 1.833333333333334,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 1.8888888888888895,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 1.944444444444445,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 2.0000000000000004,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 2.055555555555556,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 2.111111111111111,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 2.1666666666666665,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 2.222222222222222,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 2.2777777777777772,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 2.3333333333333326,
+              "type": "o",
+              "data": "m"
+            },
+            {
+              "time": 2.388888888888888,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 2.4444444444444433,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 2.4999999999999987,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 2.555555555555554,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 2.6111111111111094,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 2.6666666666666647,
+              "type": "o",
+              "data": "j"
+            },
+            {
+              "time": 2.72222222222222,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 2.7777777777777755,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 2.833333333333331,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 2.888888888888886,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 2.9444444444444415,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 2.999999999999997,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 3.0555555555555522,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 3.1111111111111076,
+              "type": "o",
+              "data": "4"
+            },
+            {
+              "time": 3.166666666666663,
+              "type": "o",
+              "data": "_"
+            },
+            {
+              "time": 3.2222222222222183,
+              "type": "o",
+              "data": "f"
+            },
+            {
+              "time": 3.2777777777777737,
+              "type": "o",
+              "data": "a"
+            },
+            {
+              "time": 3.333333333333329,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 3.3888888888888844,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 3.4444444444444398,
+              "type": "o",
+              "data": "u"
+            },
+            {
+              "time": 3.499999999999995,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 3.5555555555555505,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 3.611111111111106,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 3.666666666666661,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 3.7222222222222165,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 3.777777777777772,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 3.8333333333333273,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 3.8888888888888826,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 3.944444444444438,
+              "type": "o",
+              "data": "m"
+            },
+            {
+              "time": 3.9999999999999933,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 4.055555555555549,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 4.1111111111111045,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 4.16666666666666,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 4.222222222222215,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 4.277777777777771,
+              "type": "o",
+              "data": "j"
+            },
+            {
+              "time": 4.333333333333326,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 4.388888888888881,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 4.444444444444437,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 4.499999999999992,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 4.555555555555547,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 4.611111111111103,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 4.666666666666658,
+              "type": "o",
+              "data": "0"
+            },
+            {
+              "time": 4.722222222222213,
+              "type": "o",
+              "data": "5"
+            },
+            {
+              "time": 4.777777777777769,
+              "type": "o",
+              "data": "_"
+            },
+            {
+              "time": 4.833333333333324,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 4.8888888888888795,
+              "type": "o",
+              "data": "a"
+            },
+            {
+              "time": 4.944444444444435,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 4.99999999999999,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 5.055555555555546,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 5.111111111111101,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 5.166666666666656,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 5.222222222222212,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 5.277777777777767,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 5.333333333333322,
+              "type": "o",
+              "data": "o"
+            },
+            {
+              "time": 5.388888888888878,
+              "type": "o",
+              "data": "g"
+            },
+            {
+              "time": 5.444444444444433,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 5.4999999999999885,
+              "type": "o",
+              "data": "m"
+            },
+            {
+              "time": 5.555555555555544,
+              "type": "o",
+              "data": "d"
+            },
+            {
+              "time": 5.611111111111099,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 6.311111111111099,
+              "type": "o",
+              "data": "projects/003_pipeline/log.md\nprojects/004_failures/log.md\nprojects/005_casting/log.md"
+            },
+            {
+              "time": 6.311111111111099,
+              "type": "o",
+              "data": "\r\n"
+            }
+          ]
+        }
+      },
+      "visual": {
+        "cue": "terminal"
+      },
+      "durationMs": 11112,
+      "audioPath": "projects/006_recap/audio/scene-3-log.mp3"
+    },
+    {
+      "id": "scene-4-friction",
+      "type": "talkingPoint",
+      "narration": "그래도 매번 그 자리에서 고쳤어요. 얼어붙은 첫 프레임은 후처리로 잘라내고, 자막이 겹치면 명령을 더 짧게 줄였죠.",
+      "props": {
+        "heading": "그때그때 고친 것들",
+        "bullets": [
+          "스튜디오 캡처 지연 보정",
+          "자막 겹침 → 출력 축소",
+          "저해상도 b-roll → 재검색"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/006_recap/videos/scene-4-friction-broll.mp4"
+      },
+      "durationMs": 10152,
+      "audioPath": "projects/006_recap/audio/scene-4-friction.mp3"
+    },
+    {
+      "id": "scene-5-lesson",
+      "type": "talkingPoint",
+      "narration": "그래서 이 시리즈가 진짜 하는 일은 따로 있어요. 완전 자동화가 아니라, 매번 조금씩 덜 헤매는 파이프라인을 만드는 거예요.",
+      "props": {
+        "heading": "진짜 하는 일",
+        "bullets": [
+          "문제 발견",
+          "그 자리에서 수정",
+          "다음 편 규칙으로 남김"
+        ]
+      },
+      "visual": {
+        "cue": "checklist",
+        "assetPath": "projects/006_recap/videos/scene-5-lesson-broll.mp4"
+      },
+      "durationMs": 9984,
+      "audioPath": "projects/006_recap/audio/scene-5-lesson.mp3"
+    },
+    {
+      "id": "scene-6-outro",
+      "type": "outro",
+      "narration": "완전한 자동화는 아직 멀었지만, 매번 조금씩 덜 헤매고 있어요. 다음 편에서 또 만나요.",
+      "props": {
+        "message": "매번 조금씩 나아지는 자동화, 모션랩에서 계속 보여드릴게요.",
+        "ctaText": "구독하고 다음 편도 기다려주세요"
+      },
+      "visual": {
+        "cue": "checklist"
+      },
+      "durationMs": 8040,
+      "audioPath": "projects/006_recap/audio/scene-6-outro.mp3"
+    }
+  ]
+}
