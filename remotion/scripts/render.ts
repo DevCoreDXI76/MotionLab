@@ -5,6 +5,7 @@ import { spawnCli } from "./lib/spawnCli";
 import { validateScript } from "./lib/scriptSchema";
 import { generateMetadataDraft } from "./lib/metadataDraft";
 import { assertFfmpegAvailable, normalizeLoudness } from "./lib/audio/loudnorm";
+import { computeThumbnailSeekMs, extractThumbnail } from "./lib/thumbnail";
 import { PROJECTS_DIR, REMOTION_DIR, PUBLIC_DIR } from "./lib/paths";
 
 function assertDurationsFilled(script: {
@@ -67,6 +68,10 @@ async function main() {
 
   const draft = generateMetadataDraft(script);
   fs.writeFileSync(path.join(outputDir, `${projectId}.metadata.txt`), draft);
+
+  const seekMs = computeThumbnailSeekMs(script);
+  extractThumbnail(outputPath, seekMs, path.join(outputDir, `${projectId}.thumbnail.png`));
+
   console.log(`Rendered ${outputPath}`);
 }
 

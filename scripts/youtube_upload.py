@@ -157,6 +157,12 @@ def get_or_create_playlist(youtube) -> str:
     return playlist_id
 
 
+def set_thumbnail(youtube, video_id: str, thumbnail_path: Path) -> None:
+    from googleapiclient.http import MediaFileUpload
+
+    youtube.thumbnails().set(videoId=video_id, media_body=MediaFileUpload(str(thumbnail_path))).execute()
+
+
 def add_video_to_playlist(youtube, playlist_id: str, video_id: str) -> None:
     youtube.playlistItems().insert(
         part="snippet",
@@ -185,6 +191,7 @@ def main() -> int:
     project_id = project_dir.name
     video_path = project_dir / "output" / f"{project_id}.mp4"
     metadata_path = project_dir / "output" / f"{project_id}.metadata.txt"
+    thumbnail_path = project_dir / "output" / f"{project_id}.thumbnail.png"
 
     if not video_path.exists():
         print(f"파일 없음: {video_path}")
@@ -229,6 +236,24 @@ def main() -> int:
     video_url = f"https://youtu.be/{video_id}"
     print(f"\n업로드 완료 -> {video_url} (privacyStatus={args.privacy})")
 
+    thumbnail_set = False
+    if thumbnail_path.exists():
+        try:
+            set_thumbnail(youtube, video_id, thumbnail_path)
+            thumbnail_set = True
+            print(f"  썸네일 설정 완료 ({thumbnail_path.name})")
+        except Exception as e:
+            # 커스텀 썸네일 API 설정은 전화번호로 확인된 채널에서만 허용된다 — 업로드 자체는
+            # 이미 끝났으니 이 실패로 전체를 실패 처리하지 않는다.
+            print(
+                f"  (경고: 썸네일 설정 실패 — {e}\n"
+                "   커스텀 썸네일은 전화번호로 '확인된' 채널만 API로 설정할 수 있습니다. "
+                "youtube.com/verify에서 채널을 확인하거나, YouTube Studio에서 수동으로 "
+                "썸네일을 올려주세요. 영상 업로드 자체는 정상적으로 완료됐습니다.)"
+            )
+    else:
+        print(f"  (썸네일 파일 없음: {thumbnail_path} — 건너뜀)")
+
     playlist_id = None
     try:
         playlist_id = get_or_create_playlist(youtube)
@@ -255,6 +280,7 @@ def main() -> int:
             # 확정한 값을 남겨야 한다. 응답에 필드가 없을 때만 요청값으로 대체한다.
             "uploaded_privacy": response.get("status", {}).get("privacyStatus", args.privacy),
             "uploaded_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "thumbnail_set": thumbnail_set,
             "playlist_result": playlist_result,
         },
     )
