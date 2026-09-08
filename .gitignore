@@ -13,3 +13,8 @@ remotion/public/projects/
 .env
 
 secrets/
+
+# Python (scripts/)
+__pycache__/
+*.pyc
+.pytest_cache/

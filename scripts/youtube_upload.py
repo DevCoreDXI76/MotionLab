@@ -222,20 +222,23 @@ def main() -> int:
     request = youtube.videos().insert(
         part="snippet,status",
         body=body,
-        media_body=MediaFileUpload(str(video_path), chunksize=-1, resumable=True),
+        media_body=MediaFileUpload(str(video_path), chunksize=1024 * 1024 * 4, resumable=True),
     )
     response = resumable_upload(request)
     video_id = response["id"]
     video_url = f"https://youtu.be/{video_id}"
     print(f"\n업로드 완료 -> {video_url} (privacyStatus={args.privacy})")
 
+    playlist_id = None
     try:
         playlist_id = get_or_create_playlist(youtube)
         add_video_to_playlist(youtube, playlist_id, video_id)
         playlist_result = {"playlist_id": playlist_id, "added": True}
         print(f"  재생목록 '{PLAYLIST_TITLE}'에 추가 완료")
     except Exception as e:
-        playlist_result = {"playlist_id": None, "added": False, "error": str(e)}
+        # get_or_create_playlist가 이미 성공했다면 playlist_id에 실제 값이 남아 있으므로
+        # add_video_to_playlist만 실패한 경우에도 어느 재생목록에 수동으로 추가해야 하는지 보존한다.
+        playlist_result = {"playlist_id": playlist_id, "added": False, "error": str(e)}
         print(
             f"  (경고: 재생목록 추가 실패 — {e}\n"
             "   영상 업로드 자체는 정상적으로 완료됐습니다. YouTube Studio에서 수동으로 "
@@ -247,7 +250,10 @@ def main() -> int:
         {
             "youtube_video_id": video_id,
             "youtube_url": video_url,
-            "uploaded_privacy": args.privacy,
+            # 요청값(args.privacy)이 아니라 응답값을 기록한다: YouTube는 미인증/신규 채널 등에서
+            # 요청한 privacyStatus를 무시하고 private로 강제 적용할 수 있어, API가 실제로
+            # 확정한 값을 남겨야 한다. 응답에 필드가 없을 때만 요청값으로 대체한다.
+            "uploaded_privacy": response.get("status", {}).get("privacyStatus", args.privacy),
             "uploaded_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "playlist_result": playlist_result,
         },
