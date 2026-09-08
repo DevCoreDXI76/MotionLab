@@ -11,3 +11,5 @@ projects/*/output/
 projects/*/audio/
 remotion/public/projects/
 .env
+
+secrets/
