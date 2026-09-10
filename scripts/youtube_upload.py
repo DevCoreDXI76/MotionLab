@@ -163,6 +163,13 @@ def set_thumbnail(youtube, video_id: str, thumbnail_path: Path) -> None:
     youtube.thumbnails().set(videoId=video_id, media_body=MediaFileUpload(str(thumbnail_path))).execute()
 
 
+def update_privacy(youtube, video_id: str, privacy: str) -> None:
+    youtube.videos().update(
+        part="status",
+        body={"id": video_id, "status": {"privacyStatus": privacy}},
+    ).execute()
+
+
 def add_video_to_playlist(youtube, playlist_id: str, video_id: str) -> None:
     youtube.playlistItems().insert(
         part="snippet",
