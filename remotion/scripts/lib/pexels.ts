@@ -21,6 +21,11 @@ export interface PexelsSearchResponse {
 
 const QUALITY_PREFERENCE = ["hd", "sd"]; // avoid the largest ("uhd") renditions — b-roll doesn't need 4K.
 
+// Pexels' "hd" tag doesn't guarantee a usable resolution — some clips are tagged hd but were
+// uploaded at e.g. 360x640, too soft for a full-screen background. 720x1280 was confirmed usable
+// in practice (004/005/006 logs); 360x640 was rejected every time. See docs/remotion_사이드트랙_프로젝트설정.md.
+const MIN_PORTRAIT_HEIGHT = 1280;
+
 /**
  * Searches Pexels' free stock video API for a portrait clip matching `query`
  * and returns the best-matching downloadable mp4 file plus attribution info
@@ -58,8 +63,11 @@ export async function searchPortraitVideo(
   return null;
 }
 
-function pickBestFile(files: PexelsVideoFile[]): PexelsVideoFile | undefined {
-  const portraitMp4 = files.filter((f) => f.file_type === "video/mp4" && f.height >= f.width);
+/** Exported for testing; also used directly by searchPortraitVideo. */
+export function pickBestFile(files: PexelsVideoFile[]): PexelsVideoFile | undefined {
+  const portraitMp4 = files.filter(
+    (f) => f.file_type === "video/mp4" && f.height >= f.width && f.height >= MIN_PORTRAIT_HEIGHT,
+  );
   for (const quality of QUALITY_PREFERENCE) {
     const match = portraitMp4.find((f) => f.quality === quality);
     if (match) return match;
