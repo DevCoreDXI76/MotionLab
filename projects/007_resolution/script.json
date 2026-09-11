@@ -1,0 +1,336 @@
+{
+  "format": "shorts",
+  "id": "007_resolution",
+  "title": "화질 태그는 HD인데, 화면은 흐렸어요",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "id": "scene-1-title",
+      "type": "title",
+      "narration": "화질 태그는 HD인데, 화면은 흐렸어요. 3편 내내 반복된 문제를 오늘 드디어 없앴어요.",
+      "props": {
+        "title": "화질 태그는 HD인데,\n화면은 흐렸어요",
+        "subtitle": "3편 내내 반복된 문제를 오늘 없앴어요"
+      },
+      "visual": {
+        "assetPath": "projects/007_resolution/videos/scene-1-title-broll.mp4"
+      },
+      "durationMs": 8592,
+      "audioPath": "projects/007_resolution/audio/scene-1-title.mp3"
+    },
+    {
+      "id": "scene-2-problem",
+      "type": "talkingPoint",
+      "narration": "b-roll을 고르는 코드가 화질 태그만 보고 있었어요. 태그는 HD인데 실제로는 360 곱하기 640짜리 영상이 섞여 있었죠.",
+      "props": {
+        "heading": "진짜 원인",
+        "bullets": [
+          "pickBestFile()이 태그만 확인",
+          "실제 픽셀 크기는 검증 안 함",
+          "004·005·006 내내 반복"
+        ]
+      },
+      "visual": {
+        "assetPath": "projects/007_resolution/videos/scene-2-problem-broll.mp4"
+      },
+      "durationMs": 10776,
+      "audioPath": "projects/007_resolution/audio/scene-2-problem.mp3"
+    },
+    {
+      "id": "scene-3-test",
+      "type": "code",
+      "narration": "그래서 720 곱하기 1280 미만이면 자동으로 거부하게 고쳤어요. 테스트로 확인해봤습니다.",
+      "props": {
+        "language": "bash",
+        "code": "npx vitest run scripts/lib/pexels.test.ts",
+        "caption": "회귀 테스트 7건 통과 확인",
+        "cast": {
+          "header": {
+            "version": 2,
+            "width": 100,
+            "height": 30,
+            "timestamp": 0
+          },
+          "events": [
+            {
+              "time": 0,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 0.05555555555555555,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 0.1111111111111111,
+              "type": "o",
+              "data": "x"
+            },
+            {
+              "time": 0.16666666666666666,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.2222222222222222,
+              "type": "o",
+              "data": "v"
+            },
+            {
+              "time": 0.2777777777777778,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 0.33333333333333337,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 0.38888888888888895,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 0.44444444444444453,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 0.5000000000000001,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 0.5555555555555557,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.6111111111111113,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 0.6666666666666669,
+              "type": "o",
+              "data": "u"
+            },
+            {
+              "time": 0.7222222222222224,
+              "type": "o",
+              "data": "n"
+            },
+            {
+              "time": 0.777777777777778,
+              "type": "o",
+              "data": " "
+            },
+            {
+              "time": 0.8333333333333336,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 0.8888888888888892,
+              "type": "o",
+              "data": "c"
+            },
+            {
+              "time": 0.9444444444444448,
+              "type": "o",
+              "data": "r"
+            },
+            {
+              "time": 1.0000000000000002,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 1.0555555555555558,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 1.1111111111111114,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 1.166666666666667,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 1.2222222222222225,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 1.2777777777777781,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 1.3333333333333337,
+              "type": "o",
+              "data": "i"
+            },
+            {
+              "time": 1.3888888888888893,
+              "type": "o",
+              "data": "b"
+            },
+            {
+              "time": 1.4444444444444449,
+              "type": "o",
+              "data": "/"
+            },
+            {
+              "time": 1.5000000000000004,
+              "type": "o",
+              "data": "p"
+            },
+            {
+              "time": 1.555555555555556,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 1.6111111111111116,
+              "type": "o",
+              "data": "x"
+            },
+            {
+              "time": 1.6666666666666672,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 1.7222222222222228,
+              "type": "o",
+              "data": "l"
+            },
+            {
+              "time": 1.7777777777777783,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 1.833333333333334,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 1.8888888888888895,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 1.944444444444445,
+              "type": "o",
+              "data": "e"
+            },
+            {
+              "time": 2.0000000000000004,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 2.055555555555556,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 2.111111111111111,
+              "type": "o",
+              "data": "."
+            },
+            {
+              "time": 2.1666666666666665,
+              "type": "o",
+              "data": "t"
+            },
+            {
+              "time": 2.222222222222222,
+              "type": "o",
+              "data": "s"
+            },
+            {
+              "time": 2.2777777777777772,
+              "type": "o",
+              "data": "\r\n"
+            },
+            {
+              "time": 2.977777777777777,
+              "type": "o",
+              "data": "RUN  v4.1.10 C:/MyProjects/02_Agent/MotionLab/remotion\n\n\n Test Files  1 passed (1)\n      Tests  7 passed (7)\n   Start at  21:36:54\n   Duration  281ms (transform 30ms, setup 0ms, import 48ms, tests 4ms, environment 0ms)"
+            },
+            {
+              "time": 2.977777777777777,
+              "type": "o",
+              "data": "\r\n"
+            }
+          ]
+        }
+      },
+      "visual": {
+        "cue": "terminal"
+      },
+      "durationMs": 8712,
+      "audioPath": "projects/007_resolution/audio/scene-3-test.mp3"
+    },
+    {
+      "id": "scene-4-fix",
+      "type": "talkingPoint",
+      "narration": "고친 방식도 단순해요. 새 기능을 만든 게 아니라, 이미 있던 재시도 로직이 저해상도를 자동으로 건너뛰게만 만들었어요.",
+      "props": {
+        "heading": "고친 방식",
+        "bullets": [
+          "720x1280 미만 자동 거부",
+          "기존 재시도 루프 재사용",
+          "새 인프라 없음"
+        ]
+      },
+      "visual": {
+        "assetPath": "projects/007_resolution/videos/scene-4-fix-broll.mp4"
+      },
+      "durationMs": 9864,
+      "audioPath": "projects/007_resolution/audio/scene-4-fix.mp3"
+    },
+    {
+      "id": "scene-5-meaning",
+      "type": "talkingPoint",
+      "narration": "이걸로 완성 기준 5편을 채웠어요. 매번 사람이 눈으로 확인해야 했던 일이, 이제는 코드가 대신 잡아주는 일이 됐습니다.",
+      "props": {
+        "heading": "5편 게이트 달성",
+        "bullets": [
+          "사람이 보던 문제",
+          "→ 코드가 대신 잡는 문제로"
+        ]
+      },
+      "visual": {
+        "assetPath": "projects/007_resolution/videos/scene-5-meaning-broll.mp4"
+      },
+      "durationMs": 9888,
+      "audioPath": "projects/007_resolution/audio/scene-5-meaning.mp3"
+    },
+    {
+      "id": "scene-6-outro",
+      "type": "outro",
+      "narration": "완성 기준 5편, 이렇게 채웠습니다. 다음 편에서 또 만나요.",
+      "props": {
+        "message": "걸릴 때마다 규칙으로 바꾸는 자동화, 모션랩에서 계속 보여드릴게요.",
+        "ctaText": "구독하고 다음 편도 기다려주세요"
+      },
+      "visual": {
+        "cue": "terminal"
+      },
+      "durationMs": 6504,
+      "audioPath": "projects/007_resolution/audio/scene-6-outro.mp3"
+    }
+  ]
+}

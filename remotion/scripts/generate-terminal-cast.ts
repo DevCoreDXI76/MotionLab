@@ -79,6 +79,16 @@ const SCENE_COMMANDS: Record<string, Record<string, Parameters<typeof buildTermi
       },
     ],
   },
+  "007_resolution": {
+    "scene-3-test": [
+      {
+        display: "npx vitest run scripts/lib/pexels.test.ts",
+        command: "npx",
+        args: ["vitest", "run", "scripts/lib/pexels.test.ts"],
+        cwd: REMOTION_DIR,
+      },
+    ],
+  },
 };
 
 async function main() {
