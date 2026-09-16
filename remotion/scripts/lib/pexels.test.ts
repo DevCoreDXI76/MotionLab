@@ -89,4 +89,51 @@ describe("searchPortraitVideo", () => {
     const result = await searchPortraitVideo("hands typing", "key", new Set([1]));
     expect(result?.downloadUrl).toBe("https://example.com/fresh.mp4");
   });
+
+  it("skips a face-closeup candidate (per its Pexels page slug) and returns the next one", async () => {
+    const videos = [
+      video({
+        id: 1,
+        url: "https://www.pexels.com/video/man-face-close-up-1111111/",
+        video_files: [file({ quality: "hd", width: 720, height: 1280, link: "https://example.com/face.mp4" })],
+      }),
+      video({
+        id: 2,
+        url: "https://www.pexels.com/video/hands-typing-on-a-laptop-keyboard-2222222/",
+        video_files: [file({ quality: "hd", width: 720, height: 1280, link: "https://example.com/hands.mp4" })],
+      }),
+    ];
+    global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ videos }) }) as unknown as typeof fetch;
+
+    const result = await searchPortraitVideo("closeup on laptop", "key");
+    expect(result?.downloadUrl).toBe("https://example.com/hands.mp4");
+  });
+
+  it("does not reject a hand/screen closeup slug that mentions none of the face keywords", async () => {
+    const videos = [
+      video({
+        id: 1,
+        url: "https://www.pexels.com/video/hands-typing-on-a-laptop-keyboard-2222222/",
+        video_files: [file({ quality: "hd", width: 720, height: 1280 })],
+      }),
+    ];
+    global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ videos }) }) as unknown as typeof fetch;
+
+    const result = await searchPortraitVideo("hands typing", "key");
+    expect(result).not.toBeNull();
+  });
+
+  it("allows a face-closeup candidate through when allowFaceCloseup is true", async () => {
+    const videos = [
+      video({
+        id: 1,
+        url: "https://www.pexels.com/video/man-face-close-up-1111111/",
+        video_files: [file({ quality: "hd", width: 720, height: 1280, link: "https://example.com/face.mp4" })],
+      }),
+    ];
+    global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ videos }) }) as unknown as typeof fetch;
+
+    const result = await searchPortraitVideo("closeup on laptop", "key", new Set(), true);
+    expect(result?.downloadUrl).toBe("https://example.com/face.mp4");
+  });
 });

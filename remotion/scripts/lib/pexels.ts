@@ -26,6 +26,19 @@ const QUALITY_PREFERENCE = ["hd", "sd"]; // avoid the largest ("uhd") renditions
 // in practice (004/005/006 logs); 360x640 was rejected every time. See docs/remotion_사이드트랙_프로젝트설정.md.
 const MIN_PORTRAIT_HEIGHT = 1280;
 
+// 005 policy (docs/remotion_사이드트랙_프로젝트설정.md): emotional-beat b-roll defaults to
+// hand/screen closeups, not faces (004 review found face closeups caused person-to-person
+// discontinuity across scenes). Pexels doesn't expose a reliable "shot composition" field, so
+// this checks the page URL slug — the only text Pexels guarantees per video (`tags` exists in
+// the API but is commonly empty). Heuristic, not a real vision check: catches the common case
+// where the uploader's own title says "face"/"portrait", not every face closeup.
+const FACE_CLOSEUP_KEYWORDS = ["face", "portrait", "headshot", "selfie", "smiling"];
+
+function isFaceCloseup(pageUrl: string): boolean {
+  const slug = pageUrl.toLowerCase();
+  return FACE_CLOSEUP_KEYWORDS.some((keyword) => slug.includes(keyword));
+}
+
 /**
  * Searches Pexels' free stock video API for a portrait clip matching `query`
  * and returns the best-matching downloadable mp4 file plus attribution info
@@ -37,6 +50,7 @@ export async function searchPortraitVideo(
   query: string,
   apiKey: string,
   excludeIds: Set<number> = new Set(),
+  allowFaceCloseup = false,
 ): Promise<{ id: number; downloadUrl: string; width: number; height: number; photographer: string; pageUrl: string } | null> {
   const url = new URL("https://api.pexels.com/videos/search");
   url.searchParams.set("query", query);
@@ -51,6 +65,7 @@ export async function searchPortraitVideo(
 
   for (const video of data.videos) {
     if (excludeIds.has(video.id)) continue;
+    if (!allowFaceCloseup && isFaceCloseup(video.url)) continue;
     const file = pickBestFile(video.video_files);
     if (file) {
       return {

@@ -12,13 +12,19 @@ import { PROJECTS_DIR, PUBLIC_DIR } from "./lib/paths";
  * image/video CentralVisual pipeline built for the Studio recording (see
  * src/components/VideoBackground.tsx) — no separate "broll" code path.
  *
- * Usage: npx tsx scripts/generate-broll.ts <projectId> <sceneId> "<query>"
+ * Usage: npx tsx scripts/generate-broll.ts <projectId> <sceneId> "<query>" [--allow-face]
+ *
+ * --allow-face opts out of the 005 policy default (docs/remotion_사이드트랙_프로젝트설정.md)
+ * that rejects face-closeup candidates in favor of hand/screen closeups — use it only when a
+ * scene intentionally wants a face shot.
  */
 async function main() {
   loadEnv();
-  const [projectId, sceneId, query] = process.argv.slice(2);
+  const rawArgs = process.argv.slice(2);
+  const allowFaceCloseup = rawArgs.includes("--allow-face");
+  const [projectId, sceneId, query] = rawArgs.filter((a) => a !== "--allow-face");
   if (!projectId || !sceneId || !query) {
-    console.error('Usage: npx tsx scripts/generate-broll.ts <projectId> <sceneId> "<query>"');
+    console.error('Usage: npx tsx scripts/generate-broll.ts <projectId> <sceneId> "<query>" [--allow-face]');
     process.exit(1);
   }
 
@@ -42,7 +48,7 @@ async function main() {
   }
 
   console.log(`Searching Pexels for "${query}" (portrait)...`);
-  const result = await searchPortraitVideo(query, apiKey, excludeIds);
+  const result = await searchPortraitVideo(query, apiKey, excludeIds, allowFaceCloseup);
   if (!result) {
     console.error(`No portrait mp4 result found for "${query}" (after excluding already-used clips).`);
     process.exit(1);
