@@ -70,4 +70,23 @@ describe("searchPortraitVideo", () => {
     const result = await searchPortraitVideo("hands typing", "key");
     expect(result).toBeNull();
   });
+
+  it("includes the matched video's Pexels id in the result", async () => {
+    const videos = [video({ id: 42, video_files: [file({ quality: "hd", width: 720, height: 1280 })] })];
+    global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ videos }) }) as unknown as typeof fetch;
+
+    const result = await searchPortraitVideo("hands typing", "key");
+    expect(result?.id).toBe(42);
+  });
+
+  it("skips a video whose id is in excludeIds even if its file clears the resolution floor", async () => {
+    const videos = [
+      video({ id: 1, video_files: [file({ quality: "hd", width: 720, height: 1280, link: "https://example.com/dup.mp4" })] }),
+      video({ id: 2, video_files: [file({ quality: "hd", width: 720, height: 1280, link: "https://example.com/fresh.mp4" })] }),
+    ];
+    global.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ videos }) }) as unknown as typeof fetch;
+
+    const result = await searchPortraitVideo("hands typing", "key", new Set([1]));
+    expect(result?.downloadUrl).toBe("https://example.com/fresh.mp4");
+  });
 });

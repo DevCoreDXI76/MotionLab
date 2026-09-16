@@ -36,7 +36,8 @@ const MIN_PORTRAIT_HEIGHT = 1280;
 export async function searchPortraitVideo(
   query: string,
   apiKey: string,
-): Promise<{ downloadUrl: string; width: number; height: number; photographer: string; pageUrl: string } | null> {
+  excludeIds: Set<number> = new Set(),
+): Promise<{ id: number; downloadUrl: string; width: number; height: number; photographer: string; pageUrl: string } | null> {
   const url = new URL("https://api.pexels.com/videos/search");
   url.searchParams.set("query", query);
   url.searchParams.set("orientation", "portrait");
@@ -49,9 +50,11 @@ export async function searchPortraitVideo(
   const data = (await response.json()) as PexelsSearchResponse;
 
   for (const video of data.videos) {
+    if (excludeIds.has(video.id)) continue;
     const file = pickBestFile(video.video_files);
     if (file) {
       return {
+        id: video.id,
         downloadUrl: file.link,
         width: file.width,
         height: file.height,

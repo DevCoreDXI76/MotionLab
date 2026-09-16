@@ -28,16 +28,26 @@ async function main() {
     process.exit(1);
   }
 
+  const videosDir = path.join(PUBLIC_DIR, "projects", projectId, "videos");
+  fs.mkdirSync(videosDir, { recursive: true });
+  const excludeIds = new Set(
+    fs
+      .readdirSync(videosDir)
+      .filter((f) => f.endsWith(".credit.json"))
+      .map((f) => JSON.parse(fs.readFileSync(path.join(videosDir, f), "utf-8")).pexelsId)
+      .filter((id): id is number => typeof id === "number"),
+  );
+  if (excludeIds.size > 0) {
+    console.log(`Excluding ${excludeIds.size} already-used clip(s) from this project: ${[...excludeIds].join(", ")}`);
+  }
+
   console.log(`Searching Pexels for "${query}" (portrait)...`);
-  const result = await searchPortraitVideo(query, apiKey);
+  const result = await searchPortraitVideo(query, apiKey, excludeIds);
   if (!result) {
-    console.error(`No portrait mp4 result found for "${query}".`);
+    console.error(`No portrait mp4 result found for "${query}" (after excluding already-used clips).`);
     process.exit(1);
   }
   console.log(`Found ${result.width}x${result.height} clip by ${result.photographer} (${result.pageUrl})`);
-
-  const videosDir = path.join(PUBLIC_DIR, "projects", projectId, "videos");
-  fs.mkdirSync(videosDir, { recursive: true });
   const filename = `${sceneId}-broll.mp4`;
   const outPath = path.join(videosDir, filename);
 
@@ -54,7 +64,7 @@ async function main() {
   const creditPath = path.join(videosDir, `${sceneId}-broll.credit.json`);
   fs.writeFileSync(
     creditPath,
-    JSON.stringify({ photographer: result.photographer, pexelsUrl: result.pageUrl, query }, null, 2),
+    JSON.stringify({ pexelsId: result.id, photographer: result.photographer, pexelsUrl: result.pageUrl, query }, null, 2),
   );
 
   const scriptPath = path.join(PROJECTS_DIR, projectId, "script.json");
