@@ -1,4 +1,6 @@
-# 실험 B — Seedance image-to-video 준비 (2026-10-29)
+# 실험 B — image-to-video 프롬프트 이력 (2026-10-29 작성)
+
+> **실제 사용 (2026-10-30):** Dreamina(Seedance)는 무료 크레딧이 지급되지 않아 쓰지 못했고, 아래 초안 1·2를 **Google Flow(Veo 3.1 Lite)에 그대로** 넣어 `flow_01.mp4`, `flow_02.mp4`를 생성했다. 결과는 `../../spike_verdict.md` 실험 B 참조.
 
 ## 입력 이미지 추천: `../A_image/klein_tone_s1_1080x1920.jpg`
 
