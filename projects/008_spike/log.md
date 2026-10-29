@@ -4,8 +4,11 @@
 - 2026-10-29 셋업: 문서 확인 + 폴더·템플릿 생성 ~10분. 실험 A 도구 비교표 작성 후 사용자 선택 대기.
 - 2026-10-29 방향 변경: fal 보류(사용액 0원) → Cloudflare Workers AI 무료 할당. 문서 확인 + generate.py provider 교체 + 10장 생성·검수 ~40분(생성 자체는 장당 2~10초).
 - 2026-10-29 klein 보강: 8장 추가 생성·검수, Remotion SpikeA/SpikeACompare 렌더(74초/48초), verdict 확정 ~50분. 중간에 DNS 장애로 요청 1건이 10분 넘게 멈추고 2건 실패 → 재시도로 해결.
+- 2026-10-29 실험 C: @remotion/three 설치·회귀 확인, SpikeC 작성, `--gl` 6옵션×웜 렌더 + 백엔드 확인 ~45분. 실험 B는 사용자가 Seedance 웹에서 직접 생성 대기 중(프롬프트 `spike/B_video/seedance_prompts.md`).
 
 ## 막힌 지점
+- `npx remotion gpu`는 헤드리스 셸에서 chrome://gpu 로드 실패(net::ERR_FAILED) → WebGL `UNMASKED_RENDERER_WEBGL` 문자열을 찍는 임시 컴포지션으로 백엔드 확인(확인 후 삭제).
+- 4.0 기본(`--gl` 미지정)이 GPU가 아니라 SwiftShader로 폴백 — 화면은 정상이라 놓치기 쉬움. 3D는 `--gl=angle` 명시 필요.
 - 로컬 DNS 일시 장애(getaddrinfo 11001): urllib의 timeout은 DNS 조회 단계에 적용되지 않아 10분 넘게 무응답. 재시도로 해결. 스크립트에 전체 실행 timeout을 걸어둘 것.
 - 토큰 검증 401: account-owned 토큰(cfat_)은 `/user/tokens/verify`가 아니라 `/accounts/{id}/tokens/verify`로 검증해야 함. 실제 AI 호출에는 영향 없음.
 - flux-1-schnell이 `seed`를 HTTP 400(5006)으로 거부: 공식 예시는 seed를 넘기지만 입력 스키마가 additionalProperties:false. → schnell은 시드 고정 불가(재현 불가). 400 거절은 neuron 0 소모. 원문은 spike/A_image/errors_seed_rejected.log.

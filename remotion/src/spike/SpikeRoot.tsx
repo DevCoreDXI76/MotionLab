@@ -2,6 +2,7 @@ import React from "react";
 import { AbsoluteFill, Composition } from "remotion";
 import { KenBurnsImage } from "../components/KenBurnsImage";
 import { VideoBackground } from "../components/VideoBackground";
+import { SpikeC } from "./SpikeC";
 
 const FPS = 30;
 const DURATION = 5 * FPS;
@@ -65,5 +66,6 @@ export const SpikeRoot: React.FC = () => (
       durationInFrames={DURATION}
       defaultProps={{ imagePath: "A_image/klein_tone_s1_1080x1920.jpg", videoPath: "A_image/ref/scene-1-title-broll.mp4" }}
     />
+    <Composition id="SpikeC" component={SpikeC} fps={FPS} width={1080} height={1920} durationInFrames={DURATION} />
   </>
 );
