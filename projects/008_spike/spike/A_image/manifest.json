@@ -1,0 +1,497 @@
+[
+  {
+    "id": "klein_tone_s1",
+    "scene": "007 scene-1-title",
+    "prompt": "Close-up of hands typing on a laptop keyboard, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame",
+    "seed": 20261029,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1080,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_tone_s1.jpg",
+    "file": "klein_tone_s1_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 9.6,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:03",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "경미(각인 아웃포커스)",
+      "action_followed": "O",
+      "note": "야간 저조도·필름 질감. 베스트. 파란 톤은 약하고 중성 쿨톤"
+    }
+  },
+  {
+    "id": "repro_s1",
+    "scene": "007 scene-1-title",
+    "prompt": "hands typing on laptop keyboard close up",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/repro_s1.jpg",
+    "file": "repro_s1_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 2.3,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:22",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "경미",
+      "keyboard_distortion": "없음(자판 형태 정상)",
+      "note": "[schnell 탈락] 밝은 주간 톤. 손 자연스러움"
+    }
+  },
+  {
+    "id": "repro_s2",
+    "scene": "007 scene-2-problem",
+    "prompt": "hands scrolling code on laptop screen close up",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/repro_s2.jpg",
+    "file": "repro_s2_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 3.4,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:30",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "없음",
+      "note": "[schnell 탈락] 화면 코드가 깨진 가짜 글자(Pefel Set-fty 등) 판독 가능 — 클로즈업에선 티 남"
+    }
+  },
+  {
+    "id": "repro_s4",
+    "scene": "007 scene-4-fix",
+    "prompt": "programmer hands close up screen editing",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/repro_s4.jpg",
+    "file": "repro_s4_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 4.7,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:35",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "있음",
+      "keyboard_distortion": "해당없음",
+      "note": "[schnell 탈락] 손 하나가 화면을 쥐는 듯한 부자연 포즈, 핏줄 과장. 탈락"
+    }
+  },
+  {
+    "id": "repro_s5",
+    "scene": "007 scene-5-meaning",
+    "prompt": "hands closing laptop screen close up",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/repro_s5.jpg",
+    "file": "repro_s5_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 3.4,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:39",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "경미",
+      "keyboard_distortion": "없음",
+      "note": "[schnell 탈락] 닫는 동작 아님(타이핑). 프롬프트 불이행"
+    }
+  },
+  {
+    "id": "tone_s1",
+    "scene": "007 scene-1-title",
+    "prompt": "Close-up of hands typing on a laptop keyboard, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/tone_s1.jpg",
+    "file": "tone_s1_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 4.3,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:43",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "경미",
+      "keyboard_distortion": "없음(키 각인 없음)",
+      "note": "[schnell 탈락] 원본 상·하단에 흰 테두리 띠 생성 → 크롭 후에도 상단 흰 띠 잔존. 탈락"
+    }
+  },
+  {
+    "id": "tone_s1_seedB",
+    "scene": "007 scene-1-title",
+    "prompt": "Close-up of hands typing on a laptop keyboard, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/tone_s1_seedB.jpg",
+    "file": "tone_s1_seedB_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 2.1,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:45",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "경미",
+      "note": "[schnell 탈락] 화면에 정체불명 물방울 아이콘. seed 미지원이라 seedB는 단순 재샘플"
+    }
+  },
+  {
+    "id": "tone_s2",
+    "scene": "007 scene-2-problem",
+    "prompt": "Close-up of a hand scrolling a trackpad, laptop screen full of code in soft focus, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/tone_s2.jpg",
+    "file": "tone_s2_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 2.4,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:48",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "없음",
+      "note": "[schnell 탈락] 톤 일관성 좋음. 트랙패드 아닌 키보드"
+    }
+  },
+  {
+    "id": "tone_s4",
+    "scene": "007 scene-4-fix",
+    "prompt": "Over-the-shoulder close-up of a laptop screen showing a code editor, fingers on the keyboard, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/tone_s4.jpg",
+    "file": "tone_s4_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 3.3,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:51",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "경미",
+      "keyboard_distortion": "경미(키 각인 일부 뭉개짐)",
+      "note": "[schnell 탈락] 톤 좋음, 화면 코드 글자 가짜"
+    }
+  },
+  {
+    "id": "tone_s5",
+    "scene": "007 scene-5-meaning",
+    "prompt": "Close-up of hands gently closing a laptop lid, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame",
+    "seed": null,
+    "model": "@cf/black-forest-labs/flux-1-schnell",
+    "steps": 8,
+    "orig_size": [
+      1024,
+      1024
+    ],
+    "orig_file": "raw/tone_s5.jpg",
+    "file": "tone_s5_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 3.2,
+    "neurons_est": 96.0,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:09:54",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "경미(실루엣)",
+      "keyboard_distortion": "해당없음",
+      "note": "[schnell 탈락] 닫는 동작 아님. 실루엣이라 디테일 숨겨짐"
+    }
+  },
+  {
+    "id": "klein_repro_s1",
+    "scene": "007 scene-1-title",
+    "prompt": "hands typing on laptop keyboard close up",
+    "seed": 20261029,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1072,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_repro_s1.jpg",
+    "file": "klein_repro_s1_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 6.6,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:19:39",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "경미",
+      "action_followed": "O",
+      "note": "주간 밝은 톤. 손 해부학 정상"
+    }
+  },
+  {
+    "id": "klein_repro_s2",
+    "scene": "007 scene-2-problem",
+    "prompt": "hands scrolling code on laptop screen close up, screen out of focus, shallow depth of field",
+    "seed": 20261029,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1072,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_repro_s2.jpg",
+    "file": "klein_repro_s2_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 6.7,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:19:45",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "있음(전경 기기·자판에 초점 맞은 가짜 코드 글자)",
+      "action_followed": "X",
+      "note": "스크롤 아님(타이핑). 화면 아웃포커스 지시에도 전경에 가짜 글자가 선명"
+    }
+  },
+  {
+    "id": "klein_repro_s4",
+    "scene": "007 scene-4-fix",
+    "prompt": "programmer hands close up screen editing, screen out of focus, shallow depth of field",
+    "seed": 20261029,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1072,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_repro_s4.jpg",
+    "file": "klein_repro_s4_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 10.3,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:19:56",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "경미(모니터 코드는 색 덩어리 수준)",
+      "action_followed": "O",
+      "note": "편집 장면 성립"
+    }
+  },
+  {
+    "id": "klein_repro_s5",
+    "scene": "007 scene-5-meaning",
+    "prompt": "hands closing laptop screen close up, screen out of focus, shallow depth of field",
+    "seed": 20261029,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1072,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_repro_s5.jpg",
+    "file": "klein_repro_s5_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 6.9,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:20:03",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "없음",
+      "action_followed": "△",
+      "note": "손이 화면 모서리를 잡고 있어 닫는 동작으로 볼 여지는 있으나 애매"
+    }
+  },
+  {
+    "id": "klein_tone_s2",
+    "scene": "007 scene-2-problem",
+    "prompt": "Close-up of a hand scrolling a trackpad, laptop screen full of code in soft focus, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame, screen out of focus, shallow depth of field",
+    "seed": 20261029,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1072,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_tone_s2.jpg",
+    "file": "klein_tone_s2_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 6.7,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:30:07",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "경미(상단 코드 반쯤 읽힘)",
+      "action_followed": "O",
+      "note": "검지가 트랙패드 위. 지시 준수"
+    }
+  },
+  {
+    "id": "klein_tone_s4",
+    "scene": "007 scene-4-fix",
+    "prompt": "Over-the-shoulder close-up of a laptop screen showing a code editor, fingers on the keyboard, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame, screen out of focus, shallow depth of field",
+    "seed": 20261029,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1072,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_tone_s4.jpg",
+    "file": "klein_tone_s4_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 7.7,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 10:30:15",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "있음(화면 코드에 초점 맞은 가짜 글자)",
+      "action_followed": "O",
+      "note": "어깨 너머 구도·손가락 준수. 화면이 초점에 걸림"
+    }
+  },
+  {
+    "id": "klein_tone_s5",
+    "scene": "007 scene-5-meaning",
+    "prompt": "Close-up of hands gently closing a laptop lid, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame",
+    "seed": 20261029,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1072,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_tone_s5.jpg",
+    "file": "klein_tone_s5_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 7.9,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 12:48:10",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "있음(손이 반투명하게 이중으로 겹침)",
+      "keyboard_distortion": "경미",
+      "action_followed": "X",
+      "note": "닫기 아님(타이핑) + 이중노출형 손 왜곡. 탈락"
+    }
+  },
+  {
+    "id": "klein_tone_s1_seedB",
+    "scene": "007 scene-1-title",
+    "prompt": "Close-up of hands typing on a laptop keyboard, dark workspace at night, lit only by cool blue monitor glow, shallow depth of field, 35mm film photo, only hands visible, cropped at the wrists, no people in frame",
+    "seed": 777,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "width": 1072,
+    "height": 1920,
+    "steps": 4,
+    "orig_size": [
+      1072,
+      1920
+    ],
+    "orig_file": "raw/klein_tone_s1_seedB.jpg",
+    "file": "klein_tone_s1_seedB_1080x1920.jpg",
+    "upscaled": true,
+    "elapsed_s": 7.8,
+    "neurons_est": 312.6,
+    "cost_usd": 0,
+    "cost_krw": 0,
+    "generated_at_utc": "2026-10-29 12:48:18",
+    "review": {
+      "face_visible": false,
+      "finger_distortion": "없음",
+      "keyboard_distortion": "경미",
+      "action_followed": "O",
+      "note": "seed 777. klein_tone_s1과 구도·톤 거의 동일(노트북 좌·손 우) → 시드보다 프롬프트가 톤을 지배"
+    }
+  }
+]

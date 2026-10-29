@@ -1,0 +1,108 @@
+[2026-10-29 19:08:53] repro_s1: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (0030780e-780a-4ec2-9502-c348c1817513)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (0030780e-780a-4ec2-9502-c348c1817513)","code":5006}],"success":false,"result":{},"messages":[]}
+
+[2026-10-29 19:08:53] repro_s2: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (df9d6e40-b7cd-4fe2-805d-dc643f4a01fa)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (df9d6e40-b7cd-4fe2-805d-dc643f4a01fa)","code":5006}],"success":false,"result":{},"messages":[]}
+
+[2026-10-29 19:08:53] repro_s4: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (dfce1400-01e0-41cb-b508-11f0464108b3)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (dfce1400-01e0-41cb-b508-11f0464108b3)","code":5006}],"success":false,"result":{},"messages":[]}
+
+[2026-10-29 19:08:53] repro_s5: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (4207f934-fa50-457c-a954-63f622c44aa7)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (4207f934-fa50-457c-a954-63f622c44aa7)","code":5006}],"success":false,"result":{},"messages":[]}
+
+[2026-10-29 19:08:53] tone_s1: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (38afa523-571f-4c66-81a8-9a8ce6f3f031)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (38afa523-571f-4c66-81a8-9a8ce6f3f031)","code":5006}],"success":false,"result":{},"messages":[]}
+
+[2026-10-29 19:08:54] tone_s1_seedB: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (091193be-a475-4f52-b0a6-abe8bbe5ca6b)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (091193be-a475-4f52-b0a6-abe8bbe5ca6b)","code":5006}],"success":false,"result":{},"messages":[]}
+
+[2026-10-29 19:08:54] tone_s2: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (87d7c9ca-57ed-4a73-9a6b-bd02720b2d0e)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (87d7c9ca-57ed-4a73-9a6b-bd02720b2d0e)","code":5006}],"success":false,"result":{},"messages":[]}
+
+[2026-10-29 19:08:54] tone_s4: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (652750c2-ca84-4f46-bac8-af8017498f9c)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (652750c2-ca84-4f46-bac8-af8017498f9c)","code":5006}],"success":false,"result":{},"messages":[]}
+
+[2026-10-29 19:08:54] tone_s5: RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (93ef564c-8267-4e88-8d9a-529d0ab365fb)","code":5006}],"success":false,"result":{},"messages":[]}
+Traceback (most recent call last):
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 177, in run
+    img_bytes, params = generate(creds, item)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 155, in generate
+    res = request(creds, url, data, ctype)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\MyProjects\02_Agent\MotionLab\projects\008_spike\spike\A_image\generate.py", line 93, in request
+    raise RuntimeError(f"HTTP {e.code}: {e.read().decode(errors='replace')[:500]}") from None
+RuntimeError: HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated properties '/seed' at '/' not allowed (93ef564c-8267-4e88-8d9a-529d0ab365fb)","code":5006}],"success":false,"result":{},"messages":[]}
+

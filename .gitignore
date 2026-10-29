@@ -18,3 +18,9 @@ secrets/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# 008 spike — large generated originals / renders (paths recorded in spike_verdict.md)
+projects/008_spike/spike/*/raw/
+projects/008_spike/spike/*/ref/
+projects/008_spike/spike/**/*.mp4
+projects/008_spike/spike/*/errors.log
