@@ -83,3 +83,7 @@
   - 얼굴 오검출 1/12(≈8.3%) → aiImage 하한이 오검출만으로 깨질 확률 점추정 ~0.01%, 보수 추정 ~4.2%(설계 문서 D8).
   - YouTube 재인증: M4 실행 직전 사용자가 직접(개입 아님). preflight에서 막힌 뒤 재인증은 개입. OAuth 프로덕션 전환은 백로그.
   - **실전 편 `projects/008_ai_visual/` 생성, concept.md 커밋(개입 ① 소재 선정, 2026-10-30 15:17 KST).** 이후 실전 기록은 그쪽 log.md에 남긴다.
+  - D8 재측정 사용자 검수: 결함 2/6(d8_3 공책 더 크게·d8_5 포스트잇이 키캡 위). 결함은 모두 장면 프롬프트가 종이를 직접 요구한 경우, 요구하지 않은 4개 프롬프트는 1·2차 8장 모두 정상 → 접미사 "no ~"는 명시 요구를 못 이긴다.
+  - 조치: `validateVisualIntent`에 종이·글씨 소품 단어 가드(notebook·sticky·paper·book·note·photo 등 16개, 단어 단위·복수형) → 걸리면 오류를 붙여 대본 재생성. keyboard·laptop·MacBook·wallpaper 오탐 없음 테스트.
+  - preflight 할당 점검 확인: 이미 실전 최대치(aiImage 2씬 × 2라운드 × 2장 = 8회 ≈ 2,501 neurons) 기준이었음. 값을 생성기 상수에서 가져오도록 바꿔 어긋날 여지를 없앰. 오늘 누적 ~6,877이라 M4는 10/31 09:00 KST 리셋 후.
+  - `data/cloudflare_neurons.jsonl` 커밋(비밀값 없음, 사용자 확인). vitest 180 / pytest 26 / tsc 0.

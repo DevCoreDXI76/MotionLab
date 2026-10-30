@@ -5,7 +5,7 @@ import { spawnCli } from "../spawnCli";
 import { readSecretFile } from "../secrets";
 import { EdgeTtsProvider } from "../ttsProviders/edgeTtsProvider";
 import { DAILY_FREE_NEURONS, estimateKleinNeurons, NeuronLedger, STOP_RATIO } from "../visualProviders/neuronLedger";
-import { GEN_HEIGHT, GEN_WIDTH } from "../visualProviders/aiImage";
+import { CANDIDATES_PER_ROUND, GEN_HEIGHT, GEN_WIDTH, MAX_ROUNDS } from "../visualProviders/aiImage";
 import { loadExistingClips } from "../visualProviders/existingClip";
 import { VISUAL_LIMITS } from "../visualIntent";
 import { ROOT_DIR, SECRETS_DIR } from "../paths";
@@ -18,8 +18,9 @@ export interface Check {
   warnOnly?: boolean;
 }
 
-// Worst case per run: every aiImage scene burns 2 rounds × 2 candidates.
-export const WORST_CASE_NEURONS = VISUAL_LIMITS.aiImage.max * 2 * 2 * estimateKleinNeurons(GEN_WIDTH, GEN_HEIGHT);
+// Worst case per run: every aiImage scene (max 2) burns all rounds × candidates before falling back
+// — 2 × 2 × 2 klein calls ≈ 2,501 neurons. Script regeneration and render retries never re-generate images.
+export const WORST_CASE_NEURONS = VISUAL_LIMITS.aiImage.max * MAX_ROUNDS * CANDIDATES_PER_ROUND * estimateKleinNeurons(GEN_WIDTH, GEN_HEIGHT);
 
 function commandWorks(command: string, args: string[]): { ok: boolean; detail: string } {
   try {

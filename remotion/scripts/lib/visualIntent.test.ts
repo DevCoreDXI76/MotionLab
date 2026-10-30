@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assessAiVisualFloor, validateVisualIntent } from "./visualIntent";
+import { assessAiVisualFloor, findBannedProps, validateVisualIntent } from "./visualIntent";
 
 const ai = (id: string, extra: Record<string, unknown> = {}) => ({
   id,
@@ -98,5 +98,40 @@ describe("assessAiVisualFloor", () => {
       scenes: [rendered("a1", { provider: "cloudflare-workers-ai" }), rendered("a2", { provider: "cloudflare-workers-ai" })],
     });
     expect(result).toMatchObject({ met: false, aiImage: 2, diagram: 0 });
+  });
+});
+
+describe("banned aiImage props (D8)", () => {
+  it("rejects paper and text props in any case or plural form", () => {
+    const prompts: Array<[string, string[]]> = [
+      ["An open notebook and a pen on a desk next to part of a keyboard", ["notebook"]],
+      ["A desk lamp casting light across a keyboard and a few scattered sticky notes", ["sticky", "notes"]],
+      ["Post-its on a monitor bezel", ["post-its"]],
+      ["A stack of PAPERS, two Books and a receipt", ["papers", "books", "receipt"]],
+      ["Documents, letters and a notepad", ["documents", "letters", "notepad"]],
+      ["Framed photos beside a poster and old newspapers", ["photos", "poster", "newspapers"]],
+      ["A magazine, a memo and a photograph", ["magazine", "memo", "photograph"]],
+    ];
+    for (const [prompt, found] of prompts) expect(findBannedProps(prompt)).toEqual(found);
+  });
+
+  it("does not flag ordinary desk words", () => {
+    for (const prompt of [
+      "A ceramic mug steaming beside the corner of a backlit keyboard on a wooden desk",
+      "Fingertips resting on the edge of a laptop keyboard, desk surface in the foreground",
+      "A hand wrapped around a coffee mug next to a keyboard",
+      "Close-up of a few keys of a backlit keyboard with fingertips softly touching them",
+      "A MacBook-style aluminium keyboard, keycaps, a desk lamp and wallpaper texture",
+      "Keynote clicker, a headphone stand and a bookend-free shelf edge",
+    ]) {
+      expect(findBannedProps(prompt), prompt).toEqual([]);
+    }
+  });
+
+  it("fails intent validation with the found words so the script is regenerated", () => {
+    const scenes = valid.scenes.map((s) => (s.id === "a2" ? ai("a2", { prompt: "An open notebook beside a keyboard" }) : s));
+    expect(validateVisualIntent({ scenes }, ["flow_01"])).toEqual([
+      'scene "a2": aiImage visual.prompt must not include paper, books, photos or anything with writing (found: notebook)',
+    ]);
   });
 });

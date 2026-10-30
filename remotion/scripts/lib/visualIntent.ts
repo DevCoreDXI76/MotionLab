@@ -18,6 +18,22 @@ export const VISUAL_LIMITS = {
 
 export const DIAGRAM_LABELS = { min: 3, max: 7, maxChars: 8 } as const;
 
+/**
+ * Props that invite readable fake writing or small faces (D8: every defect in two 6-image rounds came
+ * from a scene prompt that asked for paper). The prompt rule alone is not enough, so a scene prompt
+ * naming one fails intent validation and the script is regenerated with the error attached.
+ */
+export const BANNED_AI_IMAGE_PROPS = [
+  "notebook", "notepad", "sticky", "post-it", "postit", "paper", "book", "document", "receipt", "note", "memo",
+  "letter", "poster", "photo", "photograph", "magazine", "newspaper",
+] as const;
+const BANNED_PROP_PATTERN = new RegExp(String.raw`\b(${BANNED_AI_IMAGE_PROPS.join("|")})(s|es)?\b`, "gi");
+
+/** Banned prop words in an aiImage scene prompt, lower-cased and de-duplicated (whole words, plurals included). */
+export function findBannedProps(prompt: string): string[] {
+  return [...new Set([...prompt.matchAll(BANNED_PROP_PATTERN)].map((m) => m[0].toLowerCase()))];
+}
+
 /** Visual kinds only make sense on scenes that show a CentralVisual band. */
 const BAND_SCENE_TYPES = new Set(["title", "talkingPoint", "outro"]);
 
@@ -62,6 +78,10 @@ export function validateVisualIntent(
     if (visual.kind === "aiImage") {
       counts.aiImage++;
       if (!visual.prompt?.trim()) errors.push(`${where}: aiImage needs visual.prompt`);
+      const banned = findBannedProps(visual.prompt ?? "");
+      if (banned.length) {
+        errors.push(`${where}: aiImage visual.prompt must not include paper, books, photos or anything with writing (found: ${banned.join(", ")})`);
+      }
     } else if (visual.kind === "pexels") {
       if (!visual.query?.trim()) errors.push(`${where}: pexels needs visual.query`);
     } else if (visual.kind === "existingClip") {

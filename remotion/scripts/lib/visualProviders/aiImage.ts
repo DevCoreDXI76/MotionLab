@@ -11,6 +11,9 @@ export const KLEIN_MODEL = "@cf/black-forest-labs/flux-2-klein-4b";
 // klein only takes multiples of 16 — 1080 comes back as 1072 (008 spike), so ask for that and fix up locally.
 export const GEN_WIDTH = 1072;
 export const GEN_HEIGHT = 1920;
+/** Per aiImage scene: up to MAX_ROUNDS × CANDIDATES_PER_ROUND klein calls before falling back (preflight budgets from these). */
+export const CANDIDATES_PER_ROUND = 2;
+export const MAX_ROUNDS = 2;
 const REQUEST_TIMEOUT_MS = 60_000; // covers DNS too (the spike's urllib timeout didn't, and hung 10+ min)
 
 export interface ImageGenerator {
@@ -129,8 +132,8 @@ export async function generateAiImage(
   const generator = options.generator ?? new CloudflareKleinGenerator();
   const judge = options.judge ?? new PixelRuleJudge();
   const ledger = options.ledger ?? new NeuronLedger();
-  const perRound = options.candidatesPerRound ?? 2;
-  const maxRounds = options.maxRounds ?? 2;
+  const perRound = options.candidatesPerRound ?? CANDIDATES_PER_ROUND;
+  const maxRounds = options.maxRounds ?? MAX_ROUNDS;
   const prompt = buildImagePrompt(scenePrompt);
 
   const imagesDir = path.join(PUBLIC_DIR, "projects", ctx.projectId, "images");
