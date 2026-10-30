@@ -60,3 +60,4 @@
   - 실호출 스모크(임시 편 `_m1_smoke`, 확인 후 삭제): aiImage 2씬(klein 4장, ~1,250 neurons) + diagram + pexels + existingClip → TTS → render.ts 86초, 폴백 0, 하한 판정 충족. 후보 선택은 아직 "unjudged"(첫 후보) — M2에서 판정기로 교체.
   - **막힌 지점: Edge TTS가 HTTP 403** (msedge-tts 2.0.7, 재시도해도 동일 — Microsoft 쪽 핸드셰이크 변경으로 추정). msedge-tts 2.1.0(10/13 릴리스)으로 올려 해결, 버전 고정. 1기 렌더는 기존 mp3를 쓰므로 영향 없음.
   - Veo 워터마크는 실측상 하단 약 2.5% 안 → VideoBackground 수정 대신 ffmpeg에서 하단 5% 크롭(설계 문서 반영).
+  - 설계 §10 위험 1 해소: 새 작성 스키마로 `claude -p` 실호출 1회(구독 경로, 55초) → 스키마 검증 통과, `visual.kind/prompt`까지 채움, durationMs 미포함. 임시 결과는 삭제.
