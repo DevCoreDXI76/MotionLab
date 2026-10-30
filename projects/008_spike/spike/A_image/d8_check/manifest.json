@@ -23,11 +23,11 @@
       }
     },
     "review": {
-      "face_visible": null,
-      "hand_distortion": null,
-      "readable_fake_text": null,
-      "white_border": null,
-      "note": ""
+      "face_visible": false,
+      "hand_distortion": false,
+      "readable_fake_text": false,
+      "white_border": false,
+      "note": "정상. 머그가 2개로 나왔으나 결함 아님"
     }
   },
   {
@@ -54,11 +54,11 @@
       }
     },
     "review": {
-      "face_visible": null,
-      "hand_distortion": null,
-      "readable_fake_text": null,
-      "white_border": null,
-      "note": ""
+      "face_visible": false,
+      "hand_distortion": false,
+      "readable_fake_text": false,
+      "white_border": false,
+      "note": "정상"
     }
   },
   {
@@ -85,11 +85,11 @@
       }
     },
     "review": {
-      "face_visible": null,
-      "hand_distortion": null,
-      "readable_fake_text": null,
-      "white_border": null,
-      "note": ""
+      "face_visible": false,
+      "hand_distortion": false,
+      "readable_fake_text": true,
+      "white_border": false,
+      "note": "결함: 펼친 공책의 가짜 손글씨가 화면 중앙에 초점 맞음"
     }
   },
   {
@@ -116,11 +116,11 @@
       }
     },
     "review": {
-      "face_visible": null,
-      "hand_distortion": null,
-      "readable_fake_text": null,
-      "white_border": null,
-      "note": ""
+      "face_visible": false,
+      "hand_distortion": false,
+      "readable_fake_text": false,
+      "white_border": false,
+      "note": "정상"
     }
   },
   {
@@ -147,11 +147,11 @@
       }
     },
     "review": {
-      "face_visible": null,
-      "hand_distortion": null,
-      "readable_fake_text": null,
-      "white_border": null,
-      "note": ""
+      "face_visible": false,
+      "hand_distortion": false,
+      "readable_fake_text": true,
+      "white_border": false,
+      "note": "결함: 하단 포스트잇들의 가짜 손글씨 선명"
     }
   },
   {
@@ -180,11 +180,11 @@
       }
     },
     "review": {
-      "face_visible": null,
-      "hand_distortion": null,
-      "readable_fake_text": null,
-      "white_border": null,
-      "note": ""
+      "face_visible": false,
+      "hand_distortion": false,
+      "readable_fake_text": false,
+      "white_border": false,
+      "note": "정상. 픽셀 판정 얼굴 1건은 오검출(얼굴 없음)"
     }
   }
 ]
