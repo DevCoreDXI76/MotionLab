@@ -51,3 +51,7 @@
 - **비주얼 출처를 script.json에 남기기**: 씬마다 b-roll 검색어 또는 생성 프롬프트와 선택한 클립 id(또는 seed·모델)를 `visual` 필드에 기록한다. 007은 쿼리가 script.json에 없고, gitignore된 `remotion/public/projects/007_resolution/videos/*.credit.json`에만 남아 있었다(로컬이 날아가면 함께 사라짐). `spike/A_image/manifest.json`이 이 구조의 시제품이다.
 - **AI 이미지는 배경 전용, 읽혀야 하는 코드/터미널 텍스트는 Remotion 오버레이(cast-builder 연계)**: 실험 A에서 klein이 초점 맞은 가짜 글자를 22% 확률로 만들고, "screen out of focus" 지시로도 막지 못함. 화면 속 코드는 이미지에 맡기지 말고 Remotion 컴포넌트로 실제 텍스트를 위에 얹는다.
 - **AI 영상은 연속 동작 컷 전용, 동작 전환은 KenBurns+편집으로 대체**: 실험 B에서 Veo 3.1 Lite가 시작 이미지의 동작을 잇는 컷(타이핑 지속)은 8초 내내 안정적이었지만, "멈춤→손 떼기" 같은 동작 전환 지시는 엉뚱한 손짓 후 원래 자세로 튀며 복귀했다. 전환이 필요한 장면은 정지 이미지 KenBurns 2컷을 편집으로 잇는다.
+
+## 2단계 진행 기록 (008 파이프라인 완주, 마감 12/31)
+*실전 편 폴더(`projects/008_*`)가 생기면 M4부터 그쪽 log.md로 옮긴다.*
+- 2026-10-30 M0 설계: 문서·코드 실측 후 `docs/2단계_설계.md` 작성 ~1세션. 기준선 vitest 71 / pytest 21 / tsc 0. 사람이 손대던 곳은 대본 작성·b-roll 쿼리/재검색·cast 명령 추가·단계 간 실행 판단 4곳으로 확인. 결정 대기 D1~D7.
