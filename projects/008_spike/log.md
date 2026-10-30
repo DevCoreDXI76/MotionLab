@@ -68,3 +68,11 @@
   - cast 명령: `props.commands` 우선, 002~007은 기존 SCENE_COMMANDS(HEAD와 바이트 동일). 허용 목록·secrets 경로 차단·출력/입력 비밀값 마스킹·30초 타임아웃·실패 명령 건너뛰기. 우회 시도 24종 테스트.
   - 실호출 스모크(임시 편, 확인 후 삭제): aiImage 1씬(klein 2장 ~625 neurons, 오늘 누적 ~1,876) → 픽셀 판정 통과·근거 기록. cast는 script.json 명령 2개 실행, `cat secrets/...` 시도는 정책에서 거부되어 실행 안 됨. 결과 파일 비밀값 0건.
   - 회귀: 007 앞 10초 SSIM 1.000000, 003~007 metadata 동일, vitest 162 / pytest 21 / tsc 0.
+- 2026-10-30 M3 오케스트레이터 ~1세션:
+  - `produce.ts <id> [--dry-run]`: preflight(TTS 1문장 실호출·YouTube 토큰 포함) → 대본(concept.md 입력, 스키마·의도 검증 실패 시 오류를 붙여 재생성, 상한 초과는 코드에서 강등) → cast → TTS(재시도) → 비주얼(폴백) → 렌더(실패 시 재시도→3D 강등) → 비공개 업로드. 실행마다 log.md "자동 실행 기록"에 단계표·자동 폴백·사람 개입·AI 비주얼 하한 판정을 남김. 재실행·자동 해결 실패·재생목록 추가 실패는 개입으로 자동 기록.
+  - D6: `visual.source` 있는 편만 설명에 AI 생성 고지·Pexels 크레딧, AI 이미지/영상이 있으면 `containsSyntheticMedia=true`(API 문서로 필드 확인). 003~007 metadata는 바이트 동일.
+  - D8 사전 측정: 새 구도 규칙으로 klein 6장(`spike/A_image/d8_check/`), 픽셀 판정 5 통과·d8_6 얼굴 검출(오검출 의심). 사용자 검수 대기.
+  - **dry-run(임시 편 `_m3_dryrun`, concept = M2 판정기 이야기, 확인 후 삭제)**: 사람 개입 0건, 자동 폴백 0건, AI 비주얼 하한 충족(aiImage 2/2, diagram 1/1), 약 3분 40초(대본 55초·비주얼 46초·렌더 114초), neurons ~1,250. 대본 사실·수치는 concept와 일치. 영상 72.6초(목표 45~60초 초과).
+  - **막힌 지점**: (1) YouTube refresh token `invalid_grant` — 9/11 이후 만료, M4 전 재인증 필요. (2) dry-run의 AI 이미지 하나가 "인화 사진 9장" 소품 → 사진 속 작은 얼굴은 검사 밖 → 프롬프트에 사진·포스터·액자 금지 추가. (3) 셸 cwd가 지울 폴더 안이라 정리 1회 실패 → 루트에서 재실행.
+  - Cloudflare 오늘 누적 추정 ~5,000 / 8,000.
+  - 회귀: 007 앞 10초 SSIM 1.000000, 003~007 metadata 동일, vitest 176 / pytest 26 / tsc 0.

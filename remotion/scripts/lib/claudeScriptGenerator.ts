@@ -31,11 +31,43 @@ const ALLOWED_COMMAND_EXAMPLES = [
 
 const NEWLINE = String.fromCharCode(10);
 
+export interface ScriptPromptOptions {
+  /** Full concept.md text — 2기 episodes are written from it instead of a one-line topic. */
+  concept?: string;
+  /** Errors from the previous attempt, fed back so a retry fixes them (orchestrator, §5.2). */
+  feedback?: string[];
+}
+
+function conceptSection(concept: string | undefined): string {
+  if (!concept) return "";
+  return [
+    "",
+    "아래 concept.md가 이 편의 기획서입니다. 대본의 사실·수치·흐름은 모두 여기서 가져오고, concept.md에 없는 사실이나 숫자는 지어내지 마세요. concept.md의 씬 배정 표가 있으면 그 순서와 의도를 따르되, 비주얼 종류와 개수는 아래 요구 사항의 규칙이 우선합니다.",
+    "",
+    "<concept>",
+    concept.trim(),
+    "</concept>",
+    "",
+  ].join(NEWLINE);
+}
+
+function feedbackSection(feedback: string[] | undefined): string {
+  if (!feedback || feedback.length === 0) return "";
+  return [
+    "",
+    "이전에 생성한 대본이 아래 검증에서 실패했습니다. 이 문제를 모두 고친 대본을 처음부터 다시 작성하세요:",
+    ...feedback.map((f) => `- ${f}`),
+    "",
+  ].join(NEWLINE);
+}
+
 /** Exported for testing. */
-export function buildPrompt(topic: string, format: "shorts" | "long", projectId: string): string {
+export function buildPrompt(topic: string, format: "shorts" | "long", projectId: string, options: ScriptPromptOptions = {}): string {
   const promptTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, "script_prompt_template.md"), "utf-8");
   const clips = loadExistingClips();
   return promptTemplate
+    .replace("{{CONCEPT_SECTION}}", conceptSection(options.concept))
+    .replace("{{FEEDBACK_SECTION}}", feedbackSection(options.feedback))
     .replace("{{TOPIC}}", topic)
     .replace("{{FORMAT}}", format)
     .replace("{{PROJECT_ID}}", projectId)
@@ -43,13 +75,21 @@ export function buildPrompt(topic: string, format: "shorts" | "long", projectId:
     .replace("{{ALLOWED_COMMANDS}}", ALLOWED_COMMAND_EXAMPLES.map((l) => `    - ${l}`).join(NEWLINE));
 }
 
+/** The model answered, but the script doesn't validate — the orchestrator feeds `errors` back and retries. */
+export class ScriptValidationError extends Error {
+  constructor(readonly errors: string[]) {
+    super(["Generated script failed schema validation:", ...errors].join(NEWLINE));
+  }
+}
+
 export function generateScript(
   runner: CliRunner,
   topic: string,
   format: "shorts" | "long",
   projectId: string,
+  options: ScriptPromptOptions = {},
 ): Record<string, unknown> {
-  const prompt = buildPrompt(topic, format, projectId);
+  const prompt = buildPrompt(topic, format, projectId, options);
   const schema = buildAuthoringSchema();
 
   const { status, stdout, stderr } = runner.run([
@@ -83,7 +123,7 @@ export function generateScript(
   const script = parsed.structured_output as Record<string, unknown>;
   const { valid, errors } = validateScript(script);
   if (!valid) {
-    throw new Error(`Generated script failed schema validation:\n${errors.join("\n")}`);
+    throw new ScriptValidationError(errors);
   }
   return script;
 }

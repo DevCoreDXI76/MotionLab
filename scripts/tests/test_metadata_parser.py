@@ -57,3 +57,23 @@ def test_missing_hashtags_raises(tmp_path):
     path = write(tmp_path, text)
     with pytest.raises(MetadataParseError):
         parse_metadata_txt(path)
+
+
+def test_existing_metadata_is_not_synthetic(tmp_path):
+    assert parse_metadata_txt(write(tmp_path, VALID_TEXT))["containsSyntheticMedia"] is False
+
+
+def test_synthetic_line_before_title_is_detected_and_kept_out_of_fields(tmp_path):
+    text = "합성 콘텐츠: 예\n\n" + VALID_TEXT.replace(
+        "자동으로 이어져요.\n", "자동으로 이어져요.\n\n일부 배경 이미지는 AI(FLUX.2 klein)로 생성했습니다.\n"
+    )
+    result = parse_metadata_txt(write(tmp_path, text))
+    assert result["containsSyntheticMedia"] is True
+    assert result["title"] == "이 영상, 사람은 5분만 일했어요"
+    assert result["description"].endswith("AI(FLUX.2 klein)로 생성했습니다.")
+    assert result["tags"] == ["shorts", "모션랩", "자동화영상"]
+
+
+def test_synthetic_word_inside_description_does_not_flag(tmp_path):
+    text = VALID_TEXT.replace("자동으로 이어져요.", "자동으로 이어져요.\n합성 콘텐츠: 예")
+    assert parse_metadata_txt(write(tmp_path, text))["containsSyntheticMedia"] is False

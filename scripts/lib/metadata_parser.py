@@ -6,6 +6,8 @@ TITLE_MAX_LEN = 100
 _TITLE_RE = re.compile(r"제목:\s*(.*?)\n\n설명:", re.DOTALL)
 _DESC_RE = re.compile(r"설명:\s*(.*?)\n\n해시태그:", re.DOTALL)
 _TAGS_RE = re.compile(r"해시태그:\s*(.*)", re.DOTALL)
+# 2기 편에서 AI 이미지·AI 영상 클립이 들어가면 metadataDraft.ts가 맨 앞에 넣는 줄 (D6).
+_SYNTHETIC_RE = re.compile(r"^합성 콘텐츠:\s*예\s*$", re.MULTILINE)
 
 
 class MetadataParseError(Exception):
@@ -31,4 +33,6 @@ def parse_metadata_txt(path: Path) -> dict:
     description = desc_match.group(1).strip()
     tags = [tok.lstrip("#") for tok in tags_match.group(1).split() if tok.lstrip("#")]
 
-    return {"title": title, "description": description, "tags": tags}
+    contains_synthetic = bool(_SYNTHETIC_RE.search(text.split("제목:", 1)[0]))
+
+    return {"title": title, "description": description, "tags": tags, "containsSyntheticMedia": contains_synthetic}

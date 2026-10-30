@@ -3,7 +3,7 @@
 - 주제: {{TOPIC}}
 - 포맷: {{FORMAT}} (shorts = 9:16 세로, long = 16:9 가로)
 - 프로젝트 ID: {{PROJECT_ID}}
-
+{{CONCEPT_SECTION}}{{FEEDBACK_SECTION}}
 요구 사항:
 - 씬은 title(훅, 1문장) → talkingPoint(최대 2개, 각 2문장, bullets 2~3개) → outro(1~2문장) 순서를 기본으로 하되, 코드 예시가 필요하면 talkingPoint 사이에 code 씬(2문장)을 추가하세요.
 - 전체 나레이션 총 글자수는 400~550자 이내로 작성하세요(한국어 TTS 기준 초당 약 5.5~6자, 목표 영상 길이 45~60초).
@@ -21,9 +21,13 @@
   - outro: { "message": string, "ctaText"?: string }
   - diagram: { "heading": string, "preset": "stack", "labels": string[], "highlight"?: number } — 구조·단계·흐름을 3D 블록으로 쌓아 보여주는 씬입니다. labels는 3~7개, 각 8자 이내 한국어. highlight는 강조할 블록의 0부터 시작하는 번호입니다.
 - 비주얼 배정 (title·talkingPoint·outro 씬은 visual.kind를 반드시 지정하세요. code·diagram 씬은 visual을 비워 두세요):
-  - "aiImage" — AI로 생성하는 배경 이미지. 분위기·감정 비트 컷에 씁니다. visual.prompt에 장면 묘사를 영어 한 문장으로 쓰세요. 스타일(야간 저조도, 필름 질감, 손만 보이게 등)은 파이프라인이 자동으로 붙이니 쓰지 마세요.
-    - **정적 포즈만** 허용합니다: 키보드 위에서 타이핑하는 손, 키보드·트랙패드 위에 올려 둔 손, 책상 위 사물 정물(노트북·머그컵·노트 등). 닫기·스크롤·가리키기·집어 들기처럼 동작이 바뀌는 지시는 쓰지 마세요(이미지 모델이 지키지 못합니다).
-    - 사람 얼굴, 화면 속 읽혀야 하는 글자·코드를 요구하지 마세요. 글자는 영상 위에 따로 얹습니다.
+  - "aiImage" — AI로 생성하는 배경 이미지. 분위기·감정 비트 컷에 씁니다. visual.prompt에 장면 묘사를 영어 한 문장으로 쓰세요. 스타일과 구도(야간 저조도, 필름 질감, 화면은 프레임 밖, 손은 흐릿한 보조 요소 등)는 파이프라인이 자동으로 붙이니 쓰지 마세요.
+    - **주인공은 조명·질감·사물**입니다: 키보드 일부, 책상 표면, 머그컵, 노트와 펜, 데스크 램프의 빛 같은 것을 장면의 중심에 두세요.
+    - 모니터·노트북 화면을 장면의 중심에 두지 마세요(화면은 프레임 밖이거나 가장자리에 흐릿하게만). 화면 속 글자·코드를 요구하지 마세요 — 글자는 영상 위에 따로 얹습니다.
+    - 손은 넣더라도 부분적으로만 보이는 보조 요소로 쓰세요(예: 키보드 가장자리에 걸친 손끝). 사람 얼굴은 요구하지 마세요.
+    - 사진·인화지·포스터·액자·잡지·책 표지처럼 사람 모습이 찍힐 수 있는 사물은 넣지 마세요(작은 얼굴은 자동 검사가 놓칩니다).
+    - **정적 포즈만** 허용합니다: 키보드에 올려 둔 손끝, 머그를 감싼 손, 사물 정물. 닫기·스크롤·가리키기·집어 들기처럼 동작이 바뀌는 지시는 쓰지 마세요(이미지 모델이 지키지 못합니다).
+    - 좋은 예: "A ceramic mug steaming beside the corner of a backlit keyboard on a wooden desk" / 나쁜 예: "A laptop screen showing code while hands scroll"
     - 폴백용으로 visual.query(영어 Pexels 검색어)도 함께 쓰세요.
   - "pexels" — 실제 움직임이 필요한 컷. visual.query에 영어 검색어를 쓰세요. "hands", "close up"을 넣고 face·portrait·selfie는 쓰지 마세요.
   - "existingClip" — 이미 만들어 둔 영상 재사용. visual.clipId는 아래 목록의 id만 쓸 수 있습니다:

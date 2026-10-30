@@ -4,3 +4,13 @@
 {"utc":"2026-10-30T01:16:48.171Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m1_smoke","scene":"s2-ai","ok":true}
 {"utc":"2026-10-30T02:20:38.925Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m2_smoke","scene":"s1","ok":true}
 {"utc":"2026-10-30T02:20:47.663Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m2_smoke","scene":"s1","ok":true}
+{"utc":"2026-10-30T03:22:37.146Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"d8_check","scene":"d8_1","ok":true}
+{"utc":"2026-10-30T03:22:45.504Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"d8_check","scene":"d8_2","ok":true}
+{"utc":"2026-10-30T03:22:55.403Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"d8_check","scene":"d8_3","ok":true}
+{"utc":"2026-10-30T03:23:05.013Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"d8_check","scene":"d8_4","ok":true}
+{"utc":"2026-10-30T03:23:13.490Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"d8_check","scene":"d8_5","ok":true}
+{"utc":"2026-10-30T03:23:21.176Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"d8_check","scene":"d8_6","ok":true}
+{"utc":"2026-10-30T03:31:27.298Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m3_dryrun","scene":"s1","ok":true}
+{"utc":"2026-10-30T03:31:38.530Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m3_dryrun","scene":"s1","ok":true}
+{"utc":"2026-10-30T03:31:52.702Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m3_dryrun","scene":"s5","ok":true}
+{"utc":"2026-10-30T03:32:01.622Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m3_dryrun","scene":"s5","ok":true}

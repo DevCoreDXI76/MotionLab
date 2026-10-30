@@ -21,3 +21,12 @@ def test_build_video_body_shapes_snippet_and_status():
 def test_build_video_body_uses_given_privacy():
     body = build_video_body(META, privacy="unlisted")
     assert body["status"]["privacyStatus"] == "unlisted"
+
+
+def test_build_video_body_omits_synthetic_flag_for_existing_episodes():
+    assert "containsSyntheticMedia" not in build_video_body(META, privacy="private")["status"]
+
+
+def test_build_video_body_flags_synthetic_media():
+    body = build_video_body({**META, "containsSyntheticMedia": True}, privacy="private")
+    assert body["status"]["containsSyntheticMedia"] is True

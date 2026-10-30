@@ -1,6 +1,7 @@
 """
-유튜브 업로드(@MotionLab.coredxi 채널) — 사람이 배포 단계에서 직접 실행한다.
-render 파이프라인 등 다른 스크립트가 이 스크립트를 자동 호출하지 않는다.
+유튜브 업로드(@MotionLab.coredxi 채널) — 사람이 배포 단계에서 직접 실행하거나, 2기부터는
+오케스트레이터(remotion/scripts/produce.ts)가 호출한다(docs/2단계_설계.md D5). 오케스트레이터는
+--privacy·--force를 절대 넘기지 않으므로 항상 private로만 올린다. 다른 스크립트는 자동 호출하지 않는다.
 
 사전 준비 (사람이 1회만, Google Cloud Console에서):
   1. https://console.cloud.google.com 에서 프로젝트 생성

@@ -9,6 +9,8 @@ export interface ExistingClip {
   source: string;
   description: string;
   origin: string;
+  /** Set when the clip itself is AI-generated — drives the description disclosure and synthetic-media flag (D6). */
+  aiGenerator?: string | null;
   startSec: number;
   durationSec: number | null;
   /** Share of the frame height cut from the bottom — removes Flow's visible "Veo" watermark (bottom ~2.5%). */
@@ -63,6 +65,7 @@ export function prepareExistingClip(ctx: ProviderContext, clipId: string): Provi
       clipId,
       clipPath: clip.source,
       origin: clip.origin,
+      aiGenerator: clip.aiGenerator ?? null,
       trim: { startSec: clip.startSec, durationSec: clip.durationSec },
       cropBottomRatio: clip.cropBottomRatio,
       muted: true,
