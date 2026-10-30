@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildAuthoringSchema, generateScript } from "./claudeScriptGenerator";
+import { buildAuthoringSchema, buildPrompt, generateScript } from "./claudeScriptGenerator";
 import type { CliRunner } from "./claudeCliRunner";
 
 const VALID_SCRIPT = {
@@ -46,5 +46,13 @@ describe("generateScript", () => {
     expect(sceneProps.audioPath).toBeUndefined();
     expect(Object.keys(sceneProps.visual.properties ?? {})).toEqual(["cue", "focal", "kind", "query", "prompt", "clipId"]);
     expect(schema).not.toHaveProperty("$schema");
+  });
+
+  it("fills every template placeholder, incl. clip registry and command allowlist", () => {
+    const prompt = buildPrompt("주제", "shorts", "008_x");
+    expect(prompt).not.toMatch(/\{\{[A-Z_]+\}\}/);
+    expect(prompt).toContain("flow_01:");
+    expect(prompt).toContain("npx vitest run");
+    expect(prompt).toContain("**정적 포즈만**");
   });
 });

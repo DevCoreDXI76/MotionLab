@@ -7,7 +7,7 @@ export type VisualKind = (typeof VISUAL_KINDS)[number];
  */
 export interface VisualSource {
   provider: "pexels" | "cloudflare-workers-ai" | "existing-clip" | "motion";
-  selectedBy?: "auto-vision" | "auto-rule" | "unjudged" | "fallback" | "only-candidate";
+  selectedBy?: "auto-vision" | "auto-rule" | "fallback" | "only-candidate";
   /** Set when this provider ran because the scene's intended kind failed (e.g. "aiImage"). */
   fallbackFrom?: VisualKind | null;
   fallbackReason?: string | null;

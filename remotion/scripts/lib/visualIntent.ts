@@ -7,10 +7,11 @@ interface IntentScene {
   visual?: SceneVisual | null;
 }
 
-// docs/2단계_설계.md §3: lower bounds = 2기 "AI visual floor", upper bounds = Cloudflare quota (aiImage)
-// and keeping 3D/reused footage as accents. diagram counts scenes of type "diagram" (D1).
+// docs/2단계_설계.md §3: lower bounds = 2기 "AI visual floor"; aiImage max is 2 because the
+// candidate judge only checks faces/borders (D2 result) — hand/text defects can reach ⑦ review.
+// diagram counts scenes of type "diagram" (D1).
 export const VISUAL_LIMITS = {
-  aiImage: { min: 2, max: 4 },
+  aiImage: { min: 2, max: 2 },
   diagram: { min: 1, max: 2 },
   existingClip: { min: 0, max: 1 },
 } as const;

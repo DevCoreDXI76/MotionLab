@@ -18,6 +18,8 @@ export interface SpawnCliOptions {
    * billing if any of them happen to be set in the ambient shell.
    */
   extraEnvStrip?: string[];
+  /** Kills the child after this many ms (spawnSync `timeout`); the spawn then throws. Unset = no limit. */
+  timeoutMs?: number;
 }
 
 /**
@@ -67,6 +69,7 @@ export function spawnCli(command: string, args: string[], options: SpawnCliOptio
     stdio: options.stdio ?? "inherit",
     env,
     encoding: "utf-8" as const,
+    timeout: options.timeoutMs,
   };
 
   const direct = spawnSync(command, args, spawnOptions);

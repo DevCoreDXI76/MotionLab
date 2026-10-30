@@ -30,13 +30,13 @@ describe("validateVisualIntent", () => {
 
   it("enforces the AI visual floor at script time", () => {
     const errors = validateVisualIntent({ scenes: [ai("a1"), { id: "t", type: "title", visual: { kind: "motion" as const } }] }, []);
-    expect(errors).toContain("aiImage scenes: 1 (must be 2~4)");
+    expect(errors).toContain("aiImage scenes: 1 (must be 2~2)");
     expect(errors).toContain("diagram scenes: 0 (must be 1~2)");
   });
 
-  it("caps aiImage at 4 (Cloudflare quota)", () => {
-    const scenes = [ai("a1"), ai("a2"), ai("a3"), ai("a4"), ai("a5"), diagram("d1")];
-    expect(validateVisualIntent({ scenes }, [])).toEqual(["aiImage scenes: 5 (must be 2~4)"]);
+  it("caps aiImage at 2 (pixel-rule judge cannot catch hand/text defects — D2)", () => {
+    const scenes = [ai("a1"), ai("a2"), ai("a3"), diagram("d1")];
+    expect(validateVisualIntent({ scenes }, [])).toEqual(["aiImage scenes: 3 (must be 2~2)"]);
   });
 
   it("requires kind-specific fields", () => {

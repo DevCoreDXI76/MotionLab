@@ -2,3 +2,5 @@
 {"utc":"2026-10-30T01:16:31.113Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m1_smoke","scene":"s1-title","ok":true}
 {"utc":"2026-10-30T01:16:40.718Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m1_smoke","scene":"s2-ai","ok":true}
 {"utc":"2026-10-30T01:16:48.171Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m1_smoke","scene":"s2-ai","ok":true}
+{"utc":"2026-10-30T02:20:38.925Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m2_smoke","scene":"s1","ok":true}
+{"utc":"2026-10-30T02:20:47.663Z","model":"@cf/black-forest-labs/flux-2-klein-4b","width":1072,"height":1920,"neuronsEst":312.6,"project":"_m2_smoke","scene":"s1","ok":true}

@@ -3,6 +3,7 @@ import path from "node:path";
 import { TEMPLATES_DIR } from "./paths";
 import { validateScript } from "./scriptSchema";
 import type { CliRunner } from "./claudeCliRunner";
+import { loadExistingClips } from "./visualProviders/existingClip";
 
 // Filled in by later pipeline steps (TTS, visual providers) — never authored by the model, so they're
 // removed from the schema handed to `claude -p` instead of relying on a prompt instruction to omit them.
@@ -20,12 +21,26 @@ export function buildAuthoringSchema(): Record<string, unknown> {
   return jsonSchema;
 }
 
-function buildPrompt(topic: string, format: "shorts" | "long", projectId: string): string {
+// Shown to the script writer; the real gate is lib/castCommandPolicy.ts.
+const ALLOWED_COMMAND_EXAMPLES = [
+  'git log --oneline -5 / git show --stat HEAD / git diff --stat / git status --short  (cwd "root")',
+  'npx vitest run <테스트 파일 경로>  (cwd "remotion")',
+  'grep -n <패턴> <파일> / head -n <숫자> <파일> / wc -l <파일> / ls <폴더> / cat <파일>  (cwd "root")',
+  "secrets·.env·token 같은 단어나 절대경로·상위 폴더(..)가 들어간 인자는 거부됩니다.",
+];
+
+const NEWLINE = String.fromCharCode(10);
+
+/** Exported for testing. */
+export function buildPrompt(topic: string, format: "shorts" | "long", projectId: string): string {
   const promptTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, "script_prompt_template.md"), "utf-8");
+  const clips = loadExistingClips();
   return promptTemplate
     .replace("{{TOPIC}}", topic)
     .replace("{{FORMAT}}", format)
-    .replace("{{PROJECT_ID}}", projectId);
+    .replace("{{PROJECT_ID}}", projectId)
+    .replace("{{EXISTING_CLIPS}}", Object.entries(clips).map(([id, c]) => `    - ${id}: ${c.description}`).join(NEWLINE))
+    .replace("{{ALLOWED_COMMANDS}}", ALLOWED_COMMAND_EXAMPLES.map((l) => `    - ${l}`).join(NEWLINE));
 }
 
 export function generateScript(

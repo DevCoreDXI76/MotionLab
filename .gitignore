@@ -24,3 +24,6 @@ projects/008_spike/spike/*/raw/
 projects/008_spike/spike/*/ref/
 projects/008_spike/spike/**/*.mp4
 projects/008_spike/spike/*/errors.log
+
+# script error logs
+logs/

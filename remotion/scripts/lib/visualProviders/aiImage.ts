@@ -4,6 +4,7 @@ import { spawnCli } from "../spawnCli";
 import { PUBLIC_DIR, TEMPLATES_DIR } from "../paths";
 import { maskSecrets, readSecretFile } from "../secrets";
 import { estimateKleinNeurons, NeuronLedger } from "./neuronLedger";
+import { PixelRuleJudge } from "../candidateJudge";
 import type { ProviderContext, ProviderResult } from "./types";
 
 export const KLEIN_MODEL = "@cf/black-forest-labs/flux-2-klein-4b";
@@ -58,21 +59,18 @@ export interface Candidate {
 }
 
 export interface JudgedCandidate extends Candidate {
-  verdict: "pass" | "fail" | "unjudged";
+  verdict: "pass" | "fail";
   score: number;
   reasons: string[];
+  /** Raw judge output, kept in visual.source for later audit. */
+  findings?: unknown;
 }
 
-/** Picks which generated candidates are usable. M2 replaces the default with the vision/pixel judge (backlog 3). */
+/** Picks which generated candidates are usable (backlog 3) — see lib/candidateJudge.ts. */
 export interface CandidateJudge {
-  readonly name: "auto-vision" | "auto-rule" | "unjudged";
+  readonly name: "auto-vision" | "auto-rule";
   judge(candidates: Candidate[], prompt: string): Promise<JudgedCandidate[]>;
 }
-
-export const unjudged: CandidateJudge = {
-  name: "unjudged",
-  judge: async (candidates) => candidates.map((c) => ({ ...c, verdict: "unjudged", score: 0, reasons: [] })),
-};
 
 interface VisualStyle {
   aiImageSuffix: string;
@@ -129,7 +127,7 @@ export async function generateAiImage(
   options: AiImageOptions = {},
 ): Promise<ProviderResult> {
   const generator = options.generator ?? new CloudflareKleinGenerator();
-  const judge = options.judge ?? unjudged;
+  const judge = options.judge ?? new PixelRuleJudge();
   const ledger = options.ledger ?? new NeuronLedger();
   const perRound = options.candidatesPerRound ?? 2;
   const maxRounds = options.maxRounds ?? 2;
@@ -184,7 +182,7 @@ export async function generateAiImage(
           width: 1080,
           height: 1920,
           generatedSize: [GEN_WIDTH, GEN_HEIGHT],
-          candidates: history.map(({ file, seed, round, verdict, score, reasons }) => ({ file, seed, round, verdict, score, reasons })),
+          candidates: history.map(({ file, seed, round, verdict, score, reasons, findings }) => ({ file, seed, round, verdict, score, reasons, findings })),
           neuronsEst: Math.round(neuronsUsed * 10) / 10,
           generatedAt: new Date().toISOString(),
         },

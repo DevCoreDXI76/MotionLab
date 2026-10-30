@@ -19,4 +19,19 @@
   - talkingPoint: { "heading": string, "bullets": string[] }
   - code: { "language": string, "code": string, "caption"?: string }
   - outro: { "message": string, "ctaText"?: string }
+  - diagram: { "heading": string, "preset": "stack", "labels": string[], "highlight"?: number } — 구조·단계·흐름을 3D 블록으로 쌓아 보여주는 씬입니다. labels는 3~7개, 각 8자 이내 한국어. highlight는 강조할 블록의 0부터 시작하는 번호입니다.
+- 비주얼 배정 (title·talkingPoint·outro 씬은 visual.kind를 반드시 지정하세요. code·diagram 씬은 visual을 비워 두세요):
+  - "aiImage" — AI로 생성하는 배경 이미지. 분위기·감정 비트 컷에 씁니다. visual.prompt에 장면 묘사를 영어 한 문장으로 쓰세요. 스타일(야간 저조도, 필름 질감, 손만 보이게 등)은 파이프라인이 자동으로 붙이니 쓰지 마세요.
+    - **정적 포즈만** 허용합니다: 키보드 위에서 타이핑하는 손, 키보드·트랙패드 위에 올려 둔 손, 책상 위 사물 정물(노트북·머그컵·노트 등). 닫기·스크롤·가리키기·집어 들기처럼 동작이 바뀌는 지시는 쓰지 마세요(이미지 모델이 지키지 못합니다).
+    - 사람 얼굴, 화면 속 읽혀야 하는 글자·코드를 요구하지 마세요. 글자는 영상 위에 따로 얹습니다.
+    - 폴백용으로 visual.query(영어 Pexels 검색어)도 함께 쓰세요.
+  - "pexels" — 실제 움직임이 필요한 컷. visual.query에 영어 검색어를 쓰세요. "hands", "close up"을 넣고 face·portrait·selfie는 쓰지 마세요.
+  - "existingClip" — 이미 만들어 둔 영상 재사용. visual.clipId는 아래 목록의 id만 쓸 수 있습니다:
+{{EXISTING_CLIPS}}
+  - "motion" — 코드로 그리는 모션그래픽. 위가 모두 맞지 않을 때만 쓰세요.
+  - 개수 규칙(검증에서 걸리면 대본이 다시 생성됩니다): aiImage는 정확히 2개, diagram 씬은 1~2개, existingClip은 최대 1개.
+- code 씬의 터미널 명령: props.commands에 실제로 실행할 명령을 [{ "display": string, "argv": string[], "cwd": "root" | "remotion" }] 형식으로 넣으세요. 이 저장소를 읽기만 하는 명령이어야 하며 아래 형태만 허용됩니다(그 밖의 명령은 실행되지 않고 버려집니다):
+{{ALLOWED_COMMANDS}}
+  - display는 argv를 공백으로 이은 문자열과 같아야 합니다(공백이 들어간 인자는 큰따옴표로 감쌉니다).
+  - 명령의 실행 결과(통과 건수, 출력 내용 등)는 대본을 쓰는 시점에 알 수 없으니, 나레이션에서 결과 수치를 단정하지 마세요.
 - 응답은 반드시 주어진 JSON 스키마를 만족하는 구조화된 출력으로만 제공하세요. 다른 설명 텍스트는 포함하지 마세요.

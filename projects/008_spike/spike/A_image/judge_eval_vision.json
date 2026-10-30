@@ -1,0 +1,236 @@
+{
+  "summary": {
+    "judge": "vision",
+    "evaluatedAt": "2026-10-30T02:15:20.602Z",
+    "images": 9,
+    "defectPassed": 1,
+    "falseRejects": 5,
+    "maxFalseRejects": 2,
+    "passed": false
+  },
+  "rows": [
+    {
+      "id": "klein_tone_s1",
+      "human": "pass",
+      "humanDefects": [],
+      "findings": {
+        "face_visible": false,
+        "hand_distortion": false,
+        "readable_fake_text": true,
+        "white_border": false,
+        "action": "yes",
+        "reasons": [
+          "readable_fake_text: 화면 왼쪽 아래 키보드 영역의 키캡 각인이 초점 안쪽에 들어와 있어 일부 키(쉬프트·기호·슬래시 키 등)의 글자·기호 형태가 또렷한 윤곽으로 줄지어 보임 — 흐린 색 덩어리 수준을 넘어섬"
+        ]
+      },
+      "outcome": "false_reject",
+      "seconds": 41,
+      "judge": "fail",
+      "judgeReasons": [
+        "결함: 초점 맞은 가짜 글자",
+        "readable_fake_text: 화면 왼쪽 아래 키보드 영역의 키캡 각인이 초점 안쪽에 들어와 있어 일부 키(쉬프트·기호·슬래시 키 등)의 글자·기호 형태가 또렷한 윤곽으로 줄지어 보임 — 흐린 색 덩어리 수준을 넘어섬"
+      ]
+    },
+    {
+      "id": "klein_repro_s1",
+      "human": "pass",
+      "humanDefects": [],
+      "findings": {
+        "face_visible": false,
+        "hand_distortion": true,
+        "readable_fake_text": false,
+        "white_border": false,
+        "action": "yes",
+        "reasons": [
+          "hand_distortion: 두 손이 겹치는 화면 중앙부(오른손 검지 뒤쪽)에 관절·손톱이 없는 분홍빛 손가락 형태가 반투명하게 끼어 있어, 뒤쪽 손 손가락이 앞쪽 손과 녹아 겹친 것처럼 보이고 손가락 소속·개수가 불명확함"
+        ]
+      },
+      "outcome": "false_reject",
+      "seconds": 32,
+      "judge": "fail",
+      "judgeReasons": [
+        "결함: 손 왜곡",
+        "hand_distortion: 두 손이 겹치는 화면 중앙부(오른손 검지 뒤쪽)에 관절·손톱이 없는 분홍빛 손가락 형태가 반투명하게 끼어 있어, 뒤쪽 손 손가락이 앞쪽 손과 녹아 겹친 것처럼 보이고 손가락 소속·개수가 불명확함"
+      ]
+    },
+    {
+      "id": "klein_repro_s2",
+      "human": "fail",
+      "humanDefects": [
+        "초점 맞은 가짜 글자"
+      ],
+      "findings": {
+        "face_visible": false,
+        "hand_distortion": true,
+        "readable_fake_text": true,
+        "white_border": false,
+        "action": "partial",
+        "reasons": [
+          "hand_distortion: 화면 중앙(두 손이 겹치는 부분)에서 위쪽 손의 손가락 끝과 아래쪽 손의 손등이 경계 없이 녹아 붙어 있고, 그 사이에 분홍빛 반투명 덩어리가 손가락인지 아닌지 분간되지 않는 형태로 끼어 있음",
+          "hand_distortion: 아래쪽 오른손은 손목에서 프레임 밖으로 이어지는 연결이 어색하고 손가락 굵기·관절 위치가 비정상적으로 뭉개져 손가락 개수를 셀 수 없음",
+          "readable_fake_text: 왼쪽 노트북 화면 하단(가운데 왼편)의 초록색 코드 줄들이 아웃포커스 덩어리가 아니라 또렷한 글자 형태로 줄지어 보임 — 배경으로 깔면 글자로 읽힐 수준",
+          "readable_fake_text: 키보드 키캡 각인(중앙 하단 키들)이 선명하게 찍혀 글자 모양으로 인식됨",
+          "action: 손이 노트북 키보드 위에 놓인 클로즈업이라는 점은 맞으나, 프롬프트의 '스크롤' 동작이 아닌 타이핑/얹어둔 자세에 가깝고 화면도 아웃포커스가 아니라 일부 선명해 의도를 절반만 따름"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 36,
+      "judge": "fail",
+      "judgeReasons": [
+        "결함: 손 왜곡",
+        "결함: 초점 맞은 가짜 글자",
+        "hand_distortion: 화면 중앙(두 손이 겹치는 부분)에서 위쪽 손의 손가락 끝과 아래쪽 손의 손등이 경계 없이 녹아 붙어 있고, 그 사이에 분홍빛 반투명 덩어리가 손가락인지 아닌지 분간되지 않는 형태로 끼어 있음",
+        "hand_distortion: 아래쪽 오른손은 손목에서 프레임 밖으로 이어지는 연결이 어색하고 손가락 굵기·관절 위치가 비정상적으로 뭉개져 손가락 개수를 셀 수 없음",
+        "readable_fake_text: 왼쪽 노트북 화면 하단(가운데 왼편)의 초록색 코드 줄들이 아웃포커스 덩어리가 아니라 또렷한 글자 형태로 줄지어 보임 — 배경으로 깔면 글자로 읽힐 수준",
+        "readable_fake_text: 키보드 키캡 각인(중앙 하단 키들)이 선명하게 찍혀 글자 모양으로 인식됨",
+        "action: 손이 노트북 키보드 위에 놓인 클로즈업이라는 점은 맞으나, 프롬프트의 '스크롤' 동작이 아닌 타이핑/얹어둔 자세에 가깝고 화면도 아웃포커스가 아니라 일부 선명해 의도를 절반만 따름"
+      ]
+    },
+    {
+      "id": "klein_repro_s4",
+      "human": "pass",
+      "humanDefects": [],
+      "findings": {
+        "face_visible": false,
+        "hand_distortion": false,
+        "readable_fake_text": true,
+        "white_border": false,
+        "action": "yes",
+        "reasons": [
+          "readable_fake_text: 화면 왼쪽 아래~중앙의 키보드 키캡 각인이 초점 안에 들어와 'V', 'L', 윈도우키·화살표 등 글자/기호 형태로 또렷하게 식별된다 (모니터 화면 글자는 아웃포커스로 뭉개져 문제 없음)."
+        ]
+      },
+      "outcome": "false_reject",
+      "seconds": 29,
+      "judge": "fail",
+      "judgeReasons": [
+        "결함: 초점 맞은 가짜 글자",
+        "readable_fake_text: 화면 왼쪽 아래~중앙의 키보드 키캡 각인이 초점 안에 들어와 'V', 'L', 윈도우키·화살표 등 글자/기호 형태로 또렷하게 식별된다 (모니터 화면 글자는 아웃포커스로 뭉개져 문제 없음)."
+      ]
+    },
+    {
+      "id": "klein_repro_s5",
+      "human": "pass",
+      "humanDefects": [],
+      "findings": {
+        "face_visible": false,
+        "hand_distortion": true,
+        "readable_fake_text": false,
+        "white_border": false,
+        "action": "partial",
+        "reasons": [
+          "hand_distortion: 화면 안에 손이 3개 이상 등장한다 — 좌측 중앙에서 손목 없이 손가락만 떠서 나오는 손, 우측 상단의 손, 좌측 하단 전경의 큰 손이 서로 다른 방향에서 들어와 한 사람의 양손으로 설명되지 않는다.",
+          "hand_distortion: 좌측 중앙 손(세로 약 900~1150px)은 손목·팔 연결부가 없이 전경 손 위에 반투명하게 겹쳐 보여 이중 노출처럼 녹아 있다.",
+          "hand_distortion: 전경 큰 손의 손가락들이 중앙부(가로 400~800px)에서 경계 없이 한 덩어리로 융합되어 손가락 개수와 관절 위치를 식별할 수 없다.",
+          "action(partial): 우측 하단에서 노트북 상판 가장자리를 쥔 모습은 '닫는 동작'에 부합하지만, 전경의 주 손은 화면을 닫기보다 키보드 위에 얹혀 있어 지시된 포즈를 부분적으로만 따랐다."
+        ]
+      },
+      "outcome": "false_reject",
+      "seconds": 27,
+      "judge": "fail",
+      "judgeReasons": [
+        "결함: 손 왜곡",
+        "hand_distortion: 화면 안에 손이 3개 이상 등장한다 — 좌측 중앙에서 손목 없이 손가락만 떠서 나오는 손, 우측 상단의 손, 좌측 하단 전경의 큰 손이 서로 다른 방향에서 들어와 한 사람의 양손으로 설명되지 않는다.",
+        "hand_distortion: 좌측 중앙 손(세로 약 900~1150px)은 손목·팔 연결부가 없이 전경 손 위에 반투명하게 겹쳐 보여 이중 노출처럼 녹아 있다.",
+        "hand_distortion: 전경 큰 손의 손가락들이 중앙부(가로 400~800px)에서 경계 없이 한 덩어리로 융합되어 손가락 개수와 관절 위치를 식별할 수 없다.",
+        "action(partial): 우측 하단에서 노트북 상판 가장자리를 쥔 모습은 '닫는 동작'에 부합하지만, 전경의 주 손은 화면을 닫기보다 키보드 위에 얹혀 있어 지시된 포즈를 부분적으로만 따랐다."
+      ]
+    },
+    {
+      "id": "klein_tone_s2",
+      "human": "pass",
+      "humanDefects": [],
+      "findings": {
+        "face_visible": false,
+        "hand_distortion": true,
+        "readable_fake_text": false,
+        "white_border": false,
+        "action": "partial",
+        "reasons": [
+          "hand_distortion: 화면 오른쪽에서 손 두 개가 겹쳐져 손가락이 중첩·융합된 형태로 보이고, 어느 손가락이 어느 손에 속하는지 구분되지 않아 개수가 불분명하다.",
+          "hand_distortion: 오른쪽 아래 손은 손목에서 잘린 것이 아니라 팔뚝이 프레임 밖으로 이어져 있고, 위쪽 손가락 마디와 연결이 해부학적으로 맞지 않는다.",
+          "action: 트랙패드를 스크롤하는 한 손 클로즈업이 아니라 두 손이 트랙패드 위에 얹혀 있고 손목 크롭 지시도 지켜지지 않아 부분적으로만 따랐다."
+        ]
+      },
+      "outcome": "false_reject",
+      "seconds": 22,
+      "judge": "fail",
+      "judgeReasons": [
+        "결함: 손 왜곡",
+        "hand_distortion: 화면 오른쪽에서 손 두 개가 겹쳐져 손가락이 중첩·융합된 형태로 보이고, 어느 손가락이 어느 손에 속하는지 구분되지 않아 개수가 불분명하다.",
+        "hand_distortion: 오른쪽 아래 손은 손목에서 잘린 것이 아니라 팔뚝이 프레임 밖으로 이어져 있고, 위쪽 손가락 마디와 연결이 해부학적으로 맞지 않는다.",
+        "action: 트랙패드를 스크롤하는 한 손 클로즈업이 아니라 두 손이 트랙패드 위에 얹혀 있고 손목 크롭 지시도 지켜지지 않아 부분적으로만 따랐다."
+      ]
+    },
+    {
+      "id": "klein_tone_s4",
+      "human": "fail",
+      "humanDefects": [
+        "초점 맞은 가짜 글자"
+      ],
+      "findings": {
+        "action": "partial",
+        "face_visible": false,
+        "hand_distortion": false,
+        "readable_fake_text": false,
+        "white_border": false,
+        "reasons": [
+          "action: 손이 키보드 위에 놓인 타이핑 포즈는 맞으나, 손목에서 잘리지 않고 좌측 하단으로 팔뚝과 몸통으로 보이는 어두운 덩어리가 이어져 '손목 크롭·사람 미등장' 지시를 완전히 따르지 않음"
+        ]
+      },
+      "outcome": "DEFECT_PASSED",
+      "seconds": 31,
+      "judge": "pass",
+      "judgeReasons": [
+        "action: 손이 키보드 위에 놓인 타이핑 포즈는 맞으나, 손목에서 잘리지 않고 좌측 하단으로 팔뚝과 몸통으로 보이는 어두운 덩어리가 이어져 '손목 크롭·사람 미등장' 지시를 완전히 따르지 않음"
+      ]
+    },
+    {
+      "id": "klein_tone_s5",
+      "human": "fail",
+      "humanDefects": [
+        "손 왜곡"
+      ],
+      "findings": {
+        "face_visible": false,
+        "hand_distortion": false,
+        "readable_fake_text": true,
+        "white_border": false,
+        "action": "no",
+        "reasons": [
+          "readable_fake_text: 화면 왼쪽 아래 백라이트 키보드의 키캡 각인이 줄지어 글자 형태로 드러나 보임(완전한 아웃포커스 덩어리로 뭉개지지 않음) — 애매한 수준이라 결함 쪽으로 판정",
+          "action: 프롬프트는 '노트북 덮개를 조심스럽게 닫는 손'인데, 실제 이미지는 두 손이 키보드 위에 올려져 타이핑하는 포즈이며 덮개를 잡거나 닫는 동작이 전혀 없음"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 31,
+      "judge": "fail",
+      "judgeReasons": [
+        "결함: 초점 맞은 가짜 글자",
+        "readable_fake_text: 화면 왼쪽 아래 백라이트 키보드의 키캡 각인이 줄지어 글자 형태로 드러나 보임(완전한 아웃포커스 덩어리로 뭉개지지 않음) — 애매한 수준이라 결함 쪽으로 판정",
+        "action: 프롬프트는 '노트북 덮개를 조심스럽게 닫는 손'인데, 실제 이미지는 두 손이 키보드 위에 올려져 타이핑하는 포즈이며 덮개를 잡거나 닫는 동작이 전혀 없음"
+      ]
+    },
+    {
+      "id": "klein_tone_s1_seedB",
+      "human": "pass",
+      "humanDefects": [],
+      "findings": {
+        "face_visible": false,
+        "hand_distortion": false,
+        "readable_fake_text": false,
+        "white_border": false,
+        "action": "partial",
+        "reasons": [
+          "action: 노트북 자판 위에서 타이핑하는 손 동작 자체는 맞지만, 프롬프트의 '손목에서 잘린 손만 보이게' 조건과 달리 오른쪽 가장자리까지 팔뚝이 길게 이어져 프레임에 들어와 있음"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 30,
+      "judge": "pass",
+      "judgeReasons": [
+        "action: 노트북 자판 위에서 타이핑하는 손 동작 자체는 맞지만, 프롬프트의 '손목에서 잘린 손만 보이게' 조건과 달리 오른쪽 가장자리까지 팔뚝이 길게 이어져 프레임에 들어와 있음"
+      ]
+    }
+  ]
+}

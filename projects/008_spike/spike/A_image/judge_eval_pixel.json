@@ -1,0 +1,208 @@
+{
+  "summary": {
+    "judge": "pixel",
+    "evaluatedAt": "2026-10-30T02:18:30.934Z",
+    "images": 9,
+    "defectPassed": 3,
+    "falseRejects": 0,
+    "maxFalseRejects": 2,
+    "passed": false
+  },
+  "rows": [
+    {
+      "id": "klein_tone_s1",
+      "human": "pass",
+      "humanDefects": [],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 1
+    },
+    {
+      "id": "klein_repro_s1",
+      "human": "pass",
+      "humanDefects": [],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 1
+    },
+    {
+      "id": "klein_repro_s2",
+      "human": "fail",
+      "humanDefects": [
+        "초점 맞은 가짜 글자"
+      ],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "DEFECT_PASSED",
+      "seconds": 1
+    },
+    {
+      "id": "klein_repro_s4",
+      "human": "pass",
+      "humanDefects": [],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 1
+    },
+    {
+      "id": "klein_repro_s5",
+      "human": "pass",
+      "humanDefects": [],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 1
+    },
+    {
+      "id": "klein_tone_s2",
+      "human": "pass",
+      "humanDefects": [],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 1
+    },
+    {
+      "id": "klein_tone_s4",
+      "human": "fail",
+      "humanDefects": [
+        "초점 맞은 가짜 글자"
+      ],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "DEFECT_PASSED",
+      "seconds": 1
+    },
+    {
+      "id": "klein_tone_s5",
+      "human": "fail",
+      "humanDefects": [
+        "손 왜곡"
+      ],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "DEFECT_PASSED",
+      "seconds": 1
+    },
+    {
+      "id": "klein_tone_s1_seedB",
+      "human": "pass",
+      "humanDefects": [],
+      "judge": "pass",
+      "judgeReasons": [],
+      "findings": {
+        "faces": 0,
+        "whiteBorder": false,
+        "checked": [
+          "face",
+          "white_border"
+        ],
+        "notChecked": [
+          "hand_distortion",
+          "readable_fake_text"
+        ]
+      },
+      "outcome": "match",
+      "seconds": 1
+    }
+  ]
+}
