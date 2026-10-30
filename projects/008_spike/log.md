@@ -6,6 +6,7 @@
 - 2026-10-29 klein 보강: 8장 추가 생성·검수, Remotion SpikeA/SpikeACompare 렌더(74초/48초), verdict 확정 ~50분. 중간에 DNS 장애로 요청 1건이 10분 넘게 멈추고 2건 실패 → 재시도로 해결.
 - 2026-10-29 실험 C: @remotion/three 설치·회귀 확인, SpikeC 작성, `--gl` 6옵션×웜 렌더 + 백엔드 확인 ~45분. 실험 B는 사용자가 Seedance 웹에서 직접 생성 대기 중(프롬프트 `spike/B_video/seedance_prompts.md`).
 - 2026-10-30 실험 B: 사용자가 Google Flow(무료)에서 Veo 3.1 Lite 클립 2개 생성(클립당 약 5분) → 실측 검증·SpikeB/SpikeBCompare 렌더·Veo API 단가 확인·verdict 작성 ~40분.
+- **2026-10-30 1단계(비주얼 스파이크) 종료.** 예정(11/12)보다 2주 일찍 완료. 판정 A 조건부·B 조건부·C 쓸 만함 → 사용자 결정 "0원 자동 구성"(klein+KenBurns 배경, 3D 다이어그램, Pexels 유지, Veo는 008 완주 후 선택). **1단계 총 사용액 0원**(fal 0원, Cloudflare 무료 할당, Google Flow 무료 크레딧). 2단계 착수는 별도 지시 대기.
 
 ## 막힌 지점
 - 실험 B Seedance 경로 실패: Dreamina(Seedance) 가입 시 웰컴 무료 크레딧이 지급되지 않음 → 사용액 0원으로 포기하고 Google Flow(무료 계정, Veo 3.1 Lite, 50크레딧/일·클립당 10)로 전환. 같은 프롬프트(seedance_prompts.md) 사용.
