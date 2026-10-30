@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateScript } from "./claudeScriptGenerator";
+import { buildAuthoringSchema, generateScript } from "./claudeScriptGenerator";
 import type { CliRunner } from "./claudeCliRunner";
 
 const VALID_SCRIPT = {
@@ -37,5 +37,14 @@ describe("generateScript", () => {
   it("throws when structured_output fails schema validation", () => {
     const runner = fakeRunner({ id: "x" }); // missing required fields
     expect(() => generateScript(runner, "T", "shorts", "001_sample")).toThrow(/schema validation/);
+  });
+
+  it("hands claude -p a schema without runtime-only fields", () => {
+    const schema = buildAuthoringSchema() as { properties: { scenes: { items: { properties: Record<string, { properties?: Record<string, unknown> }> } } } };
+    const sceneProps = schema.properties.scenes.items.properties;
+    expect(sceneProps.durationMs).toBeUndefined();
+    expect(sceneProps.audioPath).toBeUndefined();
+    expect(Object.keys(sceneProps.visual.properties ?? {})).toEqual(["cue", "focal", "kind", "query", "prompt", "clipId"]);
+    expect(schema).not.toHaveProperty("$schema");
   });
 });

@@ -4,10 +4,19 @@ import { TEMPLATES_DIR } from "./paths";
 import { validateScript } from "./scriptSchema";
 import type { CliRunner } from "./claudeCliRunner";
 
-function buildJsonSchema(): Record<string, unknown> {
+// Filled in by later pipeline steps (TTS, visual providers) — never authored by the model, so they're
+// removed from the schema handed to `claude -p` instead of relying on a prompt instruction to omit them.
+const RUNTIME_SCENE_FIELDS = ["durationMs", "audioPath"];
+const RUNTIME_VISUAL_FIELDS = ["assetPath", "source"];
+
+/** The full script schema minus runtime-only fields (docs/2단계_설계.md §2.3). Exported for testing. */
+export function buildAuthoringSchema(): Record<string, unknown> {
   const schemaPath = path.join(TEMPLATES_DIR, "script_schema.json");
   const schema = JSON.parse(fs.readFileSync(schemaPath, "utf-8"));
   const { $schema, title, ...jsonSchema } = schema;
+  const sceneProps = jsonSchema.properties.scenes.items.properties;
+  for (const field of RUNTIME_SCENE_FIELDS) delete sceneProps[field];
+  for (const field of RUNTIME_VISUAL_FIELDS) delete sceneProps.visual.properties[field];
   return jsonSchema;
 }
 
@@ -26,7 +35,7 @@ export function generateScript(
   projectId: string,
 ): Record<string, unknown> {
   const prompt = buildPrompt(topic, format, projectId);
-  const schema = buildJsonSchema();
+  const schema = buildAuthoringSchema();
 
   const { status, stdout, stderr } = runner.run([
     "-p",

@@ -3,6 +3,7 @@ import { TitleScene } from "./components/scenes/TitleScene";
 import { TalkingPointScene } from "./components/scenes/TalkingPointScene";
 import { CodeScene } from "./components/scenes/CodeScene";
 import { OutroScene } from "./components/scenes/OutroScene";
+import { DiagramScene } from "./components/scenes/DiagramScene";
 import type { SceneProps } from "./components/scenes/types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- heterogeneous scene props require type erasure here
@@ -11,6 +12,7 @@ export const sceneRegistry: Record<string, React.FC<SceneProps<any>>> = {
   talkingPoint: TalkingPointScene,
   code: CodeScene,
   outro: OutroScene,
+  diagram: DiagramScene,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- heterogeneous scene props require type erasure here

@@ -1,0 +1,10 @@
+{
+  "flow_01": {
+    "source": "projects/008_spike/spike/B_video/flow_01.mp4",
+    "description": "야간 저조도 노트북에서 손이 계속 타이핑하는 8초 클립 — 008 1단계 실험 B의 결과 화면 (Google Flow, Veo 3.1 Lite, image-to-video)",
+    "origin": "1단계 실험 B에서 이미 생성한 클립 재사용. 신규 생성 아님",
+    "startSec": 0,
+    "durationSec": null,
+    "cropBottomRatio": 0.05
+  }
+}

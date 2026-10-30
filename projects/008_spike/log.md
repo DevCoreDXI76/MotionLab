@@ -55,3 +55,8 @@
 ## 2단계 진행 기록 (008 파이프라인 완주, 마감 12/31)
 *실전 편 폴더(`projects/008_*`)가 생기면 M4부터 그쪽 log.md로 옮긴다.*
 - 2026-10-30 M0 설계: 문서·코드 실측 후 `docs/2단계_설계.md` 작성 ~1세션. 기준선 vitest 71 / pytest 21 / tsc 0. 사람이 손대던 곳은 대본 작성·b-roll 쿼리/재검색·cast 명령 추가·단계 간 실행 판단 4곳으로 확인. 결정 대기 D1~D7.
+- 2026-10-30 M1 스키마·프로바이더 ~1세션: script.json에 `visual.kind/query/prompt/clipId/source`와 `diagram` 씬 타입 추가(001~007 전부 그대로 통과), 대본 생성용 작성 스키마 분리, 프로바이더 4종(pexels 추출·aiImage(Cloudflare klein)·existingClip(flow_01)·motion) + 자동 폴백 체인, AI 비주얼 하한 판정 함수, `DiagramScene`(SpikeC 일반화) + 3D 포함 편만 `--gl=angle`, Pexels 키 `secrets/`로 이동(D4), flow_01 커밋(D7). 테스트 vitest 112 / pytest 21 / tsc 0.
+  - 회귀: 007 앞 10초 새 코드 렌더 vs 변경 전 렌더 SSIM 1.000000, vs 공개본 0.9996. 003~007 metadata.txt 재생성 바이트 동일. 001~007 script.json 변경 0.
+  - 실호출 스모크(임시 편 `_m1_smoke`, 확인 후 삭제): aiImage 2씬(klein 4장, ~1,250 neurons) + diagram + pexels + existingClip → TTS → render.ts 86초, 폴백 0, 하한 판정 충족. 후보 선택은 아직 "unjudged"(첫 후보) — M2에서 판정기로 교체.
+  - **막힌 지점: Edge TTS가 HTTP 403** (msedge-tts 2.0.7, 재시도해도 동일 — Microsoft 쪽 핸드셰이크 변경으로 추정). msedge-tts 2.1.0(10/13 릴리스)으로 올려 해결, 버전 고정. 1기 렌더는 기존 mp3를 쓰므로 영향 없음.
+  - Veo 워터마크는 실측상 하단 약 2.5% 안 → VideoBackground 수정 대신 ffmpeg에서 하단 5% 크롭(설계 문서 반영).

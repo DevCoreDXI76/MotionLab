@@ -9,7 +9,7 @@
     "@react-three/fiber": "^9.8.2",
     "@remotion/cli": "4.0.512",
     "@remotion/three": "4.0.512",
-    "msedge-tts": "^2.0.7",
+    "msedge-tts": "2.1.0",
     "music-metadata": "^11.14.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",

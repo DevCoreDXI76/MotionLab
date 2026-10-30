@@ -6,6 +6,7 @@ import { validateScript } from "./lib/scriptSchema";
 import { generateMetadataDraft } from "./lib/metadataDraft";
 import { assertFfmpegAvailable, normalizeLoudness } from "./lib/audio/loudnorm";
 import { computeThumbnailSeekMs, extractThumbnail } from "./lib/thumbnail";
+import { buildRenderArgs } from "./lib/renderArgs";
 import { PROJECTS_DIR, REMOTION_DIR, PUBLIC_DIR } from "./lib/paths";
 
 function assertDurationsFilled(script: {
@@ -56,7 +57,7 @@ async function main() {
   fs.mkdirSync(outputDir, { recursive: true });
   const outputPath = path.join(outputDir, `${projectId}.mp4`);
 
-  const npxArgs = ["remotion", "render", "src/index.ts", "Episode", outputPath, `--props=${scriptPath}`];
+  const npxArgs = buildRenderArgs(script, scriptPath, outputPath);
   const result = spawnCli("npx", npxArgs, { cwd: REMOTION_DIR, stdio: "inherit" });
 
   if (result.status !== 0) {

@@ -1,5 +1,8 @@
+import fs from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { validateScript } from "./scriptSchema";
+import { PROJECTS_DIR } from "./paths";
 
 const validScript = {
   id: "001_sample",
@@ -50,5 +53,34 @@ describe("validateScript", () => {
       scenes: [{ ...validScript.scenes[0], visual: { kind: "image" } }],
     };
     expect(validateScript(bad).valid).toBe(false);
+  });
+
+  it("rejects a visual field with a property outside the schema", () => {
+    const bad = {
+      ...validScript,
+      scenes: [{ ...validScript.scenes[0], visual: { kind: "aiImage", seed: 1 } }],
+    };
+    expect(validateScript(bad).valid).toBe(false);
+  });
+
+  it("accepts 2기 visual intent + source fields and the diagram scene type", () => {
+    const script = {
+      ...validScript,
+      scenes: [
+        {
+          ...validScript.scenes[0],
+          visual: { kind: "aiImage", prompt: "hands on a keyboard", query: "hands typing close up", assetPath: null, source: { provider: "cloudflare-workers-ai" } },
+        },
+        { id: "d1", type: "diagram", narration: "구조예요.", props: { heading: "구조", labels: ["대본", "TTS", "렌더"] } },
+      ],
+    };
+    expect(validateScript(script)).toEqual({ valid: true, errors: [] });
+  });
+
+  // Absolute rule 6 (docs/2단계_설계.md §7): every existing episode must keep validating unchanged.
+  const episodeIds = fs.readdirSync(PROJECTS_DIR).filter((d) => fs.existsSync(path.join(PROJECTS_DIR, d, "script.json")));
+  it.each(episodeIds)("existing episode %s still validates", (id) => {
+    const script = JSON.parse(fs.readFileSync(path.join(PROJECTS_DIR, id, "script.json"), "utf-8"));
+    expect(validateScript(script)).toEqual({ valid: true, errors: [] });
   });
 });

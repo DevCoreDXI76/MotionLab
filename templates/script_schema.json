@@ -18,7 +18,7 @@
         "required": ["id", "type", "narration"],
         "properties": {
           "id": { "type": "string", "minLength": 1 },
-          "type": { "type": "string", "enum": ["title", "talkingPoint", "code", "outro"] },
+          "type": { "type": "string", "enum": ["title", "talkingPoint", "code", "outro", "diagram"] },
           "narration": { "type": "string", "minLength": 1 },
           "subtitleText": { "type": ["string", "null"] },
           "durationMs": { "type": ["number", "null"], "minimum": 0 },
@@ -29,7 +29,12 @@
             "properties": {
               "cue": { "type": ["string", "null"] },
               "assetPath": { "type": ["string", "null"] },
-              "focal": { "type": "string", "enum": ["center", "top", "bottom", "left", "right"] }
+              "focal": { "type": "string", "enum": ["center", "top", "bottom", "left", "right"] },
+              "kind": { "type": "string", "enum": ["pexels", "aiImage", "existingClip", "motion"] },
+              "query": { "type": ["string", "null"] },
+              "prompt": { "type": ["string", "null"] },
+              "clipId": { "type": ["string", "null"] },
+              "source": { "type": ["object", "null"] }
             },
             "additionalProperties": false
           }

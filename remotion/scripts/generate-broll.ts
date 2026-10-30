@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
-import { loadEnv } from "./lib/loadEnv";
-import { searchPortraitVideo } from "./lib/pexels";
-import { PROJECTS_DIR, PUBLIC_DIR } from "./lib/paths";
+import { fetchPexelsBroll, readPexelsApiKey } from "./lib/visualProviders/pexels";
+import { PROJECTS_DIR } from "./lib/paths";
 
 /**
  * Downloads a free Pexels stock video (portrait, license needs no
@@ -11,6 +10,8 @@ import { PROJECTS_DIR, PUBLIC_DIR } from "./lib/paths";
  * wires it into a scene's `visual.assetPath`, reusing the same
  * image/video CentralVisual pipeline built for the Studio recording (see
  * src/components/VideoBackground.tsx) — no separate "broll" code path.
+ * The search itself lives in lib/visualProviders/pexels.ts, shared with
+ * generate-visuals.ts.
  *
  * Usage: npx tsx scripts/generate-broll.ts <projectId> <sceneId> "<query>" [--allow-face]
  *
@@ -19,7 +20,6 @@ import { PROJECTS_DIR, PUBLIC_DIR } from "./lib/paths";
  * scene intentionally wants a face shot.
  */
 async function main() {
-  loadEnv();
   const rawArgs = process.argv.slice(2);
   const allowFaceCloseup = rawArgs.includes("--allow-face");
   const [projectId, sceneId, query] = rawArgs.filter((a) => a !== "--allow-face");
@@ -28,51 +28,6 @@ async function main() {
     process.exit(1);
   }
 
-  const apiKey = process.env.PEXELS_API_KEY;
-  if (!apiKey) {
-    console.error("PEXELS_API_KEY not set (checked process.env and remotion/.env).");
-    process.exit(1);
-  }
-
-  const videosDir = path.join(PUBLIC_DIR, "projects", projectId, "videos");
-  fs.mkdirSync(videosDir, { recursive: true });
-  const excludeIds = new Set(
-    fs
-      .readdirSync(videosDir)
-      .filter((f) => f.endsWith(".credit.json"))
-      .map((f) => JSON.parse(fs.readFileSync(path.join(videosDir, f), "utf-8")).pexelsId)
-      .filter((id): id is number => typeof id === "number"),
-  );
-  if (excludeIds.size > 0) {
-    console.log(`Excluding ${excludeIds.size} already-used clip(s) from this project: ${[...excludeIds].join(", ")}`);
-  }
-
-  console.log(`Searching Pexels for "${query}" (portrait)...`);
-  const result = await searchPortraitVideo(query, apiKey, excludeIds, allowFaceCloseup);
-  if (!result) {
-    console.error(`No portrait mp4 result found for "${query}" (after excluding already-used clips).`);
-    process.exit(1);
-  }
-  console.log(`Found ${result.width}x${result.height} clip by ${result.photographer} (${result.pageUrl})`);
-  const filename = `${sceneId}-broll.mp4`;
-  const outPath = path.join(videosDir, filename);
-
-  const videoResponse = await fetch(result.downloadUrl);
-  if (!videoResponse.ok || !videoResponse.body) {
-    throw new Error(`Failed to download clip: HTTP ${videoResponse.status}`);
-  }
-  const buffer = Buffer.from(await videoResponse.arrayBuffer());
-  fs.writeFileSync(outPath, buffer);
-  console.log(`Downloaded ${(buffer.length / 1024).toFixed(0)} KB -> ${outPath}`);
-
-  // Attribution sidecar — not required by Pexels' license, but we told them
-  // we'd credit clips in the video description when requesting the API key.
-  const creditPath = path.join(videosDir, `${sceneId}-broll.credit.json`);
-  fs.writeFileSync(
-    creditPath,
-    JSON.stringify({ pexelsId: result.id, photographer: result.photographer, pexelsUrl: result.pageUrl, query }, null, 2),
-  );
-
   const scriptPath = path.join(PROJECTS_DIR, projectId, "script.json");
   const script = JSON.parse(fs.readFileSync(scriptPath, "utf-8"));
   const scene = script.scenes.find((s: { id: string }) => s.id === sceneId);
@@ -80,7 +35,14 @@ async function main() {
     console.error(`Scene "${sceneId}" not found in ${scriptPath}.`);
     process.exit(1);
   }
-  scene.visual = { ...scene.visual, assetPath: `projects/${projectId}/videos/${filename}` };
+
+  const ctx = { projectId, sceneId, sceneType: scene.type, log: (m: string) => console.log(m) };
+  const result = await fetchPexelsBroll(ctx, query, readPexelsApiKey(), { allowFaceCloseup });
+  if (!result) {
+    process.exit(1);
+  }
+
+  scene.visual = { ...scene.visual, assetPath: result.assetPath, source: result.source };
   fs.writeFileSync(scriptPath, JSON.stringify(script, null, 2));
   console.log(`Wired ${sceneId}.visual.assetPath in ${scriptPath}`);
 }
