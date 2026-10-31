@@ -1,0 +1,257 @@
+{
+  "id": "008_ai_visual",
+  "title": "총 사용 금액 0원, AI 비주얼 3종 실험",
+  "format": "shorts",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "id": "s1_title",
+      "type": "title",
+      "narration": "총 사용 금액 0원으로 AI 이미지와 AI 영상, 3D 씬까지 세 가지를 시험해서 만든 결과물이 지금 보고 계신 이 화면입니다.",
+      "props": {
+        "title": "총 사용 금액 0원",
+        "subtitle": "AI 비주얼 3종 무료 실험"
+      },
+      "visual": {
+        "kind": "aiImage",
+        "prompt": "A ceramic mug steaming beside the corner of a backlit mechanical keyboard on a dark wooden desk",
+        "query": "close up mechanical keyboard mug dark desk",
+        "focal": "center",
+        "assetPath": "projects/008_ai_visual/images/s1_title.jpg",
+        "source": {
+          "provider": "cloudflare-workers-ai",
+          "selectedBy": "auto-rule",
+          "model": "@cf/black-forest-labs/flux-2-klein-4b",
+          "prompt": "A ceramic mug steaming beside the corner of a backlit mechanical keyboard on a dark wooden desk, dark workspace at night, lit by a soft cool monitor glow coming from outside the frame, shallow depth of field, 35mm film photo, the subject is the light, textures and desk objects, any laptop or monitor screen is out of frame or only a blurred sliver at the edge, any hands are only partly visible and softly out of focus, no paper props such as notebooks, sticky notes, memo pads, loose paper, books, documents or receipts, no people, no faces",
+          "seed": 65662006,
+          "width": 1080,
+          "height": 1920,
+          "generatedSize": [
+            1072,
+            1920
+          ],
+          "candidates": [
+            {
+              "file": "projects/008_ai_visual/images/candidates/s1_title-r0c0.jpg",
+              "seed": 65662006,
+              "round": 0,
+              "verdict": "pass",
+              "score": 0,
+              "reasons": [],
+              "findings": {
+                "faces": 0,
+                "whiteBorder": false,
+                "checked": [
+                  "face",
+                  "white_border"
+                ],
+                "notChecked": [
+                  "hand_distortion",
+                  "readable_fake_text"
+                ]
+              }
+            },
+            {
+              "file": "projects/008_ai_visual/images/candidates/s1_title-r0c1.jpg",
+              "seed": 65662007,
+              "round": 0,
+              "verdict": "pass",
+              "score": 0,
+              "reasons": [],
+              "findings": {
+                "faces": 0,
+                "whiteBorder": false,
+                "checked": [
+                  "face",
+                  "white_border"
+                ],
+                "notChecked": [
+                  "hand_distortion",
+                  "readable_fake_text"
+                ]
+              }
+            }
+          ],
+          "neuronsEst": 625.2,
+          "generatedAt": "2026-10-31T02:22:47.069Z",
+          "fallbackFrom": null,
+          "fallbackReason": null
+        }
+      },
+      "durationMs": 10080,
+      "audioPath": "projects/008_ai_visual/audio/s1_title.mp3"
+    },
+    {
+      "id": "s2_image",
+      "type": "talkingPoint",
+      "narration": "무료로 뽑은 AI 이미지 아홉 장을 한 장씩 확대해서 전부 검수했습니다. 사람 얼굴은 한 장도 없어 다행이었지만, 손이 일그러진 게 한 장, 초점이 맞은 가짜 글자가 두 장 나와서 배경 전용으로 결론 냈어요.",
+      "props": {
+        "heading": "AI 이미지는 배경 전용",
+        "bullets": [
+          "무료 생성 9장 전수 검수",
+          "얼굴 0장, 손 왜곡 1장, 가짜 글자 2장",
+          "글자는 영상 위에 따로 얹는다"
+        ]
+      },
+      "visual": {
+        "kind": "aiImage",
+        "prompt": "A desk lamp casting warm light across a worn keyboard and a glass of water on a wooden surface",
+        "query": "close up desk lamp keyboard night",
+        "focal": "center",
+        "assetPath": "projects/008_ai_visual/images/s2_image.jpg",
+        "source": {
+          "provider": "cloudflare-workers-ai",
+          "selectedBy": "auto-rule",
+          "model": "@cf/black-forest-labs/flux-2-klein-4b",
+          "prompt": "A desk lamp casting warm light across a worn keyboard and a glass of water on a wooden surface, dark workspace at night, lit by a soft cool monitor glow coming from outside the frame, shallow depth of field, 35mm film photo, the subject is the light, textures and desk objects, any laptop or monitor screen is out of frame or only a blurred sliver at the edge, any hands are only partly visible and softly out of focus, no paper props such as notebooks, sticky notes, memo pads, loose paper, books, documents or receipts, no people, no faces",
+          "seed": 943107706,
+          "width": 1080,
+          "height": 1920,
+          "generatedSize": [
+            1072,
+            1920
+          ],
+          "candidates": [
+            {
+              "file": "projects/008_ai_visual/images/candidates/s2_image-r0c0.jpg",
+              "seed": 943107706,
+              "round": 0,
+              "verdict": "pass",
+              "score": 0,
+              "reasons": [],
+              "findings": {
+                "faces": 0,
+                "whiteBorder": false,
+                "checked": [
+                  "face",
+                  "white_border"
+                ],
+                "notChecked": [
+                  "hand_distortion",
+                  "readable_fake_text"
+                ]
+              }
+            },
+            {
+              "file": "projects/008_ai_visual/images/candidates/s2_image-r0c1.jpg",
+              "seed": 943107707,
+              "round": 0,
+              "verdict": "pass",
+              "score": 0,
+              "reasons": [],
+              "findings": {
+                "faces": 0,
+                "whiteBorder": false,
+                "checked": [
+                  "face",
+                  "white_border"
+                ],
+                "notChecked": [
+                  "hand_distortion",
+                  "readable_fake_text"
+                ]
+              }
+            }
+          ],
+          "neuronsEst": 625.2,
+          "generatedAt": "2026-10-31T02:23:10.800Z",
+          "fallbackFrom": null,
+          "fallbackReason": null
+        }
+      },
+      "durationMs": 16152,
+      "audioPath": "projects/008_ai_visual/audio/s2_image.mp3"
+    },
+    {
+      "id": "s3_video",
+      "type": "talkingPoint",
+      "narration": "무료 크레딧을 찾아 사이트 네 곳을 돌아다닌 끝에 만든 8초짜리 영상입니다. 타이핑을 이어 가는 건 자연스러웠는데, 손을 떼라는 지시에는 허공에 손을 들었다가 다시 타이핑으로 튀어 돌아왔어요.",
+      "props": {
+        "heading": "AI 영상은 하던 동작만",
+        "bullets": [
+          "무료 크레딧까지 사이트 4곳 경유",
+          "이어 가기 8초: 자연스러움",
+          "동작을 바꾸라는 지시: 실패"
+        ]
+      },
+      "visual": {
+        "kind": "existingClip",
+        "clipId": "flow_01",
+        "focal": "center",
+        "assetPath": "projects/008_ai_visual/videos/s3_video-clip.mp4",
+        "source": {
+          "provider": "existing-clip",
+          "selectedBy": "only-candidate",
+          "clipId": "flow_01",
+          "clipPath": "projects/008_spike/spike/B_video/flow_01.mp4",
+          "origin": "1단계 실험 B에서 이미 생성한 클립 재사용. 신규 생성 아님",
+          "aiGenerator": "Google Veo 3.1 Lite",
+          "trim": {
+            "startSec": 0,
+            "durationSec": null
+          },
+          "cropBottomRatio": 0.05,
+          "muted": true,
+          "generatedAt": "2026-10-31T02:23:12.223Z",
+          "fallbackFrom": null,
+          "fallbackReason": null
+        }
+      },
+      "durationMs": 15024,
+      "audioPath": "projects/008_ai_visual/audio/s3_video.mp3"
+    },
+    {
+      "id": "s4_3d",
+      "type": "diagram",
+      "narration": "마지막은 코드로 직접 그리는 3D 씬입니다. 파이프라인 일곱 단계를 블록으로 쌓은 이 장면이 평범한 2D 장면보다 오히려 빨리 렌더됐는데, GPU 옵션 하나를 빼자 1.7배나 느려졌어요.",
+      "props": {
+        "heading": "3D는 공짜고 빠르다, GPU를 켜면",
+        "preset": "stack",
+        "labels": [
+          "기획",
+          "대본",
+          "음성",
+          "이미지",
+          "영상",
+          "렌더",
+          "업로드"
+        ],
+        "highlight": 5
+      },
+      "durationMs": 14952,
+      "audioPath": "projects/008_ai_visual/audio/s4_3d.mp3"
+    },
+    {
+      "id": "s5_outro",
+      "type": "outro",
+      "narration": "세 가지 모두 되는 것과 안 되는 것이 분명하게 갈렸습니다. 그 판정 결과를 그대로 적용해서 만든 첫 번째 편이 바로 이 영상이에요.",
+      "props": {
+        "message": "AI 비주얼 3종, 판정 완료",
+        "ctaText": "다음 편에서 계속"
+      },
+      "visual": {
+        "kind": "pexels",
+        "query": "close up hands typing keyboard dark desk",
+        "focal": "center",
+        "assetPath": "projects/008_ai_visual/videos/s5_outro-broll.mp4",
+        "source": {
+          "provider": "pexels",
+          "selectedBy": "auto-rule",
+          "query": "close up hands typing keyboard dark desk",
+          "pexelsId": 39425776,
+          "photographer": "Sergei Starostin",
+          "pageUrl": "https://www.pexels.com/video/typing-on-a-keyboard-in-low-light-39425776/",
+          "width": 720,
+          "height": 1280,
+          "generatedAt": "2026-10-31T02:23:13.139Z",
+          "fallbackFrom": null,
+          "fallbackReason": null
+        }
+      },
+      "durationMs": 10536,
+      "audioPath": "projects/008_ai_visual/audio/s5_outro.mp3"
+    }
+  ]
+}

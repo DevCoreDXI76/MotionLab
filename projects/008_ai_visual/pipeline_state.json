@@ -1,0 +1,76 @@
+{
+  "projectId": "008_ai_visual",
+  "mode": "full",
+  "startedAt": "2026-10-31T02:21:13.783Z",
+  "finishedAt": "2026-10-31T02:26:51.563Z",
+  "steps": [
+    {
+      "name": "preflight",
+      "status": "ok",
+      "attempts": 1,
+      "seconds": 5,
+      "notes": [
+        "10개 점검 통과"
+      ]
+    },
+    {
+      "name": "script",
+      "status": "ok",
+      "attempts": 1,
+      "seconds": 63,
+      "notes": [
+        "씬 5개: aiImage, aiImage, existingClip, diagram, pexels"
+      ]
+    },
+    {
+      "name": "cast",
+      "status": "ok",
+      "attempts": 1,
+      "seconds": 0,
+      "notes": []
+    },
+    {
+      "name": "narration",
+      "status": "ok",
+      "attempts": 1,
+      "seconds": 2,
+      "notes": []
+    },
+    {
+      "name": "visuals",
+      "status": "ok",
+      "attempts": 1,
+      "seconds": 49,
+      "notes": [
+        "폴백 0건"
+      ]
+    },
+    {
+      "name": "render",
+      "status": "ok",
+      "attempts": 1,
+      "seconds": 192,
+      "notes": []
+    },
+    {
+      "name": "upload",
+      "status": "ok",
+      "attempts": 1,
+      "seconds": 27,
+      "notes": [
+        "privacy=private"
+      ]
+    }
+  ],
+  "fallbacks": [],
+  "interventions": [],
+  "floor": {
+    "met": true,
+    "aiImage": 2,
+    "diagram": 1,
+    "lost": []
+  },
+  "neuronsUsed": 1250.4,
+  "uploadUrl": "https://youtu.be/LuiqsjNnvSM",
+  "verdict": "비공개 업로드 완료 — ⑦ 최종 검수 대기 (완성 판정은 ⑦ 승인 후)"
+}
