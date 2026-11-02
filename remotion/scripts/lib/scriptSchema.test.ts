@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { validateScript } from "./scriptSchema";
+import { NARRATION_MAX_CHARS, validateNarrationLength, validateScript } from "./scriptSchema";
 import { PROJECTS_DIR } from "./paths";
 
 const validScript = {
@@ -82,5 +82,22 @@ describe("validateScript", () => {
   it.each(episodeIds)("existing episode %s still validates", (id) => {
     const script = JSON.parse(fs.readFileSync(path.join(PROJECTS_DIR, id, "script.json"), "utf-8"));
     expect(validateScript(script)).toEqual({ valid: true, errors: [] });
+  });
+});
+
+describe("validateNarrationLength", () => {
+  const withNarration = (...narrations: string[]) => ({
+    scenes: narrations.map((narration, i) => ({ id: `s${i}`, narration })),
+  });
+
+  it("accepts narration exactly at the cap (whitespace not counted)", () => {
+    const half = "가".repeat(NARRATION_MAX_CHARS / 2);
+    expect(validateNarrationLength(withNarration(`${half} `, ` ${half}\n`))).toEqual([]);
+  });
+
+  it("rejects narration one character over the cap", () => {
+    const errors = validateNarrationLength(withNarration("가".repeat(NARRATION_MAX_CHARS), "나"));
+    expect(errors).toHaveLength(1);
+    expect(errors[0]).toContain(`${NARRATION_MAX_CHARS + 1}자`);
   });
 });

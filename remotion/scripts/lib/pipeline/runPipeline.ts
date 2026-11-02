@@ -6,7 +6,7 @@ import { buildGuardedCast, resolveCastCommands } from "../castCommands";
 import { injectDurations } from "../injectDurations";
 import type { ScriptData } from "../injectDurations";
 import { loadLexicon } from "../pronunciationLexicon";
-import { validateScript } from "../scriptSchema";
+import { validateNarrationLength, validateScript } from "../scriptSchema";
 import { maskSecrets } from "../secrets";
 import { spawnCli } from "../spawnCli";
 import { EdgeTtsProvider } from "../ttsProviders/edgeTtsProvider";
@@ -27,6 +27,10 @@ export const SCRIPT_CLI_ATTEMPTS = 3;
 export const SCRIPT_VALIDATION_RETRIES = 2;
 export const SCRIPT_CLI_RETRY_DELAY_MS = 30_000;
 export const TTS_RETRY_DELAYS_MS = [5_000, 15_000];
+// Backlog 2: measured length gate after narration — over the cap, regenerate from the script step.
+export const LENGTH_GATE_MAX_MS = 59_000;
+export const LENGTH_GATE_RETRIES = 2;
+const LENGTH_GATE_TARGET_MS = 56_000;
 
 type Script = ScriptData & { scenes: Array<ScriptData["scenes"][number] & { props?: Record<string, unknown> }> };
 
@@ -72,6 +76,16 @@ export const defaultDeps: PipelineDeps = {
   neuronsToday: () => new NeuronLedger().usedToday(),
   sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
 };
+
+/** Feedback for the script step when the measured scene durations sum past the cap; null when within it. */
+export function lengthGateFeedback(script: { scenes: Array<{ narration: string; durationMs?: number | null }> }): string | null {
+  const totalMs = script.scenes.reduce((sum, s) => sum + (s.durationMs ?? 0), 0);
+  if (totalMs <= LENGTH_GATE_MAX_MS) return null;
+  const chars = script.scenes.reduce((sum, s) => sum + s.narration.replace(/\s+/g, "").length, 0);
+  const targetChars = Math.floor((chars * LENGTH_GATE_TARGET_MS) / totalMs);
+  const sec = (ms: number) => (ms / 1000).toFixed(1);
+  return `실측 영상 길이 ${sec(totalMs)}초 — 상한 ${sec(LENGTH_GATE_MAX_MS)}초를 ${sec(totalMs - LENGTH_GATE_MAX_MS)}초 넘음. 나레이션 총 ${chars}자(공백 제외)를 ${targetChars}자 이하로 줄여 다시 쓰세요`;
+}
 
 class StepFailed extends Error {}
 
@@ -123,7 +137,8 @@ export async function runPipeline(projectId: string, options: PipelineOptions, d
       interventions.push({ step: name, reason: `자동으로 해결하지 못하고 중단: ${reason.split("\n")[0]}` });
       throw new StepFailed(reason);
     } finally {
-      rec.seconds = Math.round((Date.now() - t0) / 1000);
+      // += because the length gate can run script/cast/narration more than once.
+      rec.seconds += Math.round((Date.now() - t0) / 1000);
       log(`[${name}] ${rec.status} (${rec.seconds}초)`);
     }
   };
@@ -141,77 +156,88 @@ export async function runPipeline(projectId: string, options: PipelineOptions, d
       rec.notes.push(`${checks.length}개 점검 통과`);
     });
 
-    await step("script", async (rec) => {
-      const concept = fs.readFileSync(conceptPath, "utf-8");
-      const clipIds = Object.keys(loadExistingClips());
-      let feedback: string[] = [];
-      let cliFailures = 0;
-      let validationRetries = 0;
-      for (;;) {
-        rec.attempts++;
-        let raw: Record<string, unknown>;
-        try {
-          raw = deps.writeScript(concept, projectId, feedback);
-        } catch (err) {
-          if (err instanceof ScriptValidationError) {
-            if (validationRetries++ >= SCRIPT_VALIDATION_RETRIES) throw err;
-            feedback = err.errors;
-            fallbacks.push({ step: "script", detail: `스키마 검증 실패 → 오류를 붙여 재생성 (${err.errors.length}건)` });
+    // Backlog 2: script → cast → narration repeats while the measured length is over the cap.
+    let lengthFeedback: string[] = [];
+    for (let lengthRetry = 0; ; lengthRetry++) {
+      await step("script", async (rec) => {
+        const concept = fs.readFileSync(conceptPath, "utf-8");
+        const clipIds = Object.keys(loadExistingClips());
+        let feedback: string[] = lengthFeedback;
+        let cliFailures = 0;
+        let validationRetries = 0;
+        for (;;) {
+          rec.attempts++;
+          let raw: Record<string, unknown>;
+          try {
+            raw = deps.writeScript(concept, projectId, feedback);
+          } catch (err) {
+            if (err instanceof ScriptValidationError) {
+              if (validationRetries++ >= SCRIPT_VALIDATION_RETRIES) throw err;
+              feedback = err.errors;
+              fallbacks.push({ step: "script", detail: `스키마 검증 실패 → 오류를 붙여 재생성 (${err.errors.length}건)` });
+              continue;
+            }
+            if (++cliFailures >= SCRIPT_CLI_ATTEMPTS) throw err;
+            fallbacks.push({ step: "script", detail: `claude -p 실패 → 30초 후 재시도: ${(err as Error).message.slice(0, 120)}` });
+            await deps.sleep(SCRIPT_CLI_RETRY_DELAY_MS);
             continue;
           }
-          if (++cliFailures >= SCRIPT_CLI_ATTEMPTS) throw err;
-          fallbacks.push({ step: "script", detail: `claude -p 실패 → 30초 후 재시도: ${(err as Error).message.slice(0, 120)}` });
-          await deps.sleep(SCRIPT_CLI_RETRY_DELAY_MS);
-          continue;
+          const { script, demoted } = demoteOverCapVisuals(normalizeGeneratedScript(raw as unknown as Script, projectId));
+          for (const d of demoted) fallbacks.push({ step: "script", detail: `상한 초과 강등 ${d}` });
+          const errors = [...validateScript(script).errors, ...validateNarrationLength(script), ...validateVisualIntent(script, clipIds)];
+          if (errors.length > 0) {
+            if (validationRetries++ >= SCRIPT_VALIDATION_RETRIES) throw new Error(`대본 검증 실패: ${errors.join("; ")}`);
+            feedback = errors;
+            fallbacks.push({ step: "script", detail: `의도 검증 실패 → 오류를 붙여 재생성: ${errors.join("; ")}` });
+            continue;
+          }
+          writeScript(script);
+          const kinds = script.scenes.map((s) => (s.type === "diagram" ? "diagram" : (s.visual as { kind?: string } | null)?.kind ?? s.type));
+          rec.notes.push(`씬 ${script.scenes.length}개: ${kinds.join(", ")}`);
+          return;
         }
-        const { script, demoted } = demoteOverCapVisuals(normalizeGeneratedScript(raw as unknown as Script, projectId));
-        for (const d of demoted) fallbacks.push({ step: "script", detail: `상한 초과 강등 ${d}` });
-        const errors = [...validateScript(script).errors, ...validateVisualIntent(script, clipIds)];
-        if (errors.length > 0) {
-          if (validationRetries++ >= SCRIPT_VALIDATION_RETRIES) throw new Error(`대본 검증 실패: ${errors.join("; ")}`);
-          feedback = errors;
-          fallbacks.push({ step: "script", detail: `의도 검증 실패 → 오류를 붙여 재생성: ${errors.join("; ")}` });
-          continue;
+      });
+
+      await step("cast", async (rec) => {
+        rec.attempts++;
+        const script = readScript();
+        for (const scene of script.scenes.filter((s) => s.type === "code")) {
+          const resolved = deps.castCommands(projectId, scene);
+          if (!resolved || resolved.commands.length === 0) {
+            for (const r of resolved?.rejected ?? []) fallbacks.push({ step: "cast", detail: `정책 거부: ${r.display} — ${r.reason}` });
+            rec.notes.push(`${scene.id}: 실행할 명령 없음 → 정적 코드 표시`);
+            continue;
+          }
+          for (const r of resolved.rejected) fallbacks.push({ step: "cast", detail: `정책 거부: ${r.display} — ${r.reason}` });
+          const result = deps.runCast(resolved.commands, { width: 100, height: 30 });
+          for (const s of result.skipped) fallbacks.push({ step: "cast", detail: `명령 실패로 제외: ${s.display} — ${s.reason}` });
+          if (result.cast) scene.props = { ...scene.props, cast: result.cast };
+          rec.notes.push(`${scene.id}: ${result.ran.length}개 명령 실행`);
         }
         writeScript(script);
-        const kinds = script.scenes.map((s) => (s.type === "diagram" ? "diagram" : (s.visual as { kind?: string } | null)?.kind ?? s.type));
-        rec.notes.push(`씬 ${script.scenes.length}개: ${kinds.join(", ")}`);
-        return;
-      }
-    });
+      });
 
-    await step("cast", async (rec) => {
-      rec.attempts = 1;
-      const script = readScript();
-      for (const scene of script.scenes.filter((s) => s.type === "code")) {
-        const resolved = deps.castCommands(projectId, scene);
-        if (!resolved || resolved.commands.length === 0) {
-          for (const r of resolved?.rejected ?? []) fallbacks.push({ step: "cast", detail: `정책 거부: ${r.display} — ${r.reason}` });
-          rec.notes.push(`${scene.id}: 실행할 명령 없음 → 정적 코드 표시`);
-          continue;
-        }
-        for (const r of resolved.rejected) fallbacks.push({ step: "cast", detail: `정책 거부: ${r.display} — ${r.reason}` });
-        const result = deps.runCast(resolved.commands, { width: 100, height: 30 });
-        for (const s of result.skipped) fallbacks.push({ step: "cast", detail: `명령 실패로 제외: ${s.display} — ${s.reason}` });
-        if (result.cast) scene.props = { ...scene.props, cast: result.cast };
-        rec.notes.push(`${scene.id}: ${result.ran.length}개 명령 실행`);
-      }
-      writeScript(script);
-    });
-
-    await step("narration", async (rec) => {
-      for (let attempt = 0; ; attempt++) {
-        rec.attempts++;
-        try {
-          writeScript(await deps.narrate(projectId, readScript()));
+      await step("narration", async (rec) => {
+        for (let attempt = 0; ; attempt++) {
+          rec.attempts++;
+          try {
+            writeScript(await deps.narrate(projectId, readScript()));
+          } catch (err) {
+            if (attempt >= TTS_RETRY_DELAYS_MS.length) throw err;
+            fallbacks.push({ step: "narration", detail: `TTS 실패 → ${TTS_RETRY_DELAYS_MS[attempt] / 1000}초 후 재시도: ${(err as Error).message.slice(0, 120)}` });
+            await deps.sleep(TTS_RETRY_DELAYS_MS[attempt]);
+            continue;
+          }
+          const overrun = lengthGateFeedback(readScript());
+          if (overrun && lengthRetry >= LENGTH_GATE_RETRIES) throw new Error(`길이 게이트 ${LENGTH_GATE_RETRIES}회 재생성 후에도 초과: ${overrun}`);
+          lengthFeedback = overrun ? [overrun] : [];
           return;
-        } catch (err) {
-          if (attempt >= TTS_RETRY_DELAYS_MS.length) throw err;
-          fallbacks.push({ step: "narration", detail: `TTS 실패 → ${TTS_RETRY_DELAYS_MS[attempt] / 1000}초 후 재시도: ${(err as Error).message.slice(0, 120)}` });
-          await deps.sleep(TTS_RETRY_DELAYS_MS[attempt]);
         }
-      }
-    });
+      });
+      if (lengthFeedback.length === 0) break;
+      fallbacks.push({ step: "narration", detail: `길이 게이트 초과 → script부터 재생성: ${lengthFeedback[0]}` });
+
+    }
 
     await step("visuals", async (rec) => {
       rec.attempts = 1;

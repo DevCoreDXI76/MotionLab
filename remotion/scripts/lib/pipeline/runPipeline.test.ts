@@ -3,7 +3,8 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ScriptValidationError } from "../claudeScriptGenerator";
-import { buildUploadArgs, runPipeline } from "./runPipeline";
+import { buildUploadArgs, LENGTH_GATE_MAX_MS, LENGTH_GATE_RETRIES, lengthGateFeedback, runPipeline } from "./runPipeline";
+import { NARRATION_MAX_CHARS } from "../scriptSchema";
 import type { PipelineDeps } from "./runPipeline";
 import { VERDICTS } from "./report";
 import { demoteOverCapVisuals } from "./normalize";
@@ -183,5 +184,51 @@ describe("pipeline helpers", () => {
     const { script, demoted } = demoteOverCapVisuals({ scenes });
     expect(script.scenes.map((s) => s.visual?.kind)).toEqual(["aiImage", "aiImage", "pexels", "motion"]);
     expect(demoted).toHaveLength(2);
+  });
+});
+
+describe("length gate (backlog 2)", () => {
+  const narrateWith = (...sceneMs: number[]) =>
+    vi.fn<PipelineDeps["narrate"]>(async (_id, script) => ({
+      ...script,
+      scenes: script.scenes.map((s, i) => ({ ...s, durationMs: sceneMs[i] ?? 1000, audioPath: `a/${s.id}.mp3` })),
+    }));
+
+  it("signals a regeneration only when the measured total exceeds 59,000ms", () => {
+    const scenes = (total: number) => ({ scenes: [{ narration: "가".repeat(100), durationMs: total - 1000 }, { narration: "나", durationMs: 1000 }] });
+    expect(lengthGateFeedback(scenes(LENGTH_GATE_MAX_MS))).toBeNull();
+    const feedback = lengthGateFeedback(scenes(LENGTH_GATE_MAX_MS + 1));
+    expect(feedback).not.toBeNull();
+    expect(feedback).toContain("59.0초");
+  });
+
+  it("regenerates from the script step with the overrun in the feedback, without a human", async () => {
+    const narrate = vi.fn<PipelineDeps["narrate"]>().mockImplementationOnce(narrateWith(15_000, 15_000, 15_000, 15_000, 15_000)).mockImplementation(deps().narrate);
+    const d = deps({ narrate });
+    const report = await run(d);
+    expect(d.writeScript).toHaveBeenCalledTimes(2);
+    expect((d.writeScript as ReturnType<typeof vi.fn>).mock.calls[1][2][0]).toContain("75.0초");
+    expect(report.steps.find((s) => s.name === "narration")).toMatchObject({ status: "ok", attempts: 2 });
+    expect(report.fallbacks.some((f) => f.step === "narration" && f.detail.includes("길이 게이트"))).toBe(true);
+    expect(report.interventions).toEqual([]);
+  });
+
+  it(`stops after ${LENGTH_GATE_RETRIES} regenerations when the video is still too long`, async () => {
+    const d = deps({ narrate: narrateWith(15_000, 15_000, 15_000, 15_000, 15_000) });
+    const report = await run(d);
+    expect(d.writeScript).toHaveBeenCalledTimes(LENGTH_GATE_RETRIES + 1);
+    expect(report.steps.find((s) => s.name === "narration")?.status).toBe("failed");
+    expect(d.render).not.toHaveBeenCalled();
+    expect(report.verdict).toBe(VERDICTS.stopped);
+  });
+
+  it("feeds an over-long narration back into the script retry loop", async () => {
+    const long = structuredClone(GOOD_SCRIPT);
+    long.scenes[0].narration = "가".repeat(NARRATION_MAX_CHARS + 1);
+    const writeScript = vi.fn<PipelineDeps["writeScript"]>().mockImplementationOnce(() => long).mockImplementation(() => structuredClone(GOOD_SCRIPT));
+    const report = await run(deps({ writeScript }));
+    expect(writeScript).toHaveBeenCalledTimes(2);
+    expect(writeScript.mock.calls[1][2].join(" ")).toContain("자");
+    expect(report.steps[1]).toMatchObject({ status: "ok", attempts: 2 });
   });
 });

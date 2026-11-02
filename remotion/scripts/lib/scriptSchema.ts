@@ -21,3 +21,16 @@ export function validateScript(data: unknown): ValidationResult {
   );
   return { valid, errors };
 }
+
+/**
+ * Total narration ceiling (whitespace excluded) for newly generated scripts. 006~008 measured
+ * Edge TTS at ~4.9~5.3 chars/s, so 320 chars is ~60~65s — a coarse guard only; the measured
+ * duration gate in runPipeline is what enforces ≤59s. Not part of validateScript, because
+ * existing episodes (008: 351 chars) must keep validating for re-render.
+ */
+export const NARRATION_MAX_CHARS = 320;
+
+export function validateNarrationLength(script: { scenes: Array<{ narration: string }> }): string[] {
+  const chars = script.scenes.reduce((sum, s) => sum + s.narration.replace(/\s+/g, "").length, 0);
+  return chars > NARRATION_MAX_CHARS ? [`나레이션 총 ${chars}자(공백 제외) — 상한 ${NARRATION_MAX_CHARS}자를 넘음. 문장을 줄이세요`] : [];
+}
