@@ -4,6 +4,7 @@ import { TEMPLATES_DIR } from "./paths";
 import { validateScript } from "./scriptSchema";
 import type { CliRunner } from "./claudeCliRunner";
 import { loadExistingClips } from "./visualProviders/existingClip";
+import { DIAGRAM_PRESETS, VISUAL_LIMITS } from "./visualIntent";
 
 // Filled in by later pipeline steps (TTS, visual providers) — never authored by the model, so they're
 // removed from the schema handed to `claude -p` instead of relying on a prompt instruction to omit them.
@@ -38,6 +39,8 @@ export interface ScriptPromptOptions {
   feedback?: string[];
   /** Clips the asset ledger still allows (device ②); omitted = every registered clip. */
   availableClipIds?: string[];
+  /** 3D scene kinds no earlier episode used (device ③); omitted = every preset. */
+  availableDiagramKinds?: readonly string[];
 }
 
 function conceptSection(concept: string | undefined): string {
@@ -69,6 +72,16 @@ function existingClipsSection(clips: Record<string, { description: string }>, av
   return entries.map(([id, c]) => `    - ${id}: ${c.description}`).join(NEWLINE);
 }
 
+function visualCountRules(availableDiagramKinds: readonly string[]): string {
+  const { aiImage, existingClip } = VISUAL_LIMITS;
+  const base = `  - 개수 규칙(검증에서 걸리면 대본이 다시 생성됩니다): aiImage는 ${aiImage.min}~${aiImage.max}개, existingClip은 최대 ${existingClip.max}개`;
+  if (availableDiagramKinds.length === 0) {
+    return `${base}. diagram(3D) 씬은 쓰지 마세요 — 이전 편에서 쓰지 않은 3D 씬 종류가 남아 있지 않습니다.`;
+  }
+  const kinds = availableDiagramKinds.map((k) => `"${k}"`).join(", ");
+  return `${base}, diagram 씬은 0~1개(선택). diagram을 쓴다면 preset은 ${kinds} 중 하나만 쓸 수 있습니다.`;
+}
+
 /** Exported for testing. */
 export function buildPrompt(topic: string, format: "shorts" | "long", projectId: string, options: ScriptPromptOptions = {}): string {
   const promptTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, "script_prompt_template.md"), "utf-8");
@@ -80,6 +93,7 @@ export function buildPrompt(topic: string, format: "shorts" | "long", projectId:
     .replace("{{FORMAT}}", format)
     .replace("{{PROJECT_ID}}", projectId)
     .replace("{{EXISTING_CLIPS}}", existingClipsSection(clips, options.availableClipIds))
+    .replace("{{VISUAL_COUNT_RULES}}", visualCountRules(options.availableDiagramKinds ?? DIAGRAM_PRESETS))
     .replace("{{ALLOWED_COMMANDS}}", ALLOWED_COMMAND_EXAMPLES.map((l) => `    - ${l}`).join(NEWLINE));
 }
 

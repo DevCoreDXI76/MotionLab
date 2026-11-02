@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { isStage2Episode } from "../visualIntent";
 import type { FloorAssessment } from "../visualIntent";
 
 export type StepName = "preflight" | "script" | "cast" | "narration" | "visuals" | "render" | "upload";
@@ -41,7 +42,9 @@ export interface RunReport {
 
 export const VERDICTS = {
   stopped: "중단 — 사람 개입 필요",
+  /** 008 and earlier — the 2기 goal wording. */
   floorMissed: "완주했으나 2기 목표 미충족(AI 비주얼 하한 미달)",
+  floorMissedNew: "완주했으나 AI 비주얼 하한 미달(aiImage 최소 1)",
   dryRunDone: "dry-run 완주(업로드 제외) — AI 비주얼 하한 충족",
   uploaded: "비공개 업로드 완료 — ⑦ 최종 검수 대기 (완성 판정은 ⑦ 승인 후)",
 } as const;
@@ -50,10 +53,10 @@ export const VERDICTS = {
  * Verdict rules (docs/2단계_설계.md §5.2.1): a stopped run is never "done"; a finished run that
  * lost the AI-visual floor is reported as not meeting the 2기 goal even though it uploaded.
  */
-export function decideVerdict(report: Pick<RunReport, "steps" | "floor" | "mode" | "uploadUrl">): string {
+export function decideVerdict(report: Pick<RunReport, "projectId" | "steps" | "floor" | "mode" | "uploadUrl">): string {
   const failed = report.steps.some((s) => s.status === "failed");
   if (failed || !report.floor) return VERDICTS.stopped;
-  if (!report.floor.met) return VERDICTS.floorMissed;
+  if (!report.floor.met) return isStage2Episode(report.projectId) ? VERDICTS.floorMissed : VERDICTS.floorMissedNew;
   return report.mode === "dry-run" ? VERDICTS.dryRunDone : VERDICTS.uploaded;
 }
 
@@ -74,7 +77,7 @@ export function renderRunLog(report: RunReport): string {
   for (const f of report.fallbacks) lines.push(`  - ${f.step}: ${f.detail}`);
   if (report.floor) {
     const f = report.floor;
-    lines.push(`- AI 비주얼 하한: ${f.met ? "충족" : "**미달**"} (aiImage ${f.aiImage}/2, diagram ${f.diagram}/1)${f.lost.length ? ` — 폴백된 씬: ${f.lost.join(", ")}` : ""}`);
+    lines.push(`- AI 비주얼 하한: ${f.met ? "충족" : "**미달**"} (aiImage ${f.aiImage}/${f.required.aiImage}, diagram ${f.diagram}/${f.required.diagram})${f.lost.length ? ` — 폴백된 씬: ${f.lost.join(", ")}` : ""}`);
   }
   lines.push(`- Cloudflare neurons(추정): ${report.neuronsUsed}`);
   if (report.uploadUrl) lines.push(`- 업로드(비공개): ${report.uploadUrl}`);

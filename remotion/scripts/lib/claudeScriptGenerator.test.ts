@@ -56,6 +56,14 @@ describe("generateScript", () => {
     expect(prompt).toContain("**정적 포즈만**");
   });
 
+  it("says composition is not fixed and drops the diagram when no new 3D kind is left (device ③)", () => {
+    const prompt = buildPrompt("주제", "shorts", "010_x", { availableDiagramKinds: [] });
+    expect(prompt).toContain("씬 구성은 고정이 아닙니다");
+    expect(prompt).toContain("aiImage는 1~2개");
+    expect(prompt).toContain("diagram(3D) 씬은 쓰지 마세요");
+    expect(buildPrompt("주제", "shorts", "010_x", { availableDiagramKinds: ["stack"] })).toContain("diagram 씬은 0~1개(선택)");
+  });
+
   it("lists only the clips the asset ledger still allows (device ②)", () => {
     const prompt = buildPrompt("주제", "shorts", "010_x", { availableClipIds: [] });
     expect(prompt).not.toContain("flow_01:");

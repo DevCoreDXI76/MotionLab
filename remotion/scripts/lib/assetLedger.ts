@@ -126,13 +126,21 @@ export function findAiImageReuse(script: { scenes: LedgerScene[] }, ledger: Asse
   return errors;
 }
 
-/** Device ② checks for a newly generated script: no reused aiImage subject, no reused existingClip. */
+/**
+ * Device ②/③ checks for a newly generated script: no reused aiImage subject, no reused existingClip,
+ * and a diagram only with a 3D scene kind no earlier episode used.
+ */
 export function validateAssetReuse(script: { scenes: LedgerScene[] }, ledger: AssetLedger, projectId: string): string[] {
   const usedClips = new Set(others(ledger, projectId).flatMap(([, a]) => a.existingClips));
+  const usedKinds = usedDiagramKinds(ledger, projectId);
   const errors = findAiImageReuse(script, ledger, projectId);
   for (const scene of script.scenes) {
     const clipId = scene.visual?.kind === "existingClip" ? scene.visual.clipId : null;
     if (clipId && usedClips.has(clipId)) errors.push(`scene "${scene.id}": existingClip ${clipId} was already used in an earlier episode`);
+    if (scene.type === "diagram") {
+      const kind = typeof scene.props?.preset === "string" ? scene.props.preset : "stack";
+      if (usedKinds.has(kind)) errors.push(`scene "${scene.id}": 3D scene kind "${kind}" was already used in an earlier episode — drop the diagram scene`);
+    }
   }
   return errors;
 }

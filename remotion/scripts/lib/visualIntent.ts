@@ -7,14 +7,39 @@ interface IntentScene {
   visual?: SceneVisual | null;
 }
 
-// docs/2단계_설계.md §3: lower bounds = 2기 "AI visual floor"; aiImage max is 2 because the
-// candidate judge only checks faces/borders (D2 result) — hand/text defects can reach ⑦ review.
-// diagram counts scenes of type "diagram" (D1).
-export const VISUAL_LIMITS = {
+interface VisualLimits {
+  aiImage: { min: number; max: number };
+  diagram: { min: number; max: number };
+  existingClip: { min: number; max: number };
+}
+
+// docs/2단계_설계.md §3: lower bounds = 2기 "AI visual floor" (008 and earlier); aiImage max is 2
+// because the candidate judge only checks faces/borders (D2 result) — hand/text defects can reach ⑦
+// review. diagram counts scenes of type "diagram" (D1).
+export const STAGE2_VISUAL_LIMITS: VisualLimits = {
   aiImage: { min: 2, max: 2 },
   diagram: { min: 1, max: 2 },
   existingClip: { min: 0, max: 1 },
-} as const;
+};
+
+// Anti-repetition device ③: the 2기 floor made every episode converge on 2 images + the same 3D
+// scene. New episodes need 1~2 aiImage; a diagram is optional and must be a new 3D kind (ledger).
+export const VISUAL_LIMITS: VisualLimits = {
+  aiImage: { min: 1, max: 2 },
+  diagram: { min: 0, max: 1 },
+  existingClip: { min: 0, max: 1 },
+};
+
+/** 3D scene kinds DiagramScene can draw (props.preset). */
+export const DIAGRAM_PRESETS = ["stack"] as const;
+
+export function isStage2Episode(projectId: string): boolean {
+  return parseInt(projectId, 10) <= 8;
+}
+
+export function visualLimitsFor(projectId: string): VisualLimits {
+  return isStage2Episode(projectId) ? STAGE2_VISUAL_LIMITS : VISUAL_LIMITS;
+}
 
 export const DIAGRAM_LABELS = { min: 3, max: 7, maxChars: 8 } as const;
 
@@ -45,6 +70,7 @@ const BAND_SCENE_TYPES = new Set(["title", "talkingPoint", "outro"]);
 export function validateVisualIntent(
   script: { scenes: IntentScene[] },
   knownClipIds: string[],
+  limits: VisualLimits = VISUAL_LIMITS,
 ): string[] {
   const errors: string[] = [];
   const counts = { aiImage: 0, diagram: 0, existingClip: 0 };
@@ -92,8 +118,8 @@ export function validateVisualIntent(
     }
   }
 
-  for (const key of Object.keys(VISUAL_LIMITS) as Array<keyof typeof VISUAL_LIMITS>) {
-    const { min, max } = VISUAL_LIMITS[key];
+  for (const key of Object.keys(limits) as Array<keyof VisualLimits>) {
+    const { min, max } = limits[key];
     if (counts[key] < min || counts[key] > max) {
       errors.push(`${key} scenes: ${counts[key]} (must be ${min}~${max})`);
     }
@@ -107,14 +133,16 @@ export interface FloorAssessment {
   diagram: number;
   /** Scenes that were meant to be AI visuals but did not survive as one. */
   lost: string[];
+  /** The floor this episode was judged against (2기: 2/1, new episodes: 1/0). */
+  required: { aiImage: number; diagram: number };
 }
 
 /**
- * Post-render check for the 2기 completion floor (docs/2단계_설계.md §5.2.1): at least 2 aiImage
- * scenes actually rendered from Cloudflare with no fallback, and at least 1 diagram scene that
- * was not demoted. Falling short means "완주했으나 2기 목표 미충족" — never reported as done.
+ * Post-render AI-visual floor check (docs/2단계_설계.md §5.2.1): aiImage scenes that actually rendered
+ * from Cloudflare with no fallback, and diagram scenes that were not demoted, against `limits`'
+ * minimums (2기: 2 + 1, new episodes: 1 + 0). Falling short is never reported as done.
  */
-export function assessAiVisualFloor(script: { scenes: IntentScene[] }): FloorAssessment {
+export function assessAiVisualFloor(script: { scenes: IntentScene[] }, limits: VisualLimits = VISUAL_LIMITS): FloorAssessment {
   let aiImage = 0;
   let diagram = 0;
   const lost: string[] = [];
@@ -132,9 +160,10 @@ export function assessAiVisualFloor(script: { scenes: IntentScene[] }): FloorAss
     }
   }
   return {
-    met: aiImage >= VISUAL_LIMITS.aiImage.min && diagram >= VISUAL_LIMITS.diagram.min,
+    met: aiImage >= limits.aiImage.min && diagram >= limits.diagram.min,
     aiImage,
     diagram,
     lost,
+    required: { aiImage: limits.aiImage.min, diagram: limits.diagram.min },
   };
 }

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { availableClipIds, collectEpisodeAssets, loadLedger, recordEpisode, validateAssetReuse } from "../assetLedger";
+import { availableClipIds, collectEpisodeAssets, loadLedger, recordEpisode, usedDiagramKinds, validateAssetReuse } from "../assetLedger";
 import type { AssetLedger } from "../assetLedger";
 import { ClaudeCliRunner } from "../claudeCliRunner";
 import { generateScript, ScriptValidationError } from "../claudeScriptGenerator";
@@ -12,7 +12,7 @@ import { validateNarrationLength, validateNoNextEpisodeTease, validateScript } f
 import { maskSecrets } from "../secrets";
 import { spawnCli } from "../spawnCli";
 import { EdgeTtsProvider } from "../ttsProviders/edgeTtsProvider";
-import { assessAiVisualFloor, validateVisualIntent } from "../visualIntent";
+import { assessAiVisualFloor, DIAGRAM_PRESETS, validateVisualIntent, visualLimitsFor } from "../visualIntent";
 import { loadExistingClips } from "../visualProviders/existingClip";
 import { generateVisuals } from "../visualProviders/generateVisuals";
 import type { FallbackEvent } from "../visualProviders/resolveVisual";
@@ -68,6 +68,7 @@ export const defaultDeps: PipelineDeps = {
       concept,
       feedback,
       availableClipIds: availableClipIds(loadLedger(), Object.keys(loadExistingClips()), projectId),
+      availableDiagramKinds: DIAGRAM_PRESETS.filter((k) => !usedDiagramKinds(loadLedger(), projectId).has(k)),
     }),
   narrate: async (projectId, script) => {
     const provider = new EdgeTtsProvider();
@@ -197,7 +198,7 @@ export async function runPipeline(projectId: string, options: PipelineOptions, d
           }
           const { script, demoted } = demoteOverCapVisuals(normalizeGeneratedScript(raw as unknown as Script, projectId));
           for (const d of demoted) fallbacks.push({ step: "script", detail: `상한 초과 강등 ${d}` });
-          const errors = [...validateScript(script).errors, ...validateNarrationLength(script), ...validateNoNextEpisodeTease(script, concept), ...validateVisualIntent(script, clipIds), ...validateAssetReuse(script, ledger, projectId)];
+          const errors = [...validateScript(script).errors, ...validateNarrationLength(script), ...validateNoNextEpisodeTease(script, concept), ...validateVisualIntent(script, clipIds, visualLimitsFor(projectId)), ...validateAssetReuse(script, ledger, projectId)];
           if (errors.length > 0) {
             if (validationRetries++ >= SCRIPT_VALIDATION_RETRIES) throw new Error(`대본 검증 실패: ${errors.join("; ")}`);
             feedback = errors;
@@ -273,7 +274,7 @@ export async function runPipeline(projectId: string, options: PipelineOptions, d
       if (deps.render(projectId) !== 0) throw new Error("3D를 내린 뒤에도 렌더 실패");
     });
 
-    floor = assessAiVisualFloor(readScript());
+    floor = assessAiVisualFloor(readScript(), visualLimitsFor(projectId));
 
     await step("upload", async (rec) => {
       if (options.dryRun) {

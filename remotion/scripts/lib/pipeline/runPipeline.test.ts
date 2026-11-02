@@ -6,7 +6,7 @@ import { ScriptValidationError } from "../claudeScriptGenerator";
 import { buildUploadArgs, LENGTH_GATE_MAX_MS, LENGTH_GATE_RETRIES, lengthGateFeedback, runPipeline } from "./runPipeline";
 import { NARRATION_MAX_CHARS } from "../scriptSchema";
 import type { PipelineDeps } from "./runPipeline";
-import { VERDICTS } from "./report";
+import { decideVerdict, VERDICTS } from "./report";
 import { demoteOverCapVisuals } from "./normalize";
 
 const ID = "008_test";
@@ -200,6 +200,16 @@ describe("asset ledger (device ②)", () => {
     const dry = deps();
     await run(dry, true);
     expect(dry.recordAssets).not.toHaveBeenCalled();
+  });
+});
+
+describe("verdict wording (device ③)", () => {
+  const floor = (met: boolean, required: { aiImage: number; diagram: number }) => ({ met, aiImage: 0, diagram: 0, lost: [], required });
+  const steps = [{ name: "render" as const, status: "ok" as const, attempts: 1, seconds: 1, notes: [] }];
+
+  it("keeps the 2기 wording for 008 and uses the aiImage-min-1 wording for new episodes", () => {
+    expect(decideVerdict({ projectId: "008_ai_visual", steps, mode: "full", uploadUrl: null, floor: floor(false, { aiImage: 2, diagram: 1 }) })).toBe(VERDICTS.floorMissed);
+    expect(decideVerdict({ projectId: "010_next", steps, mode: "full", uploadUrl: null, floor: floor(false, { aiImage: 1, diagram: 0 }) })).toBe("완주했으나 AI 비주얼 하한 미달(aiImage 최소 1)");
   });
 });
 

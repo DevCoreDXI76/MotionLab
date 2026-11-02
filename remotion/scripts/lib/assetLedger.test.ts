@@ -66,6 +66,12 @@ describe("ledger lookups", () => {
     expect([...usedDiagramKinds(ledgerWith008(), "010_new")]).toEqual(["stack"]);
   });
 
+  it("rejects a 3D scene kind an earlier episode already used (device ③)", () => {
+    const s = { scenes: [{ id: "d1", type: "diagram", props: { preset: "stack" } }] };
+    expect(validateAssetReuse(s, ledgerWith008(), "010_new").join(" ")).toContain("stack");
+    expect(validateAssetReuse(s, { episodes: {} }, "010_new")).toEqual([]);
+  });
+
   it("rejects an already-used existingClip in a new script", () => {
     const s = { scenes: [{ id: "s2", type: "talkingPoint", visual: { kind: "existingClip", clipId: "flow_01" } }] };
     expect(validateAssetReuse(s, ledgerWith008(), "010_new").join(" ")).toContain("flow_01");

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assessAiVisualFloor, findBannedProps, validateVisualIntent } from "./visualIntent";
+import { assessAiVisualFloor, findBannedProps, STAGE2_VISUAL_LIMITS, validateVisualIntent, visualLimitsFor } from "./visualIntent";
 
 const ai = (id: string, extra: Record<string, unknown> = {}) => ({
   id,
@@ -28,15 +28,15 @@ describe("validateVisualIntent", () => {
     expect(validateVisualIntent(valid, ["flow_01"])).toEqual([]);
   });
 
-  it("enforces the AI visual floor at script time", () => {
-    const errors = validateVisualIntent({ scenes: [ai("a1"), { id: "t", type: "title", visual: { kind: "motion" as const } }] }, []);
+  it("enforces the 2기 AI visual floor at script time (008 and earlier)", () => {
+    const errors = validateVisualIntent({ scenes: [ai("a1"), { id: "t", type: "title", visual: { kind: "motion" as const } }] }, [], STAGE2_VISUAL_LIMITS);
     expect(errors).toContain("aiImage scenes: 1 (must be 2~2)");
     expect(errors).toContain("diagram scenes: 0 (must be 1~2)");
   });
 
   it("caps aiImage at 2 (pixel-rule judge cannot catch hand/text defects — D2)", () => {
     const scenes = [ai("a1"), ai("a2"), ai("a3"), diagram("d1")];
-    expect(validateVisualIntent({ scenes }, [])).toEqual(["aiImage scenes: 3 (must be 2~2)"]);
+    expect(validateVisualIntent({ scenes }, [], STAGE2_VISUAL_LIMITS)).toEqual(["aiImage scenes: 3 (must be 2~2)"]);
   });
 
   it("requires kind-specific fields", () => {
@@ -58,14 +58,37 @@ describe("validateVisualIntent", () => {
 
   it("checks diagram labels (3~7 items, 8 chars max)", () => {
     const scenes = [ai("a1"), ai("a2"), diagram("d1", ["하나", "둘"]), diagram("d2", ["기획", "아주아주긴단계이름입니다", "렌더"])];
-    expect(validateVisualIntent({ scenes }, [])).toEqual([
+    expect(validateVisualIntent({ scenes }, [], STAGE2_VISUAL_LIMITS)).toEqual([
       'scene "d1": diagram props.labels must have 3~7 items',
       'scene "d2": diagram label "아주아주긴단계이름입니다" must be 1~8 characters',
     ]);
   });
 });
 
-describe("assessAiVisualFloor", () => {
+describe("device ③ — relaxed floor for new episodes", () => {
+  it("accepts one aiImage and no diagram", () => {
+    const scenes = [ai("a1"), { id: "t", type: "title", visual: { kind: "pexels" as const, query: "hands close up" } }];
+    expect(validateVisualIntent({ scenes }, [])).toEqual([]);
+  });
+
+  it("still needs at least one aiImage, and allows at most one diagram", () => {
+    const errors = validateVisualIntent({ scenes: [diagram("d1"), diagram("d2")] }, []);
+    expect(errors).toContain("aiImage scenes: 0 (must be 1~2)");
+    expect(errors).toContain("diagram scenes: 2 (must be 0~1)");
+  });
+
+  it("uses the 2기 limits only for 008 and earlier", () => {
+    expect(visualLimitsFor("008_ai_visual")).toBe(STAGE2_VISUAL_LIMITS);
+    expect(visualLimitsFor("010_next").aiImage).toEqual({ min: 1, max: 2 });
+  });
+
+  it("meets the new floor with one rendered AI image and no 3D scene", () => {
+    const result = assessAiVisualFloor({ scenes: [ai("a1", { assetPath: "x.jpg", source: { provider: "cloudflare-workers-ai" } })] });
+    expect(result).toEqual({ met: true, aiImage: 1, diagram: 0, lost: [], required: { aiImage: 1, diagram: 0 } });
+  });
+});
+
+describe("assessAiVisualFloor (2기 floor, re-verifying 008)", () => {
   const rendered = (id: string, source: Record<string, unknown>) =>
     ai(id, { assetPath: `projects/x/images/${id}.jpg`, source });
 
@@ -76,8 +99,8 @@ describe("assessAiVisualFloor", () => {
         rendered("a2", { provider: "cloudflare-workers-ai" }),
         diagram("d1"),
       ],
-    });
-    expect(result).toEqual({ met: true, aiImage: 2, diagram: 1, lost: [] });
+    }, STAGE2_VISUAL_LIMITS);
+    expect(result).toEqual({ met: true, aiImage: 2, diagram: 1, lost: [], required: { aiImage: 2, diagram: 1 } });
   });
 
   it("fails the floor when an AI image fell back to Pexels", () => {
@@ -87,7 +110,7 @@ describe("assessAiVisualFloor", () => {
         rendered("a2", { provider: "pexels", fallbackFrom: "aiImage", fallbackReason: "QuotaGuardError: over budget" }),
         diagram("d1"),
       ],
-    });
+    }, STAGE2_VISUAL_LIMITS);
     expect(result.met).toBe(false);
     expect(result.aiImage).toBe(1);
     expect(result.lost).toEqual(["a2 (QuotaGuardError: over budget)"]);
@@ -96,7 +119,7 @@ describe("assessAiVisualFloor", () => {
   it("fails the floor without a diagram scene", () => {
     const result = assessAiVisualFloor({
       scenes: [rendered("a1", { provider: "cloudflare-workers-ai" }), rendered("a2", { provider: "cloudflare-workers-ai" })],
-    });
+    }, STAGE2_VISUAL_LIMITS);
     expect(result).toMatchObject({ met: false, aiImage: 2, diagram: 0 });
   });
 });
