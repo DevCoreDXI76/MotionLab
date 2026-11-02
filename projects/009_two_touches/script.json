@@ -1,0 +1,256 @@
+{
+  "format": "shorts",
+  "fps": 30,
+  "height": 1920,
+  "id": "009_two_touches",
+  "scenes": [
+    {
+      "id": "s1_hook",
+      "type": "title",
+      "narration": "쇼츠 한 편을 만드는 데 사람 손은 딱 두 번, 걸린 시간은 5분 44초였습니다.",
+      "props": {
+        "title": "사람 손 두 번",
+        "subtitle": "5분 44초, 비용 0원"
+      },
+      "visual": {
+        "kind": "aiImage",
+        "prompt": "A desk lamp casting warm light across a wooden desk beside the edge of a dark keyboard",
+        "query": "desk lamp warm light close up night",
+        "focal": "center",
+        "assetPath": "projects/009_two_touches/images/s1_hook.jpg",
+        "source": {
+          "provider": "cloudflare-workers-ai",
+          "selectedBy": "auto-rule",
+          "model": "@cf/black-forest-labs/flux-2-klein-4b",
+          "prompt": "A desk lamp casting warm light across a wooden desk beside the edge of a dark keyboard, dark workspace at night, lit by a soft cool monitor glow coming from outside the frame, shallow depth of field, 35mm film photo, the subject is the light, textures and desk objects, any laptop or monitor screen is out of frame or only a blurred sliver at the edge, any hands are only partly visible and softly out of focus, no paper props such as notebooks, sticky notes, memo pads, loose paper, books, documents or receipts, no people, no faces",
+          "seed": 860340681,
+          "width": 1080,
+          "height": 1920,
+          "generatedSize": [
+            1072,
+            1920
+          ],
+          "candidates": [
+            {
+              "file": "projects/009_two_touches/images/candidates/s1_hook-r0c0.jpg",
+              "seed": 860340681,
+              "round": 0,
+              "verdict": "pass",
+              "score": 0,
+              "reasons": [],
+              "findings": {
+                "faces": 0,
+                "whiteBorder": false,
+                "checked": [
+                  "face",
+                  "white_border"
+                ],
+                "notChecked": [
+                  "hand_distortion",
+                  "readable_fake_text"
+                ]
+              }
+            },
+            {
+              "file": "projects/009_two_touches/images/candidates/s1_hook-r0c1.jpg",
+              "seed": 860340682,
+              "round": 0,
+              "verdict": "pass",
+              "score": 0,
+              "reasons": [],
+              "findings": {
+                "faces": 0,
+                "whiteBorder": false,
+                "checked": [
+                  "face",
+                  "white_border"
+                ],
+                "notChecked": [
+                  "hand_distortion",
+                  "readable_fake_text"
+                ]
+              }
+            }
+          ],
+          "neuronsEst": 625.2,
+          "generatedAt": "2026-11-02T12:29:33.961Z",
+          "fallbackFrom": null,
+          "fallbackReason": null
+        }
+      },
+      "durationMs": 6984,
+      "audioPath": "projects/009_two_touches/audio/s1_hook.mp3"
+    },
+    {
+      "id": "s2_two_touches",
+      "type": "talkingPoint",
+      "narration": "사람이 한 일은 무엇을 만들지 고르는 것, 그리고 완성된 걸 보고 승인하는 것 두 가지뿐이었습니다. 그 사이 일곱 단계는 명령 한 번으로 전부 돌아갔습니다.",
+      "props": {
+        "heading": "사람이 한 일 두 가지",
+        "bullets": [
+          "무엇을 만들지 고르기",
+          "완성본 보고 승인하기",
+          "그 사이는 명령 한 번"
+        ]
+      },
+      "visual": {
+        "kind": "existingClip",
+        "clipId": "flow_01",
+        "focal": "center",
+        "assetPath": "projects/009_two_touches/videos/s2_two_touches-clip.mp4",
+        "source": {
+          "provider": "existing-clip",
+          "selectedBy": "only-candidate",
+          "clipId": "flow_01",
+          "clipPath": "projects/008_spike/spike/B_video/flow_01.mp4",
+          "origin": "1단계 실험 B에서 이미 생성한 클립 재사용. 신규 생성 아님",
+          "aiGenerator": "Google Veo 3.1 Lite",
+          "trim": {
+            "startSec": 0,
+            "durationSec": null
+          },
+          "cropBottomRatio": 0.05,
+          "muted": true,
+          "generatedAt": "2026-11-02T12:29:36.054Z",
+          "fallbackFrom": null,
+          "fallbackReason": null
+        }
+      },
+      "durationMs": 12264,
+      "audioPath": "projects/009_two_touches/audio/s2_two_touches.mp3"
+    },
+    {
+      "id": "s3_steps",
+      "type": "diagram",
+      "narration": "사전 점검부터 업로드까지 일곱 단계, 전부 합쳐 5분 44초입니다. 가장 오래 걸린 건 3분 12초짜리 렌더였습니다.",
+      "props": {
+        "heading": "7단계 5분 44초",
+        "preset": "stack",
+        "labels": [
+          "사전 점검",
+          "대본",
+          "화면 준비",
+          "목소리",
+          "그림",
+          "렌더",
+          "업로드"
+        ],
+        "highlight": 5
+      },
+      "durationMs": 10776,
+      "audioPath": "projects/009_two_touches/audio/s3_steps.mp3"
+    },
+    {
+      "id": "s4_first_try",
+      "type": "talkingPoint",
+      "narration": "일곱 단계 모두 재시도 0회, 대체 그림 0건, 실행 중 사람 개입 0건이었습니다. 예전에는 단계마다 사람이 명령을 치고 결과를 확인했는데, 이제는 처음과 끝만 사람 몫입니다.",
+      "props": {
+        "heading": "전부 첫 시도 통과",
+        "bullets": [
+          "재시도 0회",
+          "대체 그림 0건",
+          "실행 중 개입 0건"
+        ]
+      },
+      "visual": {
+        "kind": "aiImage",
+        "prompt": "A ceramic mug resting beside the corner of a backlit keyboard on a dark wooden desk",
+        "query": "coffee mug beside keyboard close up",
+        "focal": "center",
+        "assetPath": "projects/009_two_touches/images/s4_first_try.jpg",
+        "source": {
+          "provider": "cloudflare-workers-ai",
+          "selectedBy": "auto-rule",
+          "model": "@cf/black-forest-labs/flux-2-klein-4b",
+          "prompt": "A ceramic mug resting beside the corner of a backlit keyboard on a dark wooden desk, dark workspace at night, lit by a soft cool monitor glow coming from outside the frame, shallow depth of field, 35mm film photo, the subject is the light, textures and desk objects, any laptop or monitor screen is out of frame or only a blurred sliver at the edge, any hands are only partly visible and softly out of focus, no paper props such as notebooks, sticky notes, memo pads, loose paper, books, documents or receipts, no people, no faces",
+          "seed": 39222537,
+          "width": 1080,
+          "height": 1920,
+          "generatedSize": [
+            1072,
+            1920
+          ],
+          "candidates": [
+            {
+              "file": "projects/009_two_touches/images/candidates/s4_first_try-r0c0.jpg",
+              "seed": 39222537,
+              "round": 0,
+              "verdict": "pass",
+              "score": 0,
+              "reasons": [],
+              "findings": {
+                "faces": 0,
+                "whiteBorder": false,
+                "checked": [
+                  "face",
+                  "white_border"
+                ],
+                "notChecked": [
+                  "hand_distortion",
+                  "readable_fake_text"
+                ]
+              }
+            },
+            {
+              "file": "projects/009_two_touches/images/candidates/s4_first_try-r0c1.jpg",
+              "seed": 39222538,
+              "round": 0,
+              "verdict": "pass",
+              "score": 0,
+              "reasons": [],
+              "findings": {
+                "faces": 0,
+                "whiteBorder": false,
+                "checked": [
+                  "face",
+                  "white_border"
+                ],
+                "notChecked": [
+                  "hand_distortion",
+                  "readable_fake_text"
+                ]
+              }
+            }
+          ],
+          "neuronsEst": 625.2,
+          "generatedAt": "2026-11-02T12:29:56.438Z",
+          "fallbackFrom": null,
+          "fallbackReason": null
+        }
+      },
+      "durationMs": 14448,
+      "audioPath": "projects/009_two_touches/audio/s4_first_try.mp3"
+    },
+    {
+      "id": "s5_outro",
+      "type": "outro",
+      "narration": "비용은 0원, 재시도는 없었습니다. 자동화가 제대로 돌면 사람에게는 고르기와 승인만 남습니다.",
+      "props": {
+        "message": "남는 건 고르기와 승인뿐"
+      },
+      "visual": {
+        "kind": "pexels",
+        "query": "close up hands keyboard desk night",
+        "focal": "center",
+        "assetPath": "projects/009_two_touches/videos/s5_outro-broll.mp4",
+        "source": {
+          "provider": "pexels",
+          "selectedBy": "auto-rule",
+          "query": "close up hands keyboard desk night",
+          "pexelsId": 39425776,
+          "photographer": "Sergei Starostin",
+          "pageUrl": "https://www.pexels.com/video/typing-on-a-keyboard-in-low-light-39425776/",
+          "width": 720,
+          "height": 1280,
+          "generatedAt": "2026-11-02T12:29:59.280Z",
+          "fallbackFrom": null,
+          "fallbackReason": null
+        }
+      },
+      "durationMs": 8832,
+      "audioPath": "projects/009_two_touches/audio/s5_outro.mp3"
+    }
+  ],
+  "title": "사람 손 두 번, 5분 44초",
+  "width": 1080
+}
