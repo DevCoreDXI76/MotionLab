@@ -1,5 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
+import { availableClipIds, collectEpisodeAssets, loadLedger, recordEpisode, validateAssetReuse } from "../assetLedger";
+import type { AssetLedger } from "../assetLedger";
 import { ClaudeCliRunner } from "../claudeCliRunner";
 import { generateScript, ScriptValidationError } from "../claudeScriptGenerator";
 import { buildGuardedCast, resolveCastCommands } from "../castCommands";
@@ -48,6 +50,10 @@ export interface PipelineDeps {
   runCast: typeof buildGuardedCast;
   neuronsToday: () => number;
   sleep: (ms: number) => Promise<void>;
+  /** data/used_assets.json (device ②) — read before writing a script. */
+  ledger: () => AssetLedger;
+  /** Adds this episode's assets to the ledger; called only after a successful upload. */
+  recordAssets: (projectId: string, script: Script) => void;
 }
 
 /** The upload command line: never --privacy (stays private) and never --force (D5). */
@@ -58,7 +64,11 @@ export function buildUploadArgs(projectId: string): string[] {
 export const defaultDeps: PipelineDeps = {
   preflight: runPreflight,
   writeScript: (concept, projectId, feedback) =>
-    generateScript(new ClaudeCliRunner(), "아래 concept.md 참조", "shorts", projectId, { concept, feedback }),
+    generateScript(new ClaudeCliRunner(), "아래 concept.md 참조", "shorts", projectId, {
+      concept,
+      feedback,
+      availableClipIds: availableClipIds(loadLedger(), Object.keys(loadExistingClips()), projectId),
+    }),
   narrate: async (projectId, script) => {
     const provider = new EdgeTtsProvider();
     try {
@@ -75,6 +85,8 @@ export const defaultDeps: PipelineDeps = {
   runCast: buildGuardedCast,
   neuronsToday: () => new NeuronLedger().usedToday(),
   sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+  ledger: () => loadLedger(),
+  recordAssets: (projectId, script) => recordEpisode(projectId, collectEpisodeAssets(script)),
 };
 
 /** Feedback for the script step when the measured scene durations sum past the cap; null when within it. */
@@ -161,7 +173,8 @@ export async function runPipeline(projectId: string, options: PipelineOptions, d
     for (let lengthRetry = 0; ; lengthRetry++) {
       await step("script", async (rec) => {
         const concept = fs.readFileSync(conceptPath, "utf-8");
-        const clipIds = Object.keys(loadExistingClips());
+        const ledger = deps.ledger();
+        const clipIds = availableClipIds(ledger, Object.keys(loadExistingClips()), projectId);
         let feedback: string[] = lengthFeedback;
         let cliFailures = 0;
         let validationRetries = 0;
@@ -184,7 +197,7 @@ export async function runPipeline(projectId: string, options: PipelineOptions, d
           }
           const { script, demoted } = demoteOverCapVisuals(normalizeGeneratedScript(raw as unknown as Script, projectId));
           for (const d of demoted) fallbacks.push({ step: "script", detail: `상한 초과 강등 ${d}` });
-          const errors = [...validateScript(script).errors, ...validateNarrationLength(script), ...validateNoNextEpisodeTease(script, concept), ...validateVisualIntent(script, clipIds)];
+          const errors = [...validateScript(script).errors, ...validateNarrationLength(script), ...validateNoNextEpisodeTease(script, concept), ...validateVisualIntent(script, clipIds), ...validateAssetReuse(script, ledger, projectId)];
           if (errors.length > 0) {
             if (validationRetries++ >= SCRIPT_VALIDATION_RETRIES) throw new Error(`대본 검증 실패: ${errors.join("; ")}`);
             feedback = errors;
@@ -272,6 +285,7 @@ export async function runPipeline(projectId: string, options: PipelineOptions, d
       const resultPath = path.join(projectDir, "output", `${projectId}.upload_result.json`);
       const result = JSON.parse(fs.readFileSync(resultPath, "utf-8")) as { youtube_url?: string; uploaded_privacy?: string; playlist_result?: { added?: boolean } };
       uploadUrl = result.youtube_url ?? null;
+      deps.recordAssets(projectId, readScript());
       rec.notes.push(`privacy=${result.uploaded_privacy}`);
       if (result.playlist_result && result.playlist_result.added === false) {
         interventions.push({ step: "upload", reason: "재생목록 자동 추가 실패 — YouTube Studio에서 수동 추가 필요" });

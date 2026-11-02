@@ -3,6 +3,8 @@ import path from "node:path";
 import { searchPortraitVideo } from "../pexels";
 import { PUBLIC_DIR } from "../paths";
 import { readSecret } from "../secrets";
+import { ledgerPexelsIds, loadLedger } from "../assetLedger";
+import type { AssetLedger } from "../assetLedger";
 import type { ProviderContext, ProviderResult } from "./types";
 
 export function readPexelsApiKey(): string {
@@ -21,6 +23,11 @@ export function usedPexelsIds(videosDir: string): Set<number> {
   );
 }
 
+/** Device ②: ids used in this project plus ids any other episode used (data/used_assets.json). */
+export function excludedPexelsIds(videosDir: string, ledger: AssetLedger, projectId: string): Set<number> {
+  return new Set([...usedPexelsIds(videosDir), ...ledgerPexelsIds(ledger, projectId)]);
+}
+
 /**
  * Searches Pexels for `query`, downloads the first clip passing the resolution/face/reuse filters
  * into public/projects/<id>/videos/<sceneId>-broll.mp4 and writes its credit sidecar. Returns null
@@ -34,9 +41,9 @@ export async function fetchPexelsBroll(
 ): Promise<ProviderResult | null> {
   const videosDir = path.join(PUBLIC_DIR, "projects", ctx.projectId, "videos");
   fs.mkdirSync(videosDir, { recursive: true });
-  const excludeIds = usedPexelsIds(videosDir);
+  const excludeIds = excludedPexelsIds(videosDir, loadLedger(), ctx.projectId);
   if (excludeIds.size > 0) {
-    ctx.log(`Excluding ${excludeIds.size} already-used clip(s) from this project: ${[...excludeIds].join(", ")}`);
+    ctx.log(`Excluding ${excludeIds.size} already-used clip(s) from this and earlier episodes: ${[...excludeIds].join(", ")}`);
   }
 
   ctx.log(`Searching Pexels for "${query}" (portrait)...`);

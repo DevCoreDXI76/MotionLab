@@ -54,6 +54,8 @@ function deps(overrides: Partial<PipelineDeps> = {}): PipelineDeps {
     runCast: vi.fn(() => ({ cast: { header: { version: 2 as const, width: 100, height: 30, timestamp: 0 }, events: [] }, ran: ["git log --oneline -3"], skipped: [] })),
     neuronsToday: vi.fn(() => 0),
     sleep: vi.fn(async () => {}),
+    ledger: vi.fn(() => ({ episodes: {} })),
+    recordAssets: vi.fn(),
     ...overrides,
   };
 }
@@ -169,6 +171,35 @@ describe("runPipeline", () => {
     expect(report.uploadUrl).toBe("https://youtu.be/x");
     expect(report.verdict).toBe(VERDICTS.uploaded);
     expect(report.interventions).toEqual([{ step: "upload", reason: "재생목록 자동 추가 실패 — YouTube Studio에서 수동 추가 필요" }]);
+  });
+});
+
+describe("asset ledger (device ②)", () => {
+  const LEDGER_008 = { episodes: { "008_ai_visual": { aiImagePrompts: ["A ceramic mug steaming beside a backlit mechanical keyboard"], existingClips: ["flow_01"], pexelsIds: [1], diagramKinds: [] } } };
+
+  it("feeds a repeated aiImage subject back into the script retry loop", async () => {
+    const fresh = structuredClone(GOOD_SCRIPT);
+    fresh.scenes[0].visual = { kind: "aiImage", prompt: "a potted cactus on a windowsill", query: "cactus close up" };
+    const writeScript = vi.fn<PipelineDeps["writeScript"]>().mockImplementationOnce(() => structuredClone(GOOD_SCRIPT)).mockImplementation(() => fresh);
+    const report = await run(deps({ writeScript, ledger: vi.fn(() => LEDGER_008) }));
+    expect(writeScript).toHaveBeenCalledTimes(2);
+    expect(writeScript.mock.calls[1][2].join(" ")).toContain("repeats an earlier episode's image (008: mug, keyboard)");
+    expect(report.steps[1].status).toBe("ok");
+  });
+
+  it("records the episode's assets after a successful upload, never in dry-run", async () => {
+    const upload = vi.fn(() => {
+      fs.mkdirSync(path.join(projectsDir, ID, "output"), { recursive: true });
+      fs.writeFileSync(path.join(projectsDir, ID, "output", `${ID}.upload_result.json`), JSON.stringify({ youtube_url: "https://youtu.be/x", uploaded_privacy: "private" }));
+      return 0;
+    });
+    const full = deps({ upload });
+    await run(full, false);
+    expect(full.recordAssets).toHaveBeenCalledWith(ID, expect.objectContaining({ scenes: expect.any(Array) }));
+
+    const dry = deps();
+    await run(dry, true);
+    expect(dry.recordAssets).not.toHaveBeenCalled();
   });
 });
 

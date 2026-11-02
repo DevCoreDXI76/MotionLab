@@ -36,6 +36,8 @@ export interface ScriptPromptOptions {
   concept?: string;
   /** Errors from the previous attempt, fed back so a retry fixes them (orchestrator, §5.2). */
   feedback?: string[];
+  /** Clips the asset ledger still allows (device ②); omitted = every registered clip. */
+  availableClipIds?: string[];
 }
 
 function conceptSection(concept: string | undefined): string {
@@ -61,6 +63,12 @@ function feedbackSection(feedback: string[] | undefined): string {
   ].join(NEWLINE);
 }
 
+function existingClipsSection(clips: Record<string, { description: string }>, available: string[] | undefined): string {
+  const entries = Object.entries(clips).filter(([id]) => !available || available.includes(id));
+  if (entries.length === 0) return "    - (사용할 수 있는 기존 클립이 없습니다 — 이전 편에서 모두 썼으므로 existingClip은 쓰지 마세요)";
+  return entries.map(([id, c]) => `    - ${id}: ${c.description}`).join(NEWLINE);
+}
+
 /** Exported for testing. */
 export function buildPrompt(topic: string, format: "shorts" | "long", projectId: string, options: ScriptPromptOptions = {}): string {
   const promptTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, "script_prompt_template.md"), "utf-8");
@@ -71,7 +79,7 @@ export function buildPrompt(topic: string, format: "shorts" | "long", projectId:
     .replace("{{TOPIC}}", topic)
     .replace("{{FORMAT}}", format)
     .replace("{{PROJECT_ID}}", projectId)
-    .replace("{{EXISTING_CLIPS}}", Object.entries(clips).map(([id, c]) => `    - ${id}: ${c.description}`).join(NEWLINE))
+    .replace("{{EXISTING_CLIPS}}", existingClipsSection(clips, options.availableClipIds))
     .replace("{{ALLOWED_COMMANDS}}", ALLOWED_COMMAND_EXAMPLES.map((l) => `    - ${l}`).join(NEWLINE));
 }
 

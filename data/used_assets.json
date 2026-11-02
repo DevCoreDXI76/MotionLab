@@ -1,0 +1,85 @@
+{
+  "episodes": {
+    "003_pipeline": {
+      "aiImagePrompts": [],
+      "existingClips": [],
+      "pexelsIds": [
+        9305771
+      ],
+      "diagramKinds": []
+    },
+    "004_failures": {
+      "aiImagePrompts": [],
+      "existingClips": [],
+      "pexelsIds": [
+        8554251,
+        7989667,
+        7942762,
+        6948584
+      ],
+      "diagramKinds": []
+    },
+    "005_casting": {
+      "aiImagePrompts": [],
+      "existingClips": [],
+      "pexelsIds": [
+        7240847,
+        12893579,
+        9063073,
+        8472307
+      ],
+      "diagramKinds": []
+    },
+    "006_recap": {
+      "aiImagePrompts": [],
+      "existingClips": [],
+      "pexelsIds": [
+        6781988,
+        8003418,
+        12893579,
+        9047447
+      ],
+      "diagramKinds": []
+    },
+    "007_resolution": {
+      "aiImagePrompts": [],
+      "existingClips": [],
+      "pexelsIds": [
+        8480685,
+        12893579,
+        9047447
+      ],
+      "diagramKinds": []
+    },
+    "008_ai_visual": {
+      "aiImagePrompts": [
+        "A ceramic mug steaming beside the corner of a backlit mechanical keyboard on a dark wooden desk",
+        "A desk lamp casting warm light across a worn keyboard and a glass of water on a wooden surface"
+      ],
+      "existingClips": [
+        "flow_01"
+      ],
+      "pexelsIds": [
+        39425776
+      ],
+      "diagramKinds": [
+        "stack"
+      ]
+    },
+    "009_two_touches": {
+      "aiImagePrompts": [
+        "A desk lamp casting warm light across a wooden desk beside the edge of a dark keyboard",
+        "A ceramic mug resting beside the corner of a backlit keyboard on a dark wooden desk"
+      ],
+      "existingClips": [
+        "flow_01"
+      ],
+      "pexelsIds": [
+        39425776
+      ],
+      "diagramKinds": [
+        "stack"
+      ]
+    }
+  }
+}

@@ -55,4 +55,10 @@ describe("generateScript", () => {
     expect(prompt).toContain("npx vitest run");
     expect(prompt).toContain("**정적 포즈만**");
   });
+
+  it("lists only the clips the asset ledger still allows (device ②)", () => {
+    const prompt = buildPrompt("주제", "shorts", "010_x", { availableClipIds: [] });
+    expect(prompt).not.toContain("flow_01:");
+    expect(prompt).toContain("사용할 수 있는 기존 클립이 없습니다");
+  });
 });
