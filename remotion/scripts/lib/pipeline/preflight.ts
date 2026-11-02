@@ -9,6 +9,7 @@ import { CANDIDATES_PER_ROUND, GEN_HEIGHT, GEN_WIDTH, MAX_ROUNDS } from "../visu
 import { loadExistingClips } from "../visualProviders/existingClip";
 import { VISUAL_LIMITS } from "../visualIntent";
 import { ROOT_DIR, SECRETS_DIR } from "../paths";
+import { findConceptOverlap, overlapMessage } from "./conceptOverlap";
 
 export interface Check {
   name: string;
@@ -42,6 +43,16 @@ function hasKeys(file: string, keys: string[]): Check {
 }
 
 /**
+ * Device ①: a concept that repeats an earlier episode stops the run before any generation. Picking a
+ * new topic is the human's ① call, so this never triggers automatic regeneration.
+ */
+export function conceptOverlapCheck(conceptPath: string): Check {
+  const projectDir = path.dirname(conceptPath);
+  const overlap = findConceptOverlap(path.dirname(projectDir), path.basename(projectDir));
+  return { name: "소재 중복 검사", ok: !overlap, detail: overlap ? overlapMessage(overlap) : "이전 편과 겹침 없음" };
+}
+
+/**
  * Everything that would otherwise fail halfway through a run (and waste quota or force a human to
  * pick up the pieces) is checked before the first expensive step (docs/2단계_설계.md §5.1).
  * Includes one real Edge TTS sentence — the 2.0.7 → 403 breakage taught us library version alone
@@ -52,6 +63,7 @@ export async function runPreflight(conceptPath: string, options: { dryRun: boole
 
   const concept = fs.existsSync(conceptPath) ? fs.readFileSync(conceptPath, "utf-8").trim() : "";
   checks.push({ name: "concept.md", ok: concept.length >= 50, detail: concept ? `${concept.length}자` : "없음" });
+  if (concept) checks.push(conceptOverlapCheck(conceptPath));
 
   const claude = commandWorks("claude", ["--version"]);
   checks.push({ name: "claude CLI", ...claude });
