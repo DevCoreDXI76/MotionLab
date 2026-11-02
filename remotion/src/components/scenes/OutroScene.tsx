@@ -7,7 +7,7 @@ import type { SceneProps } from "./types";
 
 export interface OutroSceneProps {
   message: string;
-  ctaText?: string;
+  ctaText?: string | null;
 }
 
 export const OutroScene: React.FC<SceneProps<OutroSceneProps>> = ({

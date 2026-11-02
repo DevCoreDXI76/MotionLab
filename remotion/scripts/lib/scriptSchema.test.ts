@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { NARRATION_MAX_CHARS, validateNarrationLength, validateScript } from "./scriptSchema";
+import { NARRATION_MAX_CHARS, validateNarrationLength, validateNoNextEpisodeTease, validateScript } from "./scriptSchema";
 import { PROJECTS_DIR } from "./paths";
 
 const validScript = {
@@ -99,5 +99,31 @@ describe("validateNarrationLength", () => {
     const errors = validateNarrationLength(withNarration("가".repeat(NARRATION_MAX_CHARS), "나"));
     expect(errors).toHaveLength(1);
     expect(errors[0]).toContain(`${NARRATION_MAX_CHARS + 1}자`);
+  });
+});
+
+describe("validateNoNextEpisodeTease", () => {
+  const CONCEPT_009 = "## 톤·길이\n정보성 쇼츠, 45~60초. 이전 편 번호는 쓰지 않는다. 다음 편 예고 문구는 쓰지 않는다.\n";
+  const outro = (props: Record<string, unknown>, narration = "끝입니다.") => ({ scenes: [{ id: "s5", type: "outro", narration, props }] });
+
+  it("accepts an outro with ctaText null (render props stay schema-valid)", () => {
+    const script = { ...validScript, scenes: [{ ...validScript.scenes[0], type: "outro", props: { message: "끝", ctaText: null } }] };
+    expect(validateScript(script)).toEqual({ valid: true, errors: [] });
+    expect(validateNoNextEpisodeTease(script, CONCEPT_009)).toEqual([]);
+  });
+
+  it("rejects '다음 편' in ctaText when the concept does not announce a next episode", () => {
+    const errors = validateNoNextEpisodeTease(outro({ message: "끝", ctaText: "다음 편에서 계속" }), CONCEPT_009);
+    expect(errors).toHaveLength(1);
+    expect(errors[0]).toContain("s5");
+  });
+
+  it("rejects '다음 편' in narration too", () => {
+    expect(validateNoNextEpisodeTease(outro({ message: "끝" }, "다음 편에서 만나요."), CONCEPT_009)).toHaveLength(1);
+  });
+
+  it("allows it when the concept itself announces the next episode", () => {
+    const concept = "## 마무리\n다음 편 예고: 썸네일 자동화를 다룬다.\n";
+    expect(validateNoNextEpisodeTease(outro({ message: "끝", ctaText: "다음 편에서 계속" }), concept)).toEqual([]);
   });
 });

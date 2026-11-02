@@ -6,7 +6,7 @@ import { buildGuardedCast, resolveCastCommands } from "../castCommands";
 import { injectDurations } from "../injectDurations";
 import type { ScriptData } from "../injectDurations";
 import { loadLexicon } from "../pronunciationLexicon";
-import { validateNarrationLength, validateScript } from "../scriptSchema";
+import { validateNarrationLength, validateNoNextEpisodeTease, validateScript } from "../scriptSchema";
 import { maskSecrets } from "../secrets";
 import { spawnCli } from "../spawnCli";
 import { EdgeTtsProvider } from "../ttsProviders/edgeTtsProvider";
@@ -184,7 +184,7 @@ export async function runPipeline(projectId: string, options: PipelineOptions, d
           }
           const { script, demoted } = demoteOverCapVisuals(normalizeGeneratedScript(raw as unknown as Script, projectId));
           for (const d of demoted) fallbacks.push({ step: "script", detail: `상한 초과 강등 ${d}` });
-          const errors = [...validateScript(script).errors, ...validateNarrationLength(script), ...validateVisualIntent(script, clipIds)];
+          const errors = [...validateScript(script).errors, ...validateNarrationLength(script), ...validateNoNextEpisodeTease(script, concept), ...validateVisualIntent(script, clipIds)];
           if (errors.length > 0) {
             if (validationRetries++ >= SCRIPT_VALIDATION_RETRIES) throw new Error(`대본 검증 실패: ${errors.join("; ")}`);
             feedback = errors;

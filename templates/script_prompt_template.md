@@ -18,7 +18,7 @@
   - title: { "title": string, "subtitle"?: string }
   - talkingPoint: { "heading": string, "bullets": string[] }
   - code: { "language": string, "code": string, "caption"?: string }
-  - outro: { "message": string, "ctaText"?: string }
+  - outro: { "message": string, "ctaText"?: string } — ctaText는 생략할 수 있습니다. concept.md가 다음 편을 명시하지 않으면 ctaText·나레이션 어디에도 다음 편 예고 문구("다음 편에서 계속" 등)를 쓰지 마세요.
   - diagram: { "heading": string, "preset": "stack", "labels": string[], "highlight"?: number } — 구조·단계·흐름을 3D 블록으로 쌓아 보여주는 씬입니다. labels는 3~7개, 각 8자 이내 한국어. highlight는 강조할 블록의 0부터 시작하는 번호입니다.
 - 비주얼 배정 (title·talkingPoint·outro 씬은 visual.kind를 반드시 지정하세요. code·diagram 씬은 visual을 비워 두세요):
   - "aiImage" — AI로 생성하는 배경 이미지. 분위기·감정 비트 컷에 씁니다. visual.prompt에 장면 묘사를 영어 한 문장으로 쓰세요. 스타일과 구도(야간 저조도, 필름 질감, 화면은 프레임 밖, 손은 흐릿한 보조 요소 등)는 파이프라인이 자동으로 붙이니 쓰지 마세요.
