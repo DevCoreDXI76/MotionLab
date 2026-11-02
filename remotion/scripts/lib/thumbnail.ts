@@ -1,23 +1,26 @@
 import { spawnCli } from "./spawnCli";
 
 export interface ThumbnailScriptInput {
-  scenes: Array<{ type: string; durationMs: number }>;
+  scenes: Array<{ type: string; durationMs: number; props?: { bullets?: unknown[] } }>;
 }
 
 /**
  * Picks a timestamp (ms into the rendered video) to grab a thumbnail frame
- * from: the midpoint of the first "code" scene (the terminal/code visual is
- * the most on-brand, most visually distinct frame in the episode). Falls
- * back to 40% of total duration when there is no "code" scene.
+ * from, at a point where the scene's content has fully appeared:
+ * 1. 85% into the "title" scene (entrance animation done);
+ * 2. otherwise 90% into the first scene with bullets (every bullet shown —
+ *    008's code-midpoint rule caught a frame with only one bullet);
+ * 3. otherwise 40% of total duration.
  */
 export function computeThumbnailSeekMs(script: ThumbnailScriptInput): number {
-  let elapsed = 0;
-  for (const scene of script.scenes) {
-    if (scene.type === "code") {
-      return elapsed + scene.durationMs / 2;
-    }
-    elapsed += scene.durationMs;
-  }
+  const at = (index: number, fraction: number) => {
+    const elapsed = script.scenes.slice(0, index).reduce((sum, s) => sum + s.durationMs, 0);
+    return Math.round(elapsed + script.scenes[index].durationMs * fraction);
+  };
+  const title = script.scenes.findIndex((s) => s.type === "title");
+  if (title >= 0) return at(title, 0.85);
+  const bullets = script.scenes.findIndex((s) => (s.props?.bullets?.length ?? 0) > 0);
+  if (bullets >= 0) return at(bullets, 0.9);
   const totalMs = script.scenes.reduce((sum, s) => sum + s.durationMs, 0);
   return Math.round(totalMs * 0.4);
 }
