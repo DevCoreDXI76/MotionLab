@@ -42,4 +42,23 @@ describe("splitSubtitleLines", () => {
     expect(lines).toHaveLength(2);
     expect(lines.every((l) => l.text.length > 0)).toBe(true);
   });
+  it("does not split on a decimal point between digits", () => {
+    const lines = splitSubtitleLines("속도가 1.7배 느려졌어요. 끝.", 300);
+    expect(lines.map((l) => l.text)).toEqual(["속도가 1.7배 느려졌어요.", "끝."]);
+  });
+
+  it("keeps a version number like 2.0 inside one sentence", () => {
+    const lines = splitSubtitleLines("버전 2.0을 썼다.", 300);
+    expect(lines.map((l) => l.text)).toEqual(["버전 2.0을 썼다."]);
+  });
+
+  it("keeps multiple decimals intact while still splitting at sentence ends", () => {
+    const lines = splitSubtitleLines("3.14와 2.5를 비교. 다음.", 300);
+    expect(lines.map((l) => l.text)).toEqual(["3.14와 2.5를 비교.", "다음."]);
+  });
+
+  it("does not split v2.0-style versions", () => {
+    const lines = splitSubtitleLines("v2.0 출시. 끝.", 300);
+    expect(lines.map((l) => l.text)).toEqual(["v2.0 출시.", "끝."]);
+  });
 });

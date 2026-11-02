@@ -18,7 +18,8 @@ export interface SubtitleLine {
  */
 export function splitSubtitleLines(text: string, totalDurationInFrames: number): SubtitleLine[] {
   const sentences = text
-    .split(/(?<=[.!?。!?\n])\s*/)
+    // A "." only ends a sentence when it is not between two digits (1.7, v2.0).
+    .split(/(?<=[!?。!?\n])\s*|(?<=(?<!\d)\.)\s*|(?<=\.)(?!\d)\s*/)
     .map((sentence) => sentence.trim())
     .filter((sentence) => sentence.length > 0);
 
